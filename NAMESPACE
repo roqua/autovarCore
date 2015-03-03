@@ -1,0 +1,5 @@
+useDynLib(autovarCore)
+# exportPattern("^[[:alpha:]]+")
+export(autovar)
+export(rcpp_hello_world)
+importFrom(Rcpp, evalCpp)
