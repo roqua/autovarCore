@@ -26,6 +26,10 @@ This function uses a list of default params that may be overwritten the \code{pa
 }
 \examples{
 # Here we only overwrite the imputation iterations, the rest is left at default.
-autovarCore:::validate_params(list(imputation_iterations=20))
+raw_dataframe <- data.frame(id=rep(1, times=5),
+  tijdstip=c(1, 3, 5, 6, 7),
+  home=c('yes', 'no', 'yes', NA, 'yes'))
+autovarCore:::validate_params(raw_dataframe,
+                              list(imputation_iterations=20))
 }
 

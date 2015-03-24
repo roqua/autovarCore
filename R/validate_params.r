@@ -13,8 +13,126 @@
 #' @return A list with augmented params.
 #' @examples
 #' # Here we only overwrite the imputation iterations, the rest is left at default.
-#' autovarCore:::validate_params(list(imputation_iterations=20))
+#' raw_dataframe <- data.frame(id=rep(1, times=5),
+#'   tijdstip=c(1, 3, 5, 6, 7),
+#'   home=c('yes', 'no', 'yes', NA, 'yes'))
+#' autovarCore:::validate_params(raw_dataframe,
+#'                               list(imputation_iterations=20))
 #' @export
 validate_params <- function(raw_dataframe, params) {
-  "Hello otherworld!"
+  returned_params <- default_autovar_params()
+  assert_param_class(params, 'list')
+  assert_param_subset(names(params), names(returned_params))
+  for (param_name in names(params)) {
+    validation_function <- switch(param_name,
+       significance_levels = validate_significance_levels,
+       test_names = validate_test_names,
+       criterion = validate_criterion,
+       imputation_iterations = validate_imputation_iterations,
+       measurements_per_day = validate_measurements_per_day)
+    returned_params[[param_name]] <- validation_function(raw_dataframe,
+                                                         params[[param_name]])
+  }
+  returned_params
+}
+
+
+# Configuration and defaults
+
+default_autovar_params <- function() {
+  list(significance_levels = c(0.05, 0.01, 0.005),
+       test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),
+       criterion = 'AIC',
+       imputation_iterations = 30,
+       measurements_per_day = 1)
+}
+
+supported_test_names <- function() {
+  c('portmanteau',
+    'portmanteau_squared',
+    'skewness',
+    'kurtosis')
+}
+
+supported_criteria <- function() {
+  c('AIC',
+    'BIC')
+}
+
+
+# Assertions
+
+assert_param_class <- function(param, expected_class) {
+  if (is.null(class(param)) || class(param) != expected_class)
+    stop(paste("Params class should be:", expected_class))
+}
+
+assert_param_subset <- function(given_names_vector, allowed_names_vector,
+                                error_message = "Invalid param:") {
+  for (param_name in given_names_vector)
+    if (is.null(param_name) || !(param_name %in% given_names_vector))
+      stop(paste(error_message, param_name))
+}
+
+assert_param_not_null <- function(given_param) {
+  if (is.null(given_param))
+    stop("Given param cannot be NULL")
+}
+
+assert_param_integer <- function(given_param) {
+  if (!(given_param%%1 == 0))
+    stop(paste("Given param is not an integer:"), given_param)
+}
+
+assert_param_single <- function(given_param) {
+  if (length(given_param) != 1)
+    stop(paste("Length of given param is not 1:", given_param))
+}
+
+assert_param_range <- function(given_param, min, max, param_name) {
+  if (given_param < min || given_param > max)
+    stop(paste("The ",param_name," has to be an integer in range ",min,"-",max,sep=""))
+}
+
+
+# Interpreting functions
+
+validate_significance_levels <- function(raw_dataframe, given_param) {
+  assert_param_not_null(given_param)
+  assert_param_class(given_param, 'numeric')
+  sort(given_param, decreasing = TRUE)
+}
+
+validate_test_names <- function(raw_dataframe, given_param) {
+  if (is.null(given_param)) return(NULL) # An empty vector of tests is allowed
+  assert_param_subset(given_param,
+                      supported_test_names(),
+                      "Unsupported test name:")
+  given_param
+}
+
+validate_criterion <- function(raw_dataframe, given_param) {
+  assert_param_not_null(given_param)
+  assert_param_single(given_param)
+  assert_param_subset(given_param,
+                      supported_criteria(),
+                      "Unsupported criterion:")
+  given_param
+}
+
+validate_imputation_iterations <- function(raw_dataframe, given_param) {
+  assert_param_not_null(given_param)
+  assert_param_single(given_param)
+  assert_param_integer(given_param)
+  assert_param_range(given_param, 1, 500, "number of imputation iterations")
+  given_param
+}
+
+validate_measurements_per_day <- function(raw_dataframe, given_param) {
+  assert_param_not_null(given_param)
+  assert_param_single(given_param)
+  assert_param_integer(given_param)
+  # We may use the 0 value to denote that day- and daypart dummies are not to be included.
+  assert_param_range(given_param, 0, 16, "number of measurements per day")
+  given_param
 }
