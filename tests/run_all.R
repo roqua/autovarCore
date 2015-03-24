@@ -1,5 +1,4 @@
 library(testthat)
 library(autovarCore)
 
-test_package('autovar')
-
+test_package('autovarCore')
