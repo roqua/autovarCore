@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>validate_params. autovarCore 1.0-0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">autovarCore 1.0-0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Validates the params given to the autovar function</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>validate_params(raw_dataframe, params)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>raw_dataframe</dt>
+      <dd>The raw, unimputed data frame. This parameter is supplied so that we can verify the selected column names.</dd>
+      <dt>params</dt>
+      <dd>A <code>list</code> with the following named entries: <ul>
+<li> <code>selected_column_names</code> - The endogenous variables in the models, specified as an array of character strings. This argument is required. The selected column names should be a subset of the column names of <code>raw_dataframe</code>.
+</li>
+<li> <code>significance_levels</code> - An array with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to <code>c(0.05, 0.01, 0.005)</code>. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.
+</li>
+<li> <code>test_names</code> - The residual tests that should be performed, specified as an array of character strings. If not specified, this parameter defaults to <code>c('portmanteau', 'portmanteau_squared', 'skewness')</code>. The possible tests are <code>c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis')</code>. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.
+</li>
+<li> <code>criterion</code> - The information criterion used to sort the models. Valid options are 'AIC' (the default) or 'BIC'.
+</li>
+<li> <code>imputation_iterations</code> - The number of times we average over one Amelia call for imputing the data set. Since one Amelia call averages over five imputations on its own, the actual number of imputations is five times the number specified here. The default value for this parameter is <code>30</code>.
+</li>
+<li> <code>measurements_per_day</code> - The number of measurements per day in the time series data. The default value for this parameter is <code>1</code>.
+</li>
+</ul>
+</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A list with augmented params.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>This function uses a list of default params that may be overwritten the <code>params</code> argument. <code>stop()</code> errors are thrown when invalid params are supplied.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'># Here we only overwrite the imputation iterations, the rest is left at default.
+validate_params(list(imputation_iterations=20))
+</div>
+<div class='output'>[1] &quot;Hello otherworld!&quot;
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>validate_params</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

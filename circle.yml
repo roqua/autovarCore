@@ -1,0 +1,14 @@
+machine:
+  environment:
+    R_LIBS_USER: ~/lib/R/library
+test:
+  override:
+    - R CMD INSTALL --no-multiarch --with-keep.source ~/autovarCore
+    - R CMD build ~/autovarCore
+    - R CMD check ~/autovarCore/autovarCore_1.0-0.tar.gz --no-manual --no-build-vignettes
+dependencies:
+  # cache_directories:
+  #   - "~/cran-packages"
+  pre:
+    - mkdir -p ~/lib/R/library
+    - ./inst/bash/install-package-dependencies.sh
