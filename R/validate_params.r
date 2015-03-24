@@ -13,7 +13,7 @@
 #' @return A list with augmented params.
 #' @examples
 #' # Here we only overwrite the imputation iterations, the rest is left at default.
-#' validate_params(list(imputation_iterations=20))
+#' autovarCore:::validate_params(list(imputation_iterations=20))
 #' @export
 validate_params <- function(raw_dataframe, params) {
   "Hello otherworld!"

@@ -26,6 +26,6 @@ This function uses a list of default params that may be overwritten the \code{pa
 }
 \examples{
 # Here we only overwrite the imputation iterations, the rest is left at default.
-validate_params(list(imputation_iterations=20))
+autovarCore:::validate_params(list(imputation_iterations=20))
 }
 
