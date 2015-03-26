@@ -30,6 +30,7 @@ raw_dataframe <- data.frame(id=rep(1, times=5),
   tijdstip=c(1, 3, 5, 6, 7),
   home=c('yes', 'no', 'yes', NA, 'yes'))
 autovarCore:::validate_params(raw_dataframe,
-                              list(imputation_iterations=20))
+                              list(selected_column_names = c('tijdstip', 'home'),
+                              imputation_iterations=20))
 }
 

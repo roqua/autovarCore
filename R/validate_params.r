@@ -17,7 +17,8 @@
 #'   tijdstip=c(1, 3, 5, 6, 7),
 #'   home=c('yes', 'no', 'yes', NA, 'yes'))
 #' autovarCore:::validate_params(raw_dataframe,
-#'                               list(imputation_iterations=20))
+#'                               list(selected_column_names = c('tijdstip', 'home'),
+#'                               imputation_iterations=20))
 #' @export
 validate_params <- function(raw_dataframe, params) {
   # precondition: raw_dataframe is assumed to be a valid data set
