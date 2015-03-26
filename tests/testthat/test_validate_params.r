@@ -6,6 +6,36 @@ testdata_raw_dataframe <- function() {
              home=c('yes', 'no', 'yes', NA, 'yes'))
 }
 
+test_that('validate_params requires the selected_column_names parameter', {
+  expected_error_message <- "selected_column_names is a required parameter"
+  raw_dataframe <- testdata_raw_dataframe()
+  expect_error(autovarCore:::validate_params(raw_dataframe,
+                                             list(measurements_per_day = 1)),
+               expected_error_message)
+  expect_error(autovarCore:::validate_params(raw_dataframe,
+                                             list()),
+               expected_error_message)
+})
+
+test_that('validate_params does not accept NULL for a params list', {
+  expect_error(autovarCore:::validate_params(testdata_raw_dataframe(),
+                                             NULL),
+               "Param class should be: list")
+})
+
+test_that('validate_params substitutes with default parameter values', {
+  expected_result <- autovarCore:::default_autovar_params()
+  selected_column_names <- c('tijdstip', 'home')
+  expected_result$selected_column_names <- selected_column_names
+  expect_equal(autovarCore:::validate_params(testdata_raw_dataframe(),
+                                             list(selected_column_names = selected_column_names)),
+               expected_result)
+})
+
+test_that('validate_params calls the correct subfunctions to override the default parameters', {
+  # TODO: write this test
+})
+
 
 # Assertions
 

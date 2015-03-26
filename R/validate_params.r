@@ -20,10 +20,15 @@
 #'                               list(imputation_iterations=20))
 #' @export
 validate_params <- function(raw_dataframe, params) {
+  # precondition: raw_dataframe is assumed to be a valid data set
+  #               and is not validated here (it is validated in another function)
   # TODO: CHANGE TO MATRIX
   returned_params <- default_autovar_params()
   assert_param_class(params, 'list')
-  assert_param_subset(names(params), names(returned_params))
+  assert_param_subset(names(params),
+                      c(names(returned_params), 'selected_column_names'))
+  if (!('selected_column_names' %in% names(params)))
+    stop("selected_column_names is a required parameter")
   for (param_name in names(params)) {
     validation_function <- switch(param_name,
        selected_column_names = validate_selected_column_names,
