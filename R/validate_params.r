@@ -25,7 +25,7 @@ validate_params <- function(raw_dataframe, params) {
   assert_param_subset(names(params), names(returned_params))
   for (param_name in names(params)) {
     validation_function <- switch(param_name,
-       selected_column_names = validate_selected_column_names
+       selected_column_names = validate_selected_column_names,
        significance_levels = validate_significance_levels,
        test_names = validate_test_names,
        criterion = validate_criterion,
@@ -105,8 +105,13 @@ assert_param_range <- function(given_param, min, max, param_name) {
 # Validation functions
 
 validate_selected_column_names <- function(raw_dataframe, given_param) {
+  # precondition: raw_dataframe is a data frame
   assert_param_not_null(given_param)
   accepted_column_names <- names(raw_dataframe)
+  assert_param_subset(given_param,
+                      accepted_column_names,
+                      "Invalid selected column name:")
+  given_param
 }
 
 validate_significance_levels <- function(raw_dataframe, given_param) {

@@ -6,6 +6,9 @@ testdata_raw_dataframe <- function() {
              home=c('yes', 'no', 'yes', NA, 'yes'))
 }
 
+
+# Configuration and defaults
+
 test_that('default_autovar_params returns a list of expected commands', {
   default_params <- autovarCore:::default_autovar_params()
   expect_equal(class(default_params), 'list')
@@ -23,6 +26,9 @@ test_that('supported_criteria returns a character vector', {
   expect_equal(class(supported_criteria), 'character')
   expect_more_than(length(supported_criteria), 1)
 })
+
+
+# Assertions
 
 test_that('assert_param_class asserts that the given param is of the specified class', {
   expected_error_message <- 'Params class should be: list'
@@ -86,8 +92,24 @@ test_that('assert_param_range throws an error when the given integer is not in r
 })
 
 
+# Validation functions
 
+test_that('validate_selected_column_names accepts only names of columns in the data frame', {
+  raw_dataframe <- testdata_raw_dataframe()
+  expect_error(autovarCore:::validate_selected_column_names(raw_dataframe, NULL),
+               "Given param cannot be NULL")
+  expect_error(autovarCore:::validate_selected_column_names(raw_dataframe,
+                                                            'unknown'),
+               "Invalid selected column name: unknown")
 
+  expect_error(autovarCore:::validate_selected_column_names(raw_dataframe,
+                                                            c('tijdstip', 'unknown')),
+               "Invalid selected column name: unknown")
+  # The statements below should not throw errors.
+  expect_equal(autovarCore:::validate_selected_column_names(raw_dataframe,'tijdstip'),'tijdstip')
+  expect_equal(autovarCore:::validate_selected_column_names(raw_dataframe,c('tijdstip','home','id')),
+               c('tijdstip','home','id'))
+})
 
 
 
