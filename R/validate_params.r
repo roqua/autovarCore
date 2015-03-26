@@ -20,6 +20,7 @@
 #'                               list(imputation_iterations=20))
 #' @export
 validate_params <- function(raw_dataframe, params) {
+  # TODO: CHANGE TO MATRIX
   returned_params <- default_autovar_params()
   assert_param_class(params, 'list')
   assert_param_subset(names(params), names(returned_params))
@@ -38,34 +39,11 @@ validate_params <- function(raw_dataframe, params) {
 }
 
 
-# Configuration and defaults
-
-default_autovar_params <- function() {
-  list(significance_levels = c(0.05, 0.01, 0.005),
-       test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),
-       criterion = 'AIC',
-       imputation_iterations = 30,
-       measurements_per_day = 1)
-}
-
-supported_test_names <- function() {
-  c('portmanteau',
-    'portmanteau_squared',
-    'skewness',
-    'kurtosis')
-}
-
-supported_criteria <- function() {
-  c('AIC',
-    'BIC')
-}
-
-
 # Assertions
 
 assert_param_class <- function(param, expected_class) {
   if (class(param) != expected_class)
-    stop(paste("Params class should be:", expected_class))
+    stop(paste("Param class should be:", expected_class))
 }
 
 assert_param_subset <- function(given_names_vector, allowed_names_vector,

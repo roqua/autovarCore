@@ -7,31 +7,10 @@ testdata_raw_dataframe <- function() {
 }
 
 
-# Configuration and defaults
-
-test_that('default_autovar_params returns a list of expected commands', {
-  default_params <- autovarCore:::default_autovar_params()
-  expect_equal(class(default_params), 'list')
-  expect_more_than(length(names(default_params)), 4)
-})
-
-test_that('supported_test_names returns a character vector', {
-  supported_test_names <- autovarCore:::supported_test_names()
-  expect_equal(class(supported_test_names), 'character')
-  expect_more_than(length(supported_test_names), 3)
-})
-
-test_that('supported_criteria returns a character vector', {
-  supported_criteria <- autovarCore:::supported_criteria()
-  expect_equal(class(supported_criteria), 'character')
-  expect_more_than(length(supported_criteria), 1)
-})
-
-
 # Assertions
 
 test_that('assert_param_class asserts that the given param is of the specified class', {
-  expected_error_message <- 'Params class should be: list'
+  expected_error_message <- 'Param class should be: list'
   expect_error(autovarCore:::assert_param_class(NULL, 'list'), expected_error_message)
   expect_error(autovarCore:::assert_param_class(testdata_raw_dataframe(), 'list'), expected_error_message)
   # The statement below should not throw an error.
@@ -106,10 +85,100 @@ test_that('validate_selected_column_names accepts only names of columns in the d
                                                             c('tijdstip', 'unknown')),
                "Invalid selected column name: unknown")
   # The statements below should not throw errors.
-  expect_equal(autovarCore:::validate_selected_column_names(raw_dataframe,'tijdstip'),'tijdstip')
-  expect_equal(autovarCore:::validate_selected_column_names(raw_dataframe,c('tijdstip','home','id')),
-               c('tijdstip','home','id'))
+  expect_equal(autovarCore:::validate_selected_column_names(raw_dataframe,
+                                                            'tijdstip'),
+               'tijdstip')
+  expect_equal(autovarCore:::validate_selected_column_names(raw_dataframe,
+                                                            c('tijdstip', 'home', 'id')),
+               c('tijdstip', 'home', 'id'))
 })
 
+test_that('validate_significance_levels returns the input sorted decreasingly', {
+  expect_equal(autovarCore:::validate_significance_levels(testdata_raw_dataframe(),
+                                                          c(0.5, 0.3, 0.7)),
+                c(0.7, 0.5, 0.3))
+})
 
+test_that('validate_significance_levels accepts only numeric vectors', {
+  raw_dataframe <- testdata_raw_dataframe()
+  expect_error(autovarCore:::validate_significance_levels(raw_dataframe, NULL),
+               "Given param cannot be NULL")
+  expect_error(autovarCore:::validate_significance_levels(raw_dataframe, c('a', 'b', 'c')),
+               "Param class should be: numeric")
+  # The statement below should not throw an error.
+  expect_equal(autovarCore:::validate_significance_levels(testdata_raw_dataframe(), 0.7),
+                0.7)
+})
 
+test_that('validate_test_names accepts only supported test names', {
+  raw_dataframe <- testdata_raw_dataframe()
+  expect_error(autovarCore:::validate_test_names(raw_dataframe, c('portmanteau', 'unknown')),
+               "Unsupported test name: unknown")
+  expect_error(autovarCore:::validate_test_names(raw_dataframe, 'unknown'),
+               "Unsupported test name: unknown")
+  # The statements below should not throw errors.
+  expect_null(autovarCore:::validate_test_names(raw_dataframe, NULL))
+  expect_equal(autovarCore:::validate_test_names(raw_dataframe, c('portmanteau', 'skewness')),
+               c('portmanteau', 'skewness'))
+  expect_equal(autovarCore:::validate_test_names(raw_dataframe, 'kurtosis'),
+               'kurtosis')
+})
+
+test_that('validate_criterion accepts only supported criteria', {
+  raw_dataframe <- testdata_raw_dataframe()
+  expect_error(autovarCore:::validate_criterion(raw_dataframe, NULL),
+               "Given param cannot be NULL")
+  expect_error(autovarCore:::validate_criterion(raw_dataframe, 'unknown'),
+               "Unsupported criterion: unknown")
+  expect_error(autovarCore:::validate_criterion(raw_dataframe, c('AIC', 'BIC')),
+               "Length of given param is not 1:")
+  # The statement below should not throw an error.
+  expect_equal(autovarCore:::validate_criterion(raw_dataframe, 'AIC'),
+               'AIC')
+  expect_equal(autovarCore:::validate_criterion(raw_dataframe, 'BIC'),
+               'BIC')
+})
+
+test_that('validate_imputation_iterations accepts only an integer in range', {
+  raw_dataframe <- testdata_raw_dataframe()
+  expect_error(autovarCore:::validate_imputation_iterations(raw_dataframe, NULL),
+               "Given param cannot be NULL")
+  expect_error(autovarCore:::validate_imputation_iterations(raw_dataframe, c(2, 3)),
+               "Length of given param is not 1:")
+  expect_error(autovarCore:::validate_imputation_iterations(raw_dataframe, list(a=2, b=3)),
+               "Length of given param is not 1:")
+  expect_error(autovarCore:::validate_imputation_iterations(raw_dataframe, 3.5),
+               "Given param is not an integer:")
+  expect_error(autovarCore:::validate_imputation_iterations(raw_dataframe, 'hoi'),
+               "Given param is not an integer:")
+  expect_error(autovarCore:::validate_imputation_iterations(raw_dataframe, 0),
+               "The number of imputation iterations has to be an integer in range 1-500")
+  expect_error(autovarCore:::validate_imputation_iterations(raw_dataframe, 501),
+               "The number of imputation iterations has to be an integer in range 1-500")
+  # The statements below should not throw errors.
+  expect_equal(autovarCore:::validate_imputation_iterations(raw_dataframe, 1), 1)
+  expect_equal(autovarCore:::validate_imputation_iterations(raw_dataframe, 500), 500)
+  expect_equal(autovarCore:::validate_imputation_iterations(raw_dataframe, 376), 376)
+})
+
+test_that('validate_measurements_per_day accepts only an integer in range', {
+  raw_dataframe <- testdata_raw_dataframe()
+  expect_error(autovarCore:::validate_measurements_per_day(raw_dataframe, NULL),
+               "Given param cannot be NULL")
+  expect_error(autovarCore:::validate_measurements_per_day(raw_dataframe, c(2, 3)),
+               "Length of given param is not 1:")
+  expect_error(autovarCore:::validate_measurements_per_day(raw_dataframe, list(a=2, b=3)),
+               "Length of given param is not 1:")
+  expect_error(autovarCore:::validate_measurements_per_day(raw_dataframe, 3.5),
+               "Given param is not an integer:")
+  expect_error(autovarCore:::validate_measurements_per_day(raw_dataframe, 'hoi'),
+               "Given param is not an integer:")
+  expect_error(autovarCore:::validate_measurements_per_day(raw_dataframe, -1),
+               "The number of measurements per day has to be an integer in range 0-16")
+  expect_error(autovarCore:::validate_measurements_per_day(raw_dataframe, 17),
+               "The number of measurements per day has to be an integer in range 0-16")
+  # The statements below should not throw errors.
+  expect_equal(autovarCore:::validate_measurements_per_day(raw_dataframe, 0), 0)
+  expect_equal(autovarCore:::validate_measurements_per_day(raw_dataframe, 13), 13)
+  expect_equal(autovarCore:::validate_measurements_per_day(raw_dataframe, 16), 16)
+})
