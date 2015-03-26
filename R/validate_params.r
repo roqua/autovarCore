@@ -25,6 +25,7 @@ validate_params <- function(raw_dataframe, params) {
   assert_param_subset(names(params), names(returned_params))
   for (param_name in names(params)) {
     validation_function <- switch(param_name,
+       selected_column_names = validate_selected_column_names
        significance_levels = validate_significance_levels,
        test_names = validate_test_names,
        criterion = validate_criterion,
@@ -63,14 +64,14 @@ supported_criteria <- function() {
 # Assertions
 
 assert_param_class <- function(param, expected_class) {
-  if (is.null(class(param)) || class(param) != expected_class)
+  if (class(param) != expected_class)
     stop(paste("Params class should be:", expected_class))
 }
 
 assert_param_subset <- function(given_names_vector, allowed_names_vector,
                                 error_message = "Invalid param:") {
   for (param_name in given_names_vector)
-    if (is.null(param_name) || !(param_name %in% given_names_vector))
+    if (is.null(param_name) || !(param_name %in% allowed_names_vector))
       stop(paste(error_message, param_name))
 }
 
@@ -80,22 +81,33 @@ assert_param_not_null <- function(given_param) {
 }
 
 assert_param_integer <- function(given_param) {
-  if (!(given_param%%1 == 0))
+  # precondition: given_param is a single element
+  if (class(given_param) != 'numeric' || !(given_param%%1 == 0))
     stop(paste("Given param is not an integer:"), given_param)
 }
 
 assert_param_single <- function(given_param) {
+  # precondition: given_param is not NULL
   if (length(given_param) != 1)
     stop(paste("Length of given param is not 1:", given_param))
 }
 
 assert_param_range <- function(given_param, min, max, param_name) {
+  # precondition: given_param is an integer
   if (given_param < min || given_param > max)
-    stop(paste("The ",param_name," has to be an integer in range ",min,"-",max,sep=""))
+    stop(paste("The ",
+               param_name,
+               " has to be an integer in range ",
+               min, "-", max, sep=""))
 }
 
 
-# Interpreting functions
+# Validation functions
+
+validate_selected_column_names <- function(raw_dataframe, given_param) {
+  assert_param_not_null(given_param)
+  accepted_column_names <- names(raw_dataframe)
+}
 
 validate_significance_levels <- function(raw_dataframe, given_param) {
   assert_param_not_null(given_param)
