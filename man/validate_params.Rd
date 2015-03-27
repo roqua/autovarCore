@@ -4,13 +4,13 @@
 \alias{validate_params}
 \title{Validates the params given to the autovar function}
 \usage{
-validate_params(raw_dataframe, params)
+validate_params(data_matrix, params)
 }
 \arguments{
-\item{raw_dataframe}{The raw, unimputed data frame. This parameter is supplied so that we can verify the selected column names.}
+\item{data_matrix}{The raw, unimputed data matrix. This parameter is supplied so that we can verify the selected column names.}
 
 \item{params}{A \code{list} with the following named entries: \itemize{
-\item \code{selected_column_names} - The endogenous variables in the models, specified as an array of character strings. This argument is required. The selected column names should be a subset of the column names of \code{raw_dataframe}.
+\item \code{selected_column_names} - The endogenous variables in the models, specified as an array of character strings. This argument is required. The selected column names should be a subset of the column names of \code{data_matrix}.
 \item \code{significance_levels} - An array with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to \code{c(0.05, 0.01, 0.005)}. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.
 \item \code{test_names} - The residual tests that should be performed, specified as an array of character strings. If not specified, this parameter defaults to \code{c('portmanteau', 'portmanteau_squared', 'skewness')}. The possible tests are \code{c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis')}. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.
 \item \code{criterion} - The information criterion used to sort the models. Valid options are 'AIC' (the default) or 'BIC'.
@@ -26,11 +26,13 @@ This function uses a list of default params that may be overwritten the \code{pa
 }
 \examples{
 # Here we only overwrite the imputation iterations, the rest is left at default.
-raw_dataframe <- data.frame(id=rep(1, times=5),
-  tijdstip=c(1, 3, 5, 6, 7),
-  home=c('yes', 'no', 'yes', NA, 'yes'))
-autovarCore:::validate_params(raw_dataframe,
+data_matrix <- matrix(ncol = 3, nrow = 5)
+data_matrix[,1] <- 1
+data_matrix[,2] <- c(1, 3, 5, 6, 7)
+data_matrix[,3] <- c(1, 0, 1, NA, 1)
+dimnames(data_matrix)[[2]] <- c('id', 'tijdstip', 'home')
+autovarCore:::validate_params(data_matrix,
                               list(selected_column_names = c('tijdstip', 'home'),
-                              imputation_iterations=20))
+                              imputation_iterations = 20))
 }
 
