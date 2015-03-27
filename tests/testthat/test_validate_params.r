@@ -32,12 +32,45 @@ test_that('validate_params substitutes with default parameter values', {
                expected_result)
 })
 
+test_that('validate_params does not accept invalid parameters', {
+  expect_error(autovarCore:::validate_params(testdata_raw_dataframe(),
+                                             list(selected_column_names = c('tijdstip', 'home'),
+                                                  invalid_param = 'something')),
+               "Invalid param: invalid_param")
+})
+
+
 test_that('validate_params calls the correct subfunctions to override the default parameters', {
-  # TODO: write this test
+  expected_result <- list(significance_levels = 1,
+                          test_names = 2,
+                          criterion = 3,
+                          imputation_iterations = 4,
+                          measurements_per_day = 5,
+                          selected_column_names = 6)
+  with_mock(
+    `autovarCore:::validate_significance_levels` = function(...) 1,
+    `autovarCore:::validate_test_names` = function(...) 2,
+    `autovarCore:::validate_criterion` = function(...) 3,
+    `autovarCore:::validate_imputation_iterations` = function(...) 4,
+    `autovarCore:::validate_measurements_per_day` = function(...) 5,
+    `autovarCore:::validate_selected_column_names` = function(...) 6,
+     expect_equal(autovarCore:::validate_params(testdata_raw_dataframe(), expected_result),
+                  expected_result)
+  )
 })
 
 
 # Assertions
+
+test_that('assert_param_presence requires the presence of a param name', {
+  expect_error(autovarCore:::assert_param_presence('c', c('a', 'b')),
+               "c is a required parameter")
+  expect_error(autovarCore:::assert_param_presence('c', 'a'),
+               "c is a required parameter")
+  # The statement below should not throw an error.
+  expect_null(autovarCore:::assert_param_presence('a', c('a', 'b')))
+  expect_null(autovarCore:::assert_param_presence('c', 'c'))
+})
 
 test_that('assert_param_class asserts that the given param is of the specified class', {
   expected_error_message <- 'Param class should be: list'

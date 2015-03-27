@@ -28,8 +28,7 @@ validate_params <- function(raw_dataframe, params) {
   assert_param_class(params, 'list')
   assert_param_subset(names(params),
                       c(names(returned_params), 'selected_column_names'))
-  if (!('selected_column_names' %in% names(params)))
-    stop("selected_column_names is a required parameter")
+  assert_param_presence('selected_column_names', names(params))
   for (param_name in names(params)) {
     validation_function <- switch(param_name,
        selected_column_names = validate_selected_column_names,
@@ -46,6 +45,12 @@ validate_params <- function(raw_dataframe, params) {
 
 
 # Assertions
+
+assert_param_presence <- function(param_name, given_names_vector) {
+  # precondition: given_names vector is a vector
+  if (!(param_name %in% given_names_vector))
+    stop(paste(param_name, "is a required parameter"))
+}
 
 assert_param_class <- function(param, expected_class) {
   if (class(param) != expected_class)
