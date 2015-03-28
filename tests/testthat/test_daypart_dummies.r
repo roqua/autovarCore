@@ -7,7 +7,7 @@ test_that('daypart_dummies returns NULL for 0 or 1 measurements per day', {
 
 test_that('daypart_dummies calls seasonal_dummy_column correctly', {
   called_count <<- 0
-  column_names <- c('dailymeas_1', 'dailymeas_2' ,'dailymeas_3', 'dailymeas_4')
+  column_names <- c('dailymeas_1', 'dailymeas_2', 'dailymeas_3', 'dailymeas_4')
   expected_result <- matrix(1,
                             nrow = 2,
                             ncol = 4,
