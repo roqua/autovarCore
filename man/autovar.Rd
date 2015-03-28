@@ -25,8 +25,13 @@ JSON dictionary with two elements: \code{dynamic_network} and \code{contemporane
 This function finds the best VAR model for the given data set and parameters, and returns a JSON dictionary with contemporaneous relations, dynamic relations, and a top three for the dynamic relations.
 }
 \examples{
-dataframe <- NULL # some data frame
-autovar(dataframe, list(selected_column_names = c('id'),
+data_matrix <- matrix(nrow = 40, ncol = 3)
+data_matrix[, ] <- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
+while (sum(is.na(data_matrix)) == 0)
+  data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] <- NA
+colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
+dataframe <- as.data.frame(data_matrix)
+autovar(dataframe, list(selected_column_names = c('rumination', 'happiness'),
                         significance_levels = c(0.05, 0.01, 0.005),
                         test_names = c('portmanteau',
                                        'portmanteau_squared',
