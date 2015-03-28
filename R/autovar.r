@@ -34,5 +34,7 @@ autovar <- function(raw_dataframe, params) {
                                    params$measurements_per_day,
                                    params$imputation_iterations)
   ln_data_matrix <- apply_ln_transformation(data_matrix)
+  daypart_dummy_data <- daypart_dummies(nrow(data_matrix),
+                                        params$measurements_per_day)
   "Hello world!"
 }
