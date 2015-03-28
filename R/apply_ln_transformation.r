@@ -4,7 +4,7 @@
 #' @param data_matrix The original data matrix.
 #' @return The log-transformed data matrix.
 #' @examples
-#' data_matrix <- matrix(1:10, dimnames <- list(NULL, 'some_val'))
+#' data_matrix <- matrix(1:10, dimnames = list(NULL, 'some_val'))
 #' data_matrix
 #' autovarCore:::apply_ln_transformation(data_matrix)
 #' @export
