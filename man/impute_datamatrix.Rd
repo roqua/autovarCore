@@ -25,6 +25,6 @@ while (sum(is.na(data_matrix)) == 0)
   data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] <- NA
 colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 data_matrix
-impute_datamatrix(data_matrix, 1, 30)
+autovarCore:::impute_datamatrix(data_matrix, 1, 30)
 }
 

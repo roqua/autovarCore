@@ -12,7 +12,7 @@
 #'   data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] <- NA
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' data_matrix
-#' impute_datamatrix(data_matrix, 1, 30)
+#' autovarCore:::impute_datamatrix(data_matrix, 1, 30)
 #' @export
 impute_datamatrix <- function(data_matrix, measurements_per_day, imputation_iterations) {
   # precondition: imputation_iterations > 0. This precondition is met by validate_params.
