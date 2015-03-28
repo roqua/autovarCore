@@ -2,10 +2,10 @@ context('validate_params')
 
 testdata_data_matrix <- function() {
   data_matrix <- matrix(ncol = 3, nrow = 5)
-  data_matrix[,1] <- 1
-  data_matrix[,2] <- c(1, 3, 5, 6, 7)
-  data_matrix[,3] <- c(1, 0, 1, NA, 1)
-  dimnames(data_matrix)[[2]] <- c('id', 'tijdstip', 'home')
+  data_matrix[, 1] <- 1
+  data_matrix[, 2] <- c(1, 3, 5, 6, 7)
+  data_matrix[, 3] <- c(1, 0, 1, NA, 1)
+  colnames(data_matrix) <- c('id', 'tijdstip', 'home')
   data_matrix
 }
 

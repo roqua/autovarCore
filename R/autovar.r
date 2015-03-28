@@ -13,15 +13,20 @@
 #' @return JSON dictionary with two elements: \code{dynamic_network} and \code{contemporaneous_network}.
 #' @examples
 #' dataframe <- NULL # some data frame
-#' autovar(dataframe,list(selected_column_names=c('id'),
-#'                        significance_levels=c(0.05, 0.01, 0.005),
-#'                        test_names=c('portmanteau',
-#'                                     'portmanteau_squared',
-#'                                     'skewness'),
-#'                        criterion='AIC',
-#'                        imputation_iterations=30,
-#'                        measurements_per_day=1))
+#' autovar(dataframe, list(selected_column_names = c('id'),
+#'                         significance_levels = c(0.05, 0.01, 0.005),
+#'                         test_names = c('portmanteau',
+#'                                        'portmanteau_squared',
+#'                                        'skewness'),
+#'                         criterion = 'AIC',
+#'                         imputation_iterations = 30,
+#'                         measurements_per_day = 1))
 #' @export
 autovar <- function(raw_dataframe, params) {
+  data_matrix <- validate_raw_dataframe(raw_dataframe)
+  params <- validate_params(data_matrix, params)
+  data_matrix <- impute_datamatrix(data_matrix,
+                                   params$measurements_per_day,
+                                   params$imputation_iterations)
   "Hello world!"
 }

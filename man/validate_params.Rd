@@ -27,10 +27,10 @@ This function uses a list of default params that may be overwritten the \code{pa
 \examples{
 # Here we only overwrite the imputation iterations, the rest is left at default.
 data_matrix <- matrix(ncol = 3, nrow = 5)
-data_matrix[,1] <- 1
-data_matrix[,2] <- c(1, 3, 5, 6, 7)
-data_matrix[,3] <- c(1, 0, 1, NA, 1)
-dimnames(data_matrix)[[2]] <- c('id', 'tijdstip', 'home')
+data_matrix[, 1] <- 1
+data_matrix[, 2] <- c(1, 3, 5, 6, 7)
+data_matrix[, 3] <- c(1, 0, 1, NA, 1)
+colnames(data_matrix) <- c('id', 'tijdstip', 'home')
 autovarCore:::validate_params(data_matrix,
                               list(selected_column_names = c('tijdstip', 'home'),
                               imputation_iterations = 20))
