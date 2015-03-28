@@ -1,8 +1,9 @@
 #' Imputes the missing values in the input data
 #'
-#' This function uses \code{\link{Amelia::amelia}} to try and impute missing (\code{NA}) values in the input data set. Amelia averages over five iterations, which is multiplied by the given \code{imputation_iterations} parameter.
+#' This function uses \code{Amelia::amelia} to try and impute missing (\code{NA}) values in the input data set. Amelia averages over five iterations, which is multiplied by the given \code{imputation_iterations} parameter.
 #' @param data_matrix The raw, unimputed data matrix.
 #' @param measurements_per_day The number of measurements per day. This variable is used for adding day part dummy variables to aid the imputation.
+#' @param imputation_iterations The amount of times the Amelia call should be averaged over. The actual number of imputations is five times the value for \code{imputation_iterations}, since Amelia's values are already averaged over five runs.
 #' @return This function returns the modified matrix.
 #' @examples
 #' # create a matrix with some missing values

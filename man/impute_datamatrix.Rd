@@ -10,12 +10,14 @@ impute_datamatrix(data_matrix, measurements_per_day, imputation_iterations)
 \item{data_matrix}{The raw, unimputed data matrix.}
 
 \item{measurements_per_day}{The number of measurements per day. This variable is used for adding day part dummy variables to aid the imputation.}
+
+\item{imputation_iterations}{The amount of times the Amelia call should be averaged over. The actual number of imputations is five times the value for \code{imputation_iterations}, since Amelia's values are already averaged over five runs.}
 }
 \value{
 This function returns the modified matrix.
 }
 \description{
-This function uses \code{\link{Amelia::amelia}} to try and impute missing (\code{NA}) values in the input data set. Amelia averages over five iterations, which is multiplied by the given \code{imputation_iterations} parameter.
+This function uses \code{Amelia::amelia} to try and impute missing (\code{NA}) values in the input data set. Amelia averages over five iterations, which is multiplied by the given \code{imputation_iterations} parameter.
 }
 \examples{
 # create a matrix with some missing values
