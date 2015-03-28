@@ -88,8 +88,35 @@ test_that('impute_datamatrix is able to handle some columns not having missing v
   expect_equal(sum(is.na(imputed_matrix)), 0)
 })
 
-# TODO: use a mock to assert that amelia is called an x amount of times
-
+test_that('impute_datamatrix calls amelia the specified amount of times', {
+  expected_result <- matrix(1,
+                            nrow = 40,
+                            ncol = 3,
+                            dimnames = list(NULL, c('rumination', 'happiness', 'activity')))
+  amelia_counter <<- 0
+  with_mock(
+    `Amelia::amelia` = function(...) {
+      amelia_counter <<- amelia_counter + 1
+      return(list(imputations = 5))
+    },
+    expect_equal(autovarCore:::impute_datamatrix(testdata_matrix_with_missings(),
+                                                 1, 5),
+                                                 expected_result)
+  )
+  expect_equal(amelia_counter, 5)
+  amelia_counter <<- 0
+  with_mock(
+    `Amelia::amelia` = function(...) {
+      amelia_counter <<- amelia_counter + 1
+      return(list(imputations = 5))
+    },
+    expect_equal(autovarCore:::impute_datamatrix(testdata_matrix_with_missings(),
+                                                 1, 1),
+                 expected_result)
+  )
+  expect_equal(amelia_counter, 1)
+  rm(list = 'amelia_counter', pos = '.GlobalEnv')
+})
 
 test_that('has_missings detects missings correctly', {
   expect_equal(autovarCore:::has_missings(testdata_matrix_with_missings()),
