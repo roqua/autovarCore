@@ -1,7 +1,7 @@
 #' Return a JSON array of network data
 #'
 #' This function finds the best VAR model for the given data set and parameters, and returns a JSON dictionary with contemporaneous relations, dynamic relations, and a top three for the dynamic relations.
-#' @param raw_dataframe The raw, unimputed data frame.
+#' @param raw_dataframe The raw, unimputed data frame. This can include columns other than the \code{selected_column_names}, as those may be helpful for the imputation.
 #' @param params A \code{list} with the following named entries: \itemize{
 #' \item \code{selected_column_names} - The endogenous variables in the models, specified as an array of character strings. This argument is required. The selected column names should be a subset of the column names of \code{raw_dataframe}.
 #' \item \code{significance_levels} - An array with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to \code{c(0.05, 0.01, 0.005)}. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.
@@ -33,5 +33,6 @@ autovar <- function(raw_dataframe, params) {
   data_matrix <- impute_datamatrix(data_matrix,
                                    params$measurements_per_day,
                                    params$imputation_iterations)
+  ln_data_matrix <- apply_ln_transformation(data_matrix)
   "Hello world!"
 }

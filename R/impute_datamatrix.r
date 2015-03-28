@@ -25,6 +25,8 @@ impute_datamatrix <- function(data_matrix, measurements_per_day, imputation_iter
                        daypart = rep(0:(measurements_per_day - 1),
                                      nrow(data_matrix))[1:nrow(data_matrix)])
   constant_columns <- NULL
+  if (length(colnames(data_matrix)) != dim(data_matrix)[[2]])
+    stop("Unnamed columns found in matrix")
   for (column_name in colnames(data_matrix))
     if (all(is.na(data_matrix[, column_name])) ||
         var(data_matrix[, column_name], na.rm = TRUE) == 0) {

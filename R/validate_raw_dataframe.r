@@ -4,7 +4,6 @@
 #' @param raw_dataframe The raw, unimputed data frame.
 #' @return A numeric matrix with converted values and names taken from the data frame.
 #' @examples
-#' # Here we only overwrite the imputation iterations, the rest is left at default.
 #' raw_dataframe <- data.frame(id = rep(1, times = 5),
 #'   tijdstip = c(1, 3, 5, 6, 7),
 #'   home = c(1, 0, 0, NA, 1))

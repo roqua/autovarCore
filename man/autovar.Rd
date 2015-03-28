@@ -7,7 +7,7 @@
 autovar(raw_dataframe, params)
 }
 \arguments{
-\item{raw_dataframe}{The raw, unimputed data frame.}
+\item{raw_dataframe}{The raw, unimputed data frame. This can include columns other than the \code{selected_column_names}, as those may be helpful for the imputation.}
 
 \item{params}{A \code{list} with the following named entries: \itemize{
 \item \code{selected_column_names} - The endogenous variables in the models, specified as an array of character strings. This argument is required. The selected column names should be a subset of the column names of \code{raw_dataframe}.
