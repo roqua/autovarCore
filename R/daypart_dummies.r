@@ -10,26 +10,39 @@
 daypart_dummies <- function(number_of_rows, measurements_per_day) {
   if (measurements_per_day == 0 || measurements_per_day == 1)
     return(NULL)
+  seasonal_dummy_columns(out_length = number_of_rows,
+                         period = measurements_per_day,
+                         repetitions = 1,
+                         dummy_name_prefix = 'dailymeas_')
+}
+
+seasonal_dummy_columns <- function(out_length, period, repetitions, dummy_name_prefix) {
+  # This function is used by daypart_dummies() and day_dummies().
   result <- NULL
-  for (column_index in 1:(measurements_per_day - 1))
-    result <- cbind(result, seasonal_dummy_column(number_of_rows,
-                                                  measurements_per_day,
+  for (column_index in 1:(period - 1))
+    result <- cbind(result, seasonal_dummy_column(out_length,
+                                                  period,
+                                                  repetitions,
                                                   column_index - 1))
-  colnames(result) <- dummy_column_names(ncol(result))
+  required_column_count <- min(floor((out_length - 1) / repetitions), period - 1)
+  if (required_column_count < 1)
+    return(NULL)
+  result <- as.matrix(result[, 1:required_column_count])
+  colnames(result) <- dummy_column_names(ncol(result), dummy_name_prefix)
   result
 }
 
-seasonal_dummy_column <- function(out_length, period, offset) {
-  result <- c(rep.int(0, times = offset),
-              1,
-              rep.int(0, times = period - offset - 1))
-  rep.int(result,
-          times = ceiling(out_length / period))[1:out_length]
+seasonal_dummy_column <- function(out_length, period, repetitions, offset) {
+  result <- c(rep.int(0, times = offset * repetitions),
+              rep.int(1, times = repetitions),
+              rep.int(0, times = repetitions * (period - offset - 1)))
+  matrix(rep.int(result,
+                 times = ceiling(out_length / (period * repetitions)))[1:out_length])
 }
 
-dummy_column_names <- function(number_of_columns) {
+dummy_column_names <- function(number_of_columns, dummy_name_prefix) {
   result <- NULL
   for (i in 1:number_of_columns)
-    result <- c(result, paste('dailymeas_', i, sep = ''))
+    result <- c(result, paste(dummy_name_prefix, i, sep = ''))
   result
 }

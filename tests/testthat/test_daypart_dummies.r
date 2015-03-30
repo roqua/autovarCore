@@ -35,8 +35,8 @@ test_that('daypart_dummies calls dummy_column_names correctly', {
   expected_result[, 1] <- c(1, 0, 0, 1, 0)
   expected_result[, 2] <- c(0, 1, 0, 0, 1)
   with_mock(
-    `autovarCore:::dummy_column_names` = function(x) {
-      calling_arg <<- x
+    `autovarCore:::dummy_column_names` = function(...) {
+      calling_arg <<- list(...)
       called_count <<- called_count + 1
       c('a', 'b')
     },
@@ -44,7 +44,7 @@ test_that('daypart_dummies calls dummy_column_names correctly', {
                  expected_result)
   )
   expect_equal(called_count, 1)
-  expect_equal(calling_arg, 2)
+  expect_equal(calling_arg, list(2, 'dailymeas_'))
   rm(list = c('called_count', 'calling_arg'), pos = '.GlobalEnv')
 })
 
@@ -96,10 +96,10 @@ test_that('seasonal_dummy_column works with different periods', {
 
 test_that('dummy_column_names works with just one column', {
   expected_result <- 'dailymeas_1'
-  expect_equal(autovarCore:::dummy_column_names(1), expected_result)
+  expect_equal(autovarCore:::dummy_column_names(1, 'dailymeas_'), expected_result)
 })
 
 test_that('dummy_column_names works with more than just one column', {
   expected_result <- c('dailymeas_1', 'dailymeas_2', 'dailymeas_3')
-  expect_equal(autovarCore:::dummy_column_names(3), expected_result)
+  expect_equal(autovarCore:::dummy_column_names(3, 'dailymeas_'), expected_result)
 })

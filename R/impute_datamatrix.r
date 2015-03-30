@@ -39,7 +39,7 @@ impute_datamatrix <- function(data_matrix, measurements_per_day, imputation_iter
   nominal_variables <- 'daypart'
   if ('daypart' %in% constant_columns)
     nominal_variables <- NULL
-  variable_part <- data_matrix[, !(colnames(data_matrix) %in% constant_columns)]
+  variable_part <- as.matrix(data_matrix[, !(colnames(data_matrix) %in% constant_columns)])
   tolerance <- 0.1
   time_variable_name <- 'time'
   column_numbers_of_lagged_variables <- 1:(ncol(variable_part) - 1 -
