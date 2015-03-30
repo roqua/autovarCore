@@ -40,15 +40,15 @@
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>validate_params(raw_dataframe, params)</div></pre>
+    <pre><div>validate_params(data_matrix, params)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
-      <dt>raw_dataframe</dt>
-      <dd>The raw, unimputed data frame. This parameter is supplied so that we can verify the selected column names.</dd>
+      <dt>data_matrix</dt>
+      <dd>The raw, unimputed data matrix. This parameter is supplied so that we can verify the selected column names.</dd>
       <dt>params</dt>
       <dd>A <code>list</code> with the following named entries: <ul>
-<li> <code>selected_column_names</code> - The endogenous variables in the models, specified as an array of character strings. This argument is required. The selected column names should be a subset of the column names of <code>raw_dataframe</code>.
+<li> <code>selected_column_names</code> - The endogenous variables in the models, specified as an array of character strings. This argument is required. The selected column names should be a subset of the column names of <code>data_matrix</code>.
 </li>
 <li> <code>significance_levels</code> - An array with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to <code>c(0.05, 0.01, 0.005)</code>. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.
 </li>
@@ -81,13 +81,14 @@ A list with augmented params.
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'># Here we only overwrite the imputation iterations, the rest is left at default.
-raw_dataframe &lt;- data.frame(id=rep(1, times=5),
-  tijdstip=c(1, 3, 5, 6, 7),
-  home=c(&#39;yes&#39;, &#39;no&#39;, &#39;yes&#39;, NA, &#39;yes&#39;))
-autovarCore:::validate_params(raw_dataframe,
+    <pre class="examples"><div class='input'>data_matrix &lt;- matrix(ncol = 3, nrow = 5)
+data_matrix[, 1] &lt;- 1
+data_matrix[, 2] &lt;- c(1, 3, 5, 6, 7)
+data_matrix[, 3] &lt;- c(1, 0, 1, NA, 1)
+colnames(data_matrix) &lt;- c(&#39;id&#39;, &#39;tijdstip&#39;, &#39;home&#39;)
+autovarCore:::validate_params(data_matrix,
                               list(selected_column_names = c(&#39;tijdstip&#39;, &#39;home&#39;),
-                              imputation_iterations=20))
+                                   imputation_iterations = 20))
 </div>
 <div class='output'>$significance_levels
 [1] 0.050 0.010 0.005

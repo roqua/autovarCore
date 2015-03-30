@@ -45,7 +45,7 @@
     <h2>Arguments</h2>
     <dl>
       <dt>raw_dataframe</dt>
-      <dd>The raw, unimputed data frame.</dd>
+      <dd>The raw, unimputed data frame. This can include columns other than the <code>selected_column_names</code>, as those may be helpful for the imputation.</dd>
       <dt>params</dt>
       <dd>A <code>list</code> with the following named entries: <ul>
 <li> <code>selected_column_names</code> - The endogenous variables in the models, specified as an array of character strings. This argument is required. The selected column names should be a subset of the column names of <code>raw_dataframe</code>.
@@ -81,15 +81,20 @@ JSON dictionary with two elements: <code>dynamic_network</code> and <code>contem
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>dataframe &lt;- NULL # some data frame
-autovar(dataframe,list(selected_column_names=c(&#39;id&#39;),
-                       significance_levels=c(0.05, 0.01, 0.005),
-                       test_names=c(&#39;portmanteau&#39;,
-                                    &#39;portmanteau_squared&#39;,
-                                    &#39;skewness&#39;),
-                       criterion=&#39;AIC&#39;,
-                       imputation_iterations=30,
-                       measurements_per_day=1))
+    <pre class="examples"><div class='input'>data_matrix &lt;- matrix(nrow = 40, ncol = 3)
+data_matrix[, ] &lt;- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
+while (sum(is.na(data_matrix)) == 0)
+  data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] &lt;- NA
+colnames(data_matrix) &lt;- c(&#39;rumination&#39;, &#39;happiness&#39;, &#39;activity&#39;)
+dataframe &lt;- as.data.frame(data_matrix)
+autovar(dataframe, list(selected_column_names = c(&#39;rumination&#39;, &#39;happiness&#39;),
+                        significance_levels = c(0.05, 0.01, 0.005),
+                        test_names = c(&#39;portmanteau&#39;,
+                                       &#39;portmanteau_squared&#39;,
+                                       &#39;skewness&#39;),
+                        criterion = &#39;AIC&#39;,
+                        imputation_iterations = 30,
+                        measurements_per_day = 1))
 </div>
 <div class='output'>[1] &quot;Hello world!&quot;
 </div></pre>

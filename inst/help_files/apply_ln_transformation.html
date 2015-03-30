@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>apply_ln_transformation. autovarCore 1.0-0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">autovarCore 1.0-0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Applies the natural logarithm to the data set</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>apply_ln_transformation(data_matrix)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>data_matrix</dt>
+      <dd>The original data matrix.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+The log-transformed data matrix.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>This applies the ln function columnwise to the given input matrix and returns the modified matrix. If necessary, columns undergo a linear translation to ensure that all resulting values are >= 0.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>data_matrix &lt;- matrix(1:10, dimnames = list(NULL, &#39;some_val&#39;))
+data_matrix
+</div>
+<div class='output'>      some_val
+ [1,]        1
+ [2,]        2
+ [3,]        3
+ [4,]        4
+ [5,]        5
+ [6,]        6
+ [7,]        7
+ [8,]        8
+ [9,]        9
+[10,]       10
+</div>
+<div class='input'>autovarCore:::apply_ln_transformation(data_matrix)
+</div>
+<div class='output'>       some_val
+ [1,] 0.0000000
+ [2,] 0.6931472
+ [3,] 1.0986123
+ [4,] 1.3862944
+ [5,] 1.6094379
+ [6,] 1.7917595
+ [7,] 1.9459101
+ [8,] 2.0794415
+ [9,] 2.1972246
+[10,] 2.3025851
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>apply_ln_transformation</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
