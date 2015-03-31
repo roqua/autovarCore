@@ -15,7 +15,7 @@ needs_trend(endo_matrix, lag)
 A boolean indicating whether a trend is required for the specified VAR model.
 }
 \description{
-This function uses the Phillips-Perron Unit Root Test to determine whether a trend is required for a VAR model based on the given matrix of endogenous variables and the given lag. All variables are assessed individually. This function returns \text{TRUE} if any of the endogenous variables requires a trend.
+This function uses the Phillips-Perron Unit Root Test to determine whether a trend is required for a VAR model based on the given matrix of endogenous variables and the given lag. All variables are assessed individually. This function returns \code{TRUE} if any of the endogenous variables requires a trend.
 }
 \examples{
 data_matrix <- matrix(nrow = 40, ncol = 3)

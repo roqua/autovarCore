@@ -1,6 +1,6 @@
 #' Determines if a trend is required for the specified VAR model
 #'
-#' This function uses the Phillips-Perron Unit Root Test to determine whether a trend is required for a VAR model based on the given matrix of endogenous variables and the given lag. All variables are assessed individually. This function returns \text{TRUE} if any of the endogenous variables requires a trend.
+#' This function uses the Phillips-Perron Unit Root Test to determine whether a trend is required for a VAR model based on the given matrix of endogenous variables and the given lag. All variables are assessed individually. This function returns \code{TRUE} if any of the endogenous variables requires a trend.
 #' @param endo_matrix The matrix of endogenous variables in the model.
 #' @param lag An integer specifying the lag length of the model.
 #' @return A boolean indicating whether a trend is required for the specified VAR model.

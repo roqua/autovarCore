@@ -40,5 +40,6 @@ autovar <- function(raw_dataframe, params) {
   day_dummy_data <- day_dummies(number_of_measurements,
                                 params$measurements_per_day)
   trend_column_matrix <- trend_columns(number_of_measurements)
+
   "Hello world!"
 }
