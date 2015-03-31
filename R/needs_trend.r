@@ -30,7 +30,7 @@ column_needs_trend <- function(endo_column, lag) {
     return(FALSE)
   five_crit_val <- pp_summary@cval[colnames(pp_summary@cval) == '5pct']
   teststat <- pp_summary@teststat
-  # If the p-level of trend is significant AND the Z(t) value is smaller
-  # than the 5% critical value, then the variable requires a trend.
+  # If the p-level of trend is significant AND the Z(t) value is less than
+  # or equal to the 5% critical value, then the variable requires a trend.
   teststat <= five_crit_val
 }
