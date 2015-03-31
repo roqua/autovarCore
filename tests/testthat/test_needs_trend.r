@@ -114,7 +114,7 @@ test_that('column_needs_trend calls p_level_for_trend_significance', {
       p_level_for_trend_significance_count <<- p_level_for_trend_significance_count + 1
       0.05
     },
-    expect_true(autovarCore:::column_needs_trend((1:40) / 3 + 3 * rnorm(40), 1))
+    expect_true(autovarCore:::column_needs_trend(testdata_matrix_with_trend()[, 2], 1))
   )
   expect_equal(p_level_for_trend_significance_count, 1)
   rm(list = 'p_level_for_trend_significance_count', pos = '.GlobalEnv')
