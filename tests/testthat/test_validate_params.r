@@ -76,10 +76,14 @@ test_that('validate_selected_column_names accepts only names of columns in the d
   expect_error(autovarCore:::validate_selected_column_names(data_matrix,
                                                             c('tijdstip', 'unknown')),
                "Invalid selected column name: unknown")
+  # Below goes wrong because the minimum required number of columns is 2.
+  expect_error(autovarCore:::validate_selected_column_names(data_matrix,
+                                                            'tijdstip'),
+               "Need at least two selected column names")
   # The statements below should not throw errors.
   expect_equal(autovarCore:::validate_selected_column_names(data_matrix,
-                                                            'tijdstip'),
-               'tijdstip')
+                                                            c('tijdstip', 'home')),
+               c('tijdstip', 'home'))
   expect_equal(autovarCore:::validate_selected_column_names(data_matrix,
                                                             c('tijdstip', 'home', 'id')),
                c('tijdstip', 'home', 'id'))

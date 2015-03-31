@@ -40,6 +40,28 @@ autovar <- function(raw_dataframe, params) {
   day_dummy_data <- day_dummies(number_of_measurements,
                                 params$measurements_per_day)
   trend_column_matrix <- trend_columns(number_of_measurements)
-
+  significance_buckets <- c(params$significance_levels, 0)
+  best_model <- list(model_score = Inf, bucket = 0)
+  for (use_logtransform in c(FALSE, TRUE)) {
+    if (use_logtransform)
+      endo_matrix <- ln_data_matrix[, params$selected_column_names]
+    else
+      endo_matrix <- data_matrix[, params$selected_column_names]
+    for (use_daydummies in c(FALSE, TRUE)) {
+      if (use_daydummies) {
+        if (is.null(day_dummy_data)) next
+        seasonal_dummies <- cbind(daypart_dummy_data, day_dummy_data)
+      } else {
+        seasonal_dummies <- daypart_dummy_data
+      }
+      for (lag in 1:2) {
+        if (needs_trend(endo_matrix, lag))
+          exo_matrix <- cbind(seasonal_dummies, trend_column_matrix)
+        else
+          exo_matrix <- seasonal_dummies
+        # TODO: add code
+      }
+    }
+  }
   "Hello world!"
 }

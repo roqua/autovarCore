@@ -53,6 +53,8 @@ validate_selected_column_names <- function(data_matrix, given_param) {
   assert_param_subset(given_param,
                       accepted_column_names,
                       "Invalid selected column name:")
+  if (length(given_param) < 2)
+    stop("Need at least two selected column names")
   given_param
 }
 

@@ -34,7 +34,7 @@ test_that('impute_datamatrix returns a matrix of the correct dimensions', {
 
 test_that('impute_datamatrix works for a column with just one value not NA', {
   input_matrix <- testdata_matrix_with_missings()
-  input_matrix[2,3] <- 27
+  input_matrix[2, 3] <- 27
   # Assert that there actually are missings:
   expect_more_than(sum(is.na(input_matrix)), 0)
   expect_equal(sum(is.na(autovarCore:::impute_datamatrix(input_matrix,
