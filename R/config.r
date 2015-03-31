@@ -19,3 +19,7 @@ supported_criteria <- function() {
   c('AIC',
     'BIC')
 }
+
+p_level_for_trend_significance <- function() {
+  0.05
+}
