@@ -29,6 +29,7 @@ impute_datamatrix <- function(data_matrix, measurements_per_day, imputation_iter
     stop("Unnamed columns found in matrix")
   for (column_name in colnames(data_matrix))
     if (all(is.na(data_matrix[, column_name])) ||
+        is.na(var(data_matrix[, column_name], na.rm = TRUE)) ||
         var(data_matrix[, column_name], na.rm = TRUE) == 0) {
       constant_columns <- c(constant_columns, column_name)
       # If there is no variance but some rows still have a

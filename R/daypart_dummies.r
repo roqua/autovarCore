@@ -19,15 +19,16 @@ daypart_dummies <- function(number_of_rows, measurements_per_day) {
 seasonal_dummy_columns <- function(out_length, period, repetitions, dummy_name_prefix) {
   # This function is used by daypart_dummies() and day_dummies().
   result <- NULL
-  for (column_index in 1:(period - 1))
+  required_column_count <- min(floor((out_length - 1) / repetitions), period - 1)
+  if (required_column_count < 1)
+    return(NULL)
+  for (column_index in 1:required_column_count)
     result <- cbind(result, seasonal_dummy_column(out_length,
                                                   period,
                                                   repetitions,
                                                   column_index - 1))
-  required_column_count <- min(floor((out_length - 1) / repetitions), period - 1)
-  if (required_column_count < 1)
-    return(NULL)
-  result <- as.matrix(result[, 1:required_column_count])
+
+  result <- as.matrix(result)
   colnames(result) <- dummy_column_names(ncol(result), dummy_name_prefix)
   result
 }
@@ -36,8 +37,8 @@ seasonal_dummy_column <- function(out_length, period, repetitions, offset) {
   result <- c(rep.int(0, times = offset * repetitions),
               rep.int(1, times = repetitions),
               rep.int(0, times = repetitions * (period - offset - 1)))
-  matrix(rep.int(result,
-                 times = ceiling(out_length / (period * repetitions)))[1:out_length])
+  rep.int(result,
+          times = ceiling(out_length / (period * repetitions)))[1:out_length]
 }
 
 dummy_column_names <- function(number_of_columns, dummy_name_prefix) {
