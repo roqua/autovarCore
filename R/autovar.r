@@ -40,6 +40,8 @@ autovar <- function(raw_dataframe, params) {
   day_dummy_data <- day_dummies(number_of_measurements,
                                 params$measurements_per_day)
   trend_column_matrix <- trend_columns(number_of_measurements)
+  number_of_endo_vars <- length(params$selected_column_names)
+  all_outlier_masks <- 0:(2^(number_of_endo_vars) - 1)
   significance_buckets <- c(params$significance_levels, 0)
   best_model <- list(model_score = Inf, bucket = 0)
   for (use_logtransform in c(FALSE, TRUE)) {
@@ -63,6 +65,8 @@ autovar <- function(raw_dataframe, params) {
                                                                exo_matrix,
                                                                lag)),
                                              number_of_measurements)
+        #outlier_masks <- select_valid_masks(all_outlier_masks,
+        #                                    invalid_mask(outlier_dummies))
         # TODO: add code
       }
     }
