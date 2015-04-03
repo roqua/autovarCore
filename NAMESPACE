@@ -5,8 +5,6 @@ export(rcpp_hello_world)
 importFrom(Rcpp, evalCpp)
 importFrom(Amelia, amelia)
 importFrom(jsonlite, toJSON)
-importFrom(urca, ur.pp) # and also urca::summary
+importFrom(urca, ur.pp)
 importFrom(vars, VAR)
 importFrom(vars, restrict)
-importFrom(vars, residuals)
-
