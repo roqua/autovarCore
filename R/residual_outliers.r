@@ -23,7 +23,7 @@ residual_outliers <- function(resid_matrix, number_of_rows) {
                    dimnames = list(NULL, colnames(resid_matrix)))
   for (column_index in 1:ncol(resid_matrix)) {
     result[, column_index] <- residual_outliers_column(resid_matrix[, column_index],
-                                                      number_of_rows)
+                                                       number_of_rows)
   }
   result
 }

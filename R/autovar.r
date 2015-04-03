@@ -59,6 +59,10 @@ autovar <- function(raw_dataframe, params) {
           exo_matrix <- cbind(seasonal_dummies, trend_column_matrix)
         else
           exo_matrix <- seasonal_dummies
+        outlier_dummies <- residual_outliers(residuals(run_var(endo_matrix,
+                                                               exo_matrix,
+                                                               lag)),
+                                             number_of_measurements)
         # TODO: add code
       }
     }
