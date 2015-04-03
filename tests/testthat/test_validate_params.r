@@ -141,7 +141,7 @@ test_that('validate_imputation_iterations accepts only an integer in range', {
                "Given param cannot be NULL")
   expect_error(autovarCore:::validate_imputation_iterations(data_matrix, c(2, 3)),
                "Length of given param is not 1:")
-  expect_error(autovarCore:::validate_imputation_iterations(data_matrix, list(a=2, b=3)),
+  expect_error(autovarCore:::validate_imputation_iterations(data_matrix, list(a = 2, b = 3)),
                "Length of given param is not 1:")
   expect_error(autovarCore:::validate_imputation_iterations(data_matrix, 3.5),
                "Given param is not an integer:")
@@ -163,7 +163,7 @@ test_that('validate_measurements_per_day accepts only an integer in range', {
                "Given param cannot be NULL")
   expect_error(autovarCore:::validate_measurements_per_day(data_matrix, c(2, 3)),
                "Length of given param is not 1:")
-  expect_error(autovarCore:::validate_measurements_per_day(data_matrix, list(a=2, b=3)),
+  expect_error(autovarCore:::validate_measurements_per_day(data_matrix, list(a = 2, b = 3)),
                "Length of given param is not 1:")
   expect_error(autovarCore:::validate_measurements_per_day(data_matrix, 3.5),
                "Given param is not an integer:")

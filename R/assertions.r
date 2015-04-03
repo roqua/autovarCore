@@ -41,7 +41,7 @@ assert_param_range <- function(given_param, min, max, param_name) {
     stop(paste("The ",
                param_name,
                " has to be an integer in range ",
-               min, "-", max, sep=""))
+               min, "-", max, sep = ""))
 }
 
 assert_param_nrow <- function(data_frame, minimum = NULL, maximum = NULL) {

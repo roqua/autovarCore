@@ -23,3 +23,11 @@ supported_criteria <- function() {
 p_level_for_trend_significance <- function() {
   0.05
 }
+
+std_factor_for_normal_outliers <- function() {
+  2.5
+}
+
+std_factor_for_squared_outliers <- function() {
+  2.5
+}
