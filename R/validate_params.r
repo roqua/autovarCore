@@ -55,6 +55,8 @@ validate_selected_column_names <- function(data_matrix, given_param) {
                       "Invalid selected column name:")
   if (length(given_param) < 2)
     stop("Need at least two selected column names")
+  if (length(given_param) > 31)
+    stop("Need at most 31 selected column names")
   given_param
 }
 

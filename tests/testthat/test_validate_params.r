@@ -80,6 +80,14 @@ test_that('validate_selected_column_names accepts only names of columns in the d
   expect_error(autovarCore:::validate_selected_column_names(data_matrix,
                                                             'tijdstip'),
                "Need at least two selected column names")
+  col_names <- c('aa', 'ab', 'ac', 'ad', 'ae', 'af', 'ag', 'ah',
+                 'ai', 'aj', 'ak', 'al', 'am', 'an', 'ao', 'ap',
+                 'aq', 'ar', 'as', 'at', 'au', 'av', 'aw', 'ax',
+                 'ay', 'az', 'ba', 'bb', 'bc', 'bd', 'be', 'bf')
+  data_matrix2 <- matrix(NA, nrow = 1, ncol = 32, dimnames = list(NULL, col_names))
+  expect_error(autovarCore:::validate_selected_column_names(data_matrix2,
+                                                            col_names),
+               "Need at most 31 selected column names")
   # The statements below should not throw errors.
   expect_equal(autovarCore:::validate_selected_column_names(data_matrix,
                                                             c('tijdstip', 'home')),

@@ -65,8 +65,8 @@ autovar <- function(raw_dataframe, params) {
                                                                exo_matrix,
                                                                lag)),
                                              number_of_measurements)
-        #outlier_masks <- select_valid_masks(all_outlier_masks,
-        #                                    invalid_mask(outlier_dummies))
+        outlier_masks <- select_valid_masks(all_outlier_masks,
+                                            invalid_mask(outlier_dummies))
         # TODO: add code
       }
     }
