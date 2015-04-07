@@ -91,8 +91,8 @@ setup_cluster <- function() {
 }
 
 evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_dummies) {
-  selected_columns <- selected_columns(outlier_dummies, outlier_mask)
-  exploded_outlier_dummies <- explode_dummies(outlier_dummies[, selected_columns])
+  selected_outlier_columns <- selected_columns(outlier_dummies, outlier_mask)
+  exploded_outlier_dummies <- explode_dummies(outlier_dummies[, selected_outlier_columns])
   exo_matrix <- cbind(exo_matrix, exploded_outlier_dummies)
   varest <- run_var(endo_matrix, exo_matrix, lag)
   NULL
