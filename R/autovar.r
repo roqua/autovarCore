@@ -41,6 +41,8 @@ autovar <- function(raw_dataframe, params) {
                                 params$measurements_per_day)
   trend_column_matrix <- trend_columns(number_of_measurements)
   number_of_endo_vars <- length(params$selected_column_names)
+  cluster <- makeCluster(detectCores(), type = "PSOCK") # try with methods=false and useXDR = FALSE.
+  clusterCall(cluster, setup_cluster)
   all_outlier_masks <- 0:(2^(number_of_endo_vars) - 1)
   significance_buckets <- c(params$significance_levels, 0)
   best_model <- list(model_score = Inf, bucket = 0)
@@ -67,9 +69,33 @@ autovar <- function(raw_dataframe, params) {
                                              number_of_measurements)
         outlier_masks <- select_valid_masks(all_outlier_masks,
                                             invalid_mask(outlier_dummies))
+        model_vector <- clusterMap(cluster, evaluate_model, outlier_masks,
+                                   MoreArgs = list(endo_matrix = endo_matrix,
+                                                   exo_matrix = exo_matrix,
+                                                   lag = lag,
+                                                   outlier_dummies = outlier_dummies),
+                                   SIMPLIFY = FALSE, USE.NAMES = FALSE)
+        #print(model_vector)
+        # for each model in model_vector, best <- compete(best, model)
+        # next if the model is NULL
         # TODO: add code
       }
     }
   }
+  stopCluster(cluster)
   "Hello world!"
+}
+
+setup_cluster <- function() {
+  # library('vars')
+}
+
+evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_dummies) {
+  selected_columns <- selected_columns(outlier_dummies, outlier_mask)
+  exploded_outlier_dummies <- explode_dummies(outlier_dummies[, selected_columns])
+  exo_matrix <- cbind(exo_matrix, exploded_outlier_dummies)
+  varest <- run_var(endo_matrix, exo_matrix, lag)
+  NULL
+  # TODO: run the tests on the threads and also calculate the stability and significance level
+  # TODO: return NULL if the model is not stable
 }

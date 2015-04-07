@@ -12,6 +12,7 @@ License: Unlimited
 Depends:
     Amelia,
     jsonlite,
+    parallel,
     urca,
     vars
 Suggests:
