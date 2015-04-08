@@ -11,10 +11,21 @@ testdata_raw_dataframe <- function() {
 
 
 test_that('autovar function returns hello world', {
-  expect_equal(autovar(testdata_raw_dataframe(),
-                       list(selected_column_names = c('rumination',
-                                                      'happiness',
-                                                      'activity'),
-                            imputation_iterations = 1)),
-               "Hello world!")
+  with_mock(
+    `parallel::clusterMap` = function(cluster, ...) {
+      mapply(...)
+    },
+    `parallel::makeCluster` = function(...) {
+      NULL
+    },
+    `parallel::stopCluster` = function(...) {
+      NULL
+    },
+    expect_equal(autovar(testdata_raw_dataframe(),
+                         list(selected_column_names = c('rumination',
+                                                        'happiness',
+                                                        'activity'),
+                              imputation_iterations = 1)),
+                 "Hello world!")
+  )
 })
