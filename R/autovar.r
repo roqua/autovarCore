@@ -73,7 +73,8 @@ autovar <- function(raw_dataframe, params) {
                                    MoreArgs = list(endo_matrix = endo_matrix,
                                                    exo_matrix = exo_matrix,
                                                    lag = lag,
-                                                   outlier_dummies = outlier_dummies),
+                                                   outlier_dummies = outlier_dummies
+                                                   test_names = params$test_names),
                                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
         # for each model in model_vector, best <- compete(best, model)
         # next if the model is NULL
@@ -89,7 +90,7 @@ setup_cluster <- function() {
   # library('vars')
 }
 
-evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_dummies) {
+evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_dummies, test_names) {
   if (outlier_mask != 0) {
     selected_column_indices <- selected_columns(outlier_mask)
     exploded_outlier_dummies <- explode_dummies(as.matrix(outlier_dummies[, selected_column_indices]))
@@ -97,6 +98,8 @@ evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_d
   }
   varest <- run_var(endo_matrix, exo_matrix, lag)
   NULL
+  # TODO: check stability
+  # TODO: run tests and return all test values or just the minimum
   # TODO: run the tests on the threads and also calculate the stability and significance level
   # TODO: return NULL if the model is not stable
 }
