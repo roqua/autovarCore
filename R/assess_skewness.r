@@ -10,5 +10,45 @@
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore:::assess_skewness(varest)
 assess_skewness <- function(varest) {
-  0.06
+  resids <- resid(varest)
+  nr_cols <- ncol(resids)
+  nr_rows <- nrow(resids)
+  if (is.null(nr_cols) || nr_cols < 1 || is.null(nr_rows) || nr_rows < 1)
+    stop("No residuals found")
+  minimum_p_level_skew <- Inf
+  for (column_index in 1:nr_cols) {
+    column_resids <- resids[, column_index]
+    coef_of_skewness <- coefficient_of_skewness(column_resids)
+    z_skew <- z_skewness(coef_of_skewness, nr_rows)
+    p_level_skew <- 2 - 2 * pnorm(abs(z_skew))
+    if (p_level_skew < minimum_p_level_skew)
+      minimum_p_level_skew <- p_level_skew
+  }
+  minimum_p_level_skew
+}
+
+z_skewness <- function(g1, n) {
+  Y <- g1 * sqrt((n + 1) * (n + 3)/(6 * (n - 2)))
+  B2g1 <- (3 * (n^2 + 27 * n -70) * (n + 1) * (n + 3))/((n - 2) * (n + 5) * (n + 7) * (n + 9))
+  W2 <- -1 + sqrt(2 * (B2g1 - 1))
+  a <- sqrt(2/(W2 - 1))
+  Z1 <- (1/(sqrt(log(sqrt(W2))))) * log((Y/a) + sqrt((Y/a)^2 + 1))
+  Z1
+}
+
+coefficient_of_skewness <- function(x) {
+  m3 <- rth_moment_about_the_mean(x, 3)
+  m2 <- rth_moment_about_the_mean(x, 2)
+  m3 * m2^(-3/2)
+}
+
+rth_moment_about_the_mean <- function(x, r) {
+  # This function is also used by assess_kurtosis.
+  mu <- mean(x)
+  n <- length(x)
+  tsum <- 0
+  for (i in 1:n)
+    tsum <- tsum + (x[[i]] - mu)^r
+  tsum <- (1/n)*tsum
+  tsum
 }
