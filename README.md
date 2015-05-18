@@ -3,7 +3,7 @@
 AutovarCore
 ===========
 
-AutovarCore generates networks given a data frame. AutovarCore is a simplified version of the [Autovar](https://github.com/roqua/autovar).
+AutovarCore generates networks given a data frame. AutovarCore is a simplified version of [Autovar](https://github.com/roqua/autovar).
 
 To install, type the following:
 
