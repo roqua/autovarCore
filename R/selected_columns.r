@@ -1,6 +1,6 @@
-#' Convert an outlier_mask to a list of column indices
+#' Convert an outlier_mask to a vector of column indices
 #'
-#' This function returns an ordered list of all the 1-toggled bits in the outlier_mask offset by 1.
+#' This function returns an ordered vector of all the 1-toggled bits in the outlier_mask offset by 1.
 #' @param outlier_mask An integer representing the outlier mask.
 #' @return A vector of column indices corresponding to the outlier mask.
 #' @examples

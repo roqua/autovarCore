@@ -14,6 +14,14 @@ test_that('supported_test_names returns a character vector', {
   expect_more_than(length(supported_test_names), 3)
 })
 
+test_that('run_test accepts exactly the correct test_names', {
+  test_names <- autovarCore:::supported_test_names()
+  for (test_name in test_names)
+    expect_false(is.null(autovarCore:::run_test(test_name)))
+  expect_error(autovarCore:::run_test(), 'argument .* is missing')
+  expect_error(autovarCore:::run_test('asdf'), 'Unknown test')
+})
+
 test_that('supported_criteria returns a character vector', {
   supported_criteria <- autovarCore:::supported_criteria()
   expect_equal(class(supported_criteria), 'character')

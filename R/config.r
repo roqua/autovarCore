@@ -15,6 +15,17 @@ supported_test_names <- function() {
     'kurtosis')
 }
 
+run_test <- function(test_name) {
+  test_function <- switch(test_name,
+         'portmanteau' = autovarCore:::assess_portmanteau,
+         'portmanteau_squared' = autovarCore:::assess_portmanteau_squared,
+         'skewness' = autovarCore:::assess_skewness,
+         'kurtosis' = autovarCore:::assess_kurtosis)
+  if (is.null(test_function))
+    stop(paste("Unknown test:", test_name))
+  test_function
+}
+
 supported_criteria <- function() {
   c('AIC',
     'BIC')
