@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>needs_trend. autovarCore 1.0-0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">autovarCore 1.0-0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Determines if a trend is required for the specified VAR model</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>needs_trend(endo_matrix, lag)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>endo_matrix</dt>
+      <dd>The matrix of endogenous variables in the model.</dd>
+      <dt>lag</dt>
+      <dd>An integer specifying the lag length of the model.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A boolean indicating whether a trend is required for the specified VAR model.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>This function uses the Phillips-Perron Unit Root Test to determine whether a trend is required for a VAR model based on the given matrix of endogenous variables and the given lag. All variables are assessed individually. This function returns <code>TRUE</code> if any of the endogenous variables requires a trend.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>data_matrix &lt;- matrix(nrow = 40, ncol = 3)
+data_matrix[, ] &lt;- runif(ncol(data_matrix) * nrow(data_matrix), 1, 10)
+data_matrix[, 3] &lt;- (1:40) + rnorm(40)
+colnames(data_matrix) &lt;- c(&#39;rumination&#39;, &#39;happiness&#39;, &#39;activity&#39;)
+data_matrix
+</div>
+<div class='output'>      rumination happiness   activity
+ [1,]   9.969246  7.825360  1.2686965
+ [2,]   8.877780  6.373284  0.8883082
+ [3,]   8.873719  8.072622  3.3403351
+ [4,]   8.765063  4.082165  3.9844119
+ [5,]   1.811389  4.791480  2.7686792
+ [6,]   7.773685  9.416459  6.9037123
+ [7,]   2.611017  7.230094  6.8435467
+ [8,]   9.262844  4.320071  7.8035818
+ [9,]   8.335479  2.583537 12.6823449
+[10,]   1.608783  9.354466 11.1634079
+[11,]   7.698417  2.808788 11.7995252
+[12,]   7.210491  2.686524 12.6376221
+[13,]   7.813438  2.631503 11.4280398
+[14,]   8.227214  2.193846 14.9884773
+[15,]   7.560767  9.273957 14.2210217
+[16,]   9.653240  3.971879 17.0353624
+[17,]   9.749304  5.243229 17.7497372
+[18,]   3.621913  8.055430 18.2777680
+[19,]   1.670798  6.595494 19.0691392
+[20,]   9.690675  5.703757 20.7141323
+[21,]   4.022943  8.707915 20.0956566
+[22,]   4.523258  7.065698 22.2973433
+[23,]   5.433553  8.060592 22.2550140
+[24,]   1.405765  2.965617 23.0062951
+[25,]   8.663509  4.487756 26.0201055
+[26,]   4.103328  2.781567 24.9587397
+[27,]   6.114978  7.737100 27.0319226
+[28,]   6.403425  5.959759 27.4891187
+[29,]   5.212242  7.135493 30.7294727
+[30,]   9.564236  5.019223 32.0729033
+[31,]   1.350314  7.048481 28.5278385
+[32,]   5.054573  1.972316 30.8406711
+[33,]   6.422244  5.022619 33.0568896
+[34,]   6.674945  1.398518 34.4836191
+[35,]   7.400114  2.865018 35.2976881
+[36,]   3.519497  5.640863 38.0786508
+[37,]   6.683274  5.329364 37.9248468
+[38,]   3.588803  9.380443 37.5160229
+[39,]   7.791127  1.341203 38.6006760
+[40,]   9.777340  9.673170 39.3133063
+</div>
+<div class='input'>autovarCore:::needs_trend(data_matrix, 1)
+</div>
+<div class='output'>[1] TRUE
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>needs_trend</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

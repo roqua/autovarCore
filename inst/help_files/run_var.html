@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>run_var. autovarCore 1.0-0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">autovarCore 1.0-0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Calculate the VAR model and apply restrictions</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>run_var(endo_matrix, exo_matrix, lag)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>endo_matrix</dt>
+      <dd>A numeric matrix of endogenous data.</dd>
+      <dt>exo_matrix</dt>
+      <dd>Either <code>NULL</code> or a numeric matrix of exogenous data.</dd>
+      <dt>lag</dt>
+      <dd>A nonnegative integer specifying the lag length of the model. Specifying 0 for the lag results in calculating a lag 1 model with all lag-1 terms restricted.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A <code>varest</code> object with the VAR estimation result.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>This function calls the <code>vars::var</code> function to calculate the VAR model and applies restrictions if needed. We set the intercept to 1 for restricted equations because calculations go wrong otherwise (this is a bug in the vars library).</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>endo_matrix &lt;- matrix(rnorm(120), ncol = 2, nrow = 60, dimnames = list(NULL, c(&quot;rumination&quot;, &quot;activity&quot;)))
+autovarCore:::run_var(endo_matrix, NULL, 1)
+</div>
+<div class='output'>
+VAR Estimation Results:
+======================= 
+
+Estimated coefficients for equation rumination: 
+=============================================== 
+Call:
+rumination = rumination.l1 + activity.l1 + const 
+
+rumination.l1   activity.l1         const 
+  -0.01523649    0.04524457   -0.07377563 
+
+
+Estimated coefficients for equation activity: 
+============================================= 
+Call:
+activity = rumination.l1 + activity.l1 + const 
+
+rumination.l1   activity.l1         const 
+   0.16024982   -0.01346516    0.11744286 
+
+
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>run_var</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

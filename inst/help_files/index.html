@@ -37,9 +37,11 @@
       
       <div class="row">
   <div class="span8">
-    <h1>AutovarCore</h1>
+    <p><a href="https://circleci.com/gh/roqua/autovarCore"><img src="https://circleci.com/gh/roqua/autovarCore.png?style=shield&amp;circle-token=6934b57a8e350e98f46f7798cf9347dce3c0d74f" alt="Circle CI"/></a></p>
 
-<p>AutovarCore generates networks given a data frame. AutovarCore is a simplified version of the <a href="https://github.com/roqua/autovar">Autovar</a>.</p>
+<h1>AutovarCore</h1>
+
+<p>AutovarCore generates networks given a data frame. AutovarCore is a simplified version of <a href="https://github.com/roqua/autovar">Autovar</a>.</p>
 
 <p>To install, type the following:</p>
 
@@ -62,6 +64,18 @@ install_github(&#39;roqua/autovarCore&#39;)
         <code><a href="apply_ln_transformation.html">apply_ln_transformation</a></code><br />Applies the natural logarithm to the data set</li>
             
       <li>
+        <code><a href="assess_kurtosis.html">assess_kurtosis</a></code><br />Tests the kurtosis of a VAR model</li>
+            
+      <li>
+        <code><a href="assess_portmanteau.html">assess_portmanteau</a></code><br />Tests the white noise assumption for a VAR model using a portmanteau test on the residuals</li>
+            
+      <li>
+        <code><a href="assess_portmanteau_squared.html">assess_portmanteau_squared</a></code><br />Tests the homeskedasticity assumption for a VAR model using a portmanteau test on the squared residuals</li>
+            
+      <li>
+        <code><a href="assess_skewness.html">assess_skewness</a></code><br />Tests the skewness of a VAR model</li>
+            
+      <li>
         <code><a href="autovar.html">autovar</a></code><br />Return a JSON array of network data</li>
             
       <li>
@@ -69,13 +83,43 @@ install_github(&#39;roqua/autovarCore&#39;)
 </li>
             
       <li>
+        <code><a href="day_dummies.html">day_dummies</a></code><br />Calculate day dummy variables</li>
+            
+      <li>
         <code><a href="daypart_dummies.html">daypart_dummies</a></code><br />Calculate day-part dummy variables</li>
+            
+      <li>
+        <code><a href="explode_dummies.html">explode_dummies</a></code><br />Explode dummies columns into separate dummy variables</li>
             
       <li>
         <code><a href="impute_datamatrix.html">impute_datamatrix</a></code><br />Imputes the missing values in the input data</li>
             
       <li>
+        <code><a href="invalid_mask.html">invalid_mask</a></code><br />Calculate a bit mask to identify invalid outlier dummies</li>
+            
+      <li>
+        <code><a href="model_is_stable.html">model_is_stable</a></code><br />Eigenvalue stability condition checking</li>
+            
+      <li>
+        <code><a href="needs_trend.html">needs_trend</a></code><br />Determines if a trend is required for the specified VAR model</li>
+            
+      <li>
         <code><a href="rcpp_hello_world.html">rcpp_hello_world</a></code><br />Simple function using Rcpp</li>
+            
+      <li>
+        <code><a href="residual_outliers.html">residual_outliers</a></code><br />Calculate dummy variables to mask residual outliers</li>
+            
+      <li>
+        <code><a href="run_tests.html">run_tests</a></code><br />Execute a series of model validity assumptions</li>
+            
+      <li>
+        <code><a href="run_var.html">run_var</a></code><br />Calculate the VAR model and apply restrictions</li>
+            
+      <li>
+        <code><a href="select_valid_masks.html">select_valid_masks</a></code><br />Select and return valid dummy outlier masks</li>
+            
+      <li>
+        <code><a href="selected_columns.html">selected_columns</a></code><br />Convert an outlier_mask to a vector of column indices</li>
             
       <li>
         <code><a href="trend_columns.html">trend_columns</a></code><br />Construct linear and quadratic trend columns</li>
@@ -93,7 +137,7 @@ install_github(&#39;roqua/autovarCore&#39;)
         
     <h2>Dependencies</h2>
     <ul>
-      <li><strong>Depends</strong>: Amelia, jsonlite, urca, vars</li>
+      <li><strong>Depends</strong>: Amelia, jsonlite, parallel, urca, vars</li>
       <li><strong>Imports</strong>: Rcpp</li>
       <li><strong>Suggests</strong>: testthat, roxygen2</li>
       <li><strong>Extends</strong>: </li>

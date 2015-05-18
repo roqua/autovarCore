@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>explode_dummies. autovarCore 1.0-0</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">autovarCore 1.0-0</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Explode dummies columns into separate dummy variables</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><div>explode_dummies(outlier_dummies)</div></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>outlier_dummies</dt>
+      <dd>A matrix of outlier dummy variables in columns.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A matrix with dummy variables in columns, each having one nonzero index. The columns are named <code>outlier_x</code>, with x being the 1-based row index of the position that this dummy variable is masking.
+</dl></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>This function takes a matrix with dummy outlier columns, where there are possibly multiple ones. We first merge these columns to one and then explode them to obtain one dummy variable per column.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>outlier_dummies &lt;- matrix(NA,
+                          nrow = 5,
+                          ncol = 3,
+                         dimnames = list(NULL, c(&#39;rumination&#39;, &#39;happiness&#39;, &#39;activity&#39;)))
+outlier_dummies[, 1] &lt;- c(0, 0, 1, 0, 1)
+outlier_dummies[, 2] &lt;- c(0, 1, 1, 0, 0)
+outlier_dummies[, 3] &lt;- c(1, 0, 0, 0, 1)
+outlier_dummies
+</div>
+<div class='output'>     rumination happiness activity
+[1,]          0         0        1
+[2,]          0         1        0
+[3,]          1         1        0
+[4,]          0         0        0
+[5,]          1         0        1
+</div>
+<div class='input'>autovarCore:::explode_dummies(outlier_dummies)
+</div>
+<div class='output'>     outlier_1 outlier_2 outlier_3 outlier_5
+[1,]         1         0         0         0
+[2,]         0         1         0         0
+[3,]         0         0         1         0
+[4,]         0         0         0         0
+[5,]         0         0         0         1
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>explode_dummies</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

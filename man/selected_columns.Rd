@@ -2,7 +2,7 @@
 % Please edit documentation in R/selected_columns.r
 \name{selected_columns}
 \alias{selected_columns}
-\title{Convert an outlier_mask to a list of column indices}
+\title{Convert an outlier_mask to a vector of column indices}
 \usage{
 selected_columns(outlier_mask)
 }
@@ -13,7 +13,7 @@ selected_columns(outlier_mask)
 A vector of column indices corresponding to the outlier mask.
 }
 \description{
-This function returns an ordered list of all the 1-toggled bits in the outlier_mask offset by 1.
+This function returns an ordered vector of all the 1-toggled bits in the outlier_mask offset by 1.
 }
 \examples{
 outlier_mask <- 7
