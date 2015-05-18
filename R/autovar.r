@@ -96,8 +96,9 @@ evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_d
     exo_matrix <- cbind(exo_matrix, exploded_outlier_dummies)
   }
   varest <- run_var(endo_matrix, exo_matrix, lag)
+  if (!model_is_stable(varest))
+    return(NULL)
   NULL
-  # TODO: check stability
   # TODO: run tests and return all test values or just the minimum
   # TODO: run the tests on the threads and also calculate the stability and significance level
   # TODO: return NULL if the model is not stable
