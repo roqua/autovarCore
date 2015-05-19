@@ -10,5 +10,6 @@
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore:::assess_portmanteau_squared(varest)
 assess_portmanteau_squared <- function(varest) {
-  0.06
+  data <- unname(resid(varest))
+  portmanteau_test_data(data^2)
 }
