@@ -12,7 +12,8 @@ supported_test_names <- function() {
   c('portmanteau',
     'portmanteau_squared',
     'skewness',
-    'kurtosis')
+    'kurtosis',
+    'joint_sktest')
 }
 
 run_test <- function(test_name) {
@@ -20,7 +21,8 @@ run_test <- function(test_name) {
          'portmanteau' = autovarCore:::assess_portmanteau,
          'portmanteau_squared' = autovarCore:::assess_portmanteau_squared,
          'skewness' = autovarCore:::assess_skewness,
-         'kurtosis' = autovarCore:::assess_kurtosis)
+         'kurtosis' = autovarCore:::assess_kurtosis,
+         'joint_sktest' = autovarCore:::assess_joint_sktest)
   if (is.null(test_function))
     stop(paste("Unknown test:", test_name))
   test_function

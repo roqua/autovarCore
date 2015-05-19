@@ -1,4 +1,4 @@
-context('assess_skewness')
+context('assess_joint_sktest')
 
 testdata_data_matrix <- function() {
   structure(c(21.9545724191703, 34.6768329953775, 4.09459971333854,
@@ -37,33 +37,53 @@ testdata_data_matrix <- function() {
                                                                        "activity")))
 }
 
-test_that('assess_skewness returns the correct result', {
+test_that('assess_joint_sktest returns the correct result', {
   varest <- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
-  expect_less_than(abs(autovarCore:::assess_skewness(varest) - 0.3871345), 0.0000001)
+  expect_less_than(abs(autovarCore:::assess_joint_sktest(varest) - 0.002976649), 0.0000001)
 })
 
-test_that('assess_skewness calls its subfunctions', {
-  called_count_coefficient <<- 0
+test_that('assess_joint_sktest calls its subfunctions', {
+  called_count_coef_skew <<- 0
   called_count_z_skewness <<- 0
+  called_count_coef_kurt <<- 0
+  called_count_z_kurtosis <<- 0
   varest <<- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
   skewness_coeffs <<- c(0.4, 0.5, 0.6)
   z_skewnesses <<- c(1.6, 1.7, 1.8)
+  kurtosis_coeffs <<- c(0.1, 0.2, 0.3)
+  z_kurtosises <<- c(1.2, 1.3, 1.4)
   with_mock(
     `autovarCore:::coefficient_of_skewness` = function(...) {
-      called_count_coefficient <<- called_count_coefficient + 1
-      expect_equal(list(...), list(resid(varest)[, called_count_coefficient]))
-      skewness_coeffs[called_count_coefficient]
+      called_count_coef_skew <<- called_count_coef_skew + 1
+      expect_equal(list(...), list(resid(varest)[, called_count_coef_skew]))
+      skewness_coeffs[called_count_coef_skew]
     },
     `autovarCore:::z_skewness` = function(...) {
       called_count_z_skewness <<- called_count_z_skewness + 1
       expect_equal(list(...), list(skewness_coeffs[called_count_z_skewness], 39))
       z_skewnesses[called_count_z_skewness]
     },
-    expect_less_than(abs(autovarCore:::assess_skewness(varest) - 0.07186064), 0.0000001)
+    `autovarCore:::coefficient_of_kurtosis` = function(...) {
+      called_count_coef_kurt <<- called_count_coef_kurt + 1
+      expect_equal(list(...), list(resid(varest)[, called_count_coef_kurt]))
+      kurtosis_coeffs[called_count_coef_kurt]
+    },
+    `autovarCore:::z_kurtosis` = function(...) {
+      called_count_z_kurtosis <<- called_count_z_kurtosis + 1
+      expect_equal(list(...), list(kurtosis_coeffs[called_count_z_kurtosis], 39))
+      z_kurtosises[called_count_z_kurtosis]
+    },
+    expect_less_than(abs(autovarCore:::assess_joint_sktest(varest) - 0.0786804), 0.0000001)
   )
-  expect_equal(called_count_coefficient, 3)
+  expect_equal(called_count_coef_skew, 3)
   expect_equal(called_count_z_skewness, 3)
-  rm(list = c('called_count_coefficient',
+  expect_equal(called_count_coef_kurt, 3)
+  expect_equal(called_count_z_kurtosis, 3)
+  rm(list = c('called_count_coef_skew',
               'called_count_z_skewness',
-              'varest', 'skewness_coeffs', 'z_skewnesses'), pos = '.GlobalEnv')
+              'called_count_coef_kurt',
+              'called_count_z_kurtosis',
+              'varest',
+              'skewness_coeffs', 'z_skewnesses',
+              'kurtosis_coeffs', 'z_kurtosises'), pos = '.GlobalEnv')
 })

@@ -28,6 +28,7 @@ assess_skewness <- function(varest) {
 }
 
 z_skewness <- function(g1, n) {
+  # This function is also used by assess_joint_sktest.
   Y <- g1 * sqrt((n + 1) * (n + 3)/(6 * (n - 2)))
   B2g1 <- (3 * (n^2 + 27 * n -70) * (n + 1) * (n + 3))/((n - 2) * (n + 5) * (n + 7) * (n + 9))
   W2 <- -1 + sqrt(2 * (B2g1 - 1))
@@ -37,6 +38,7 @@ z_skewness <- function(g1, n) {
 }
 
 coefficient_of_skewness <- function(x) {
+  # This function is also used by assess_joint_sktest.
   m3 <- rth_moment_about_the_mean(x, 3)
   m2 <- rth_moment_about_the_mean(x, 2)
   m3 * m2^(-3/2)
