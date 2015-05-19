@@ -10,7 +10,7 @@
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore:::assess_kurtosis(varest)
 assess_kurtosis <- function(varest) {
-  resids <- resid(varest)
+  resids <- unname(resid(varest))
   nr_cols <- ncol(resids)
   nr_rows <- nrow(resids)
   if (is.null(nr_cols) || nr_cols < 1 || is.null(nr_rows) || nr_rows < 1)

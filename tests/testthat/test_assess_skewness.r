@@ -51,7 +51,7 @@ test_that('assess_skewness calls its subfunctions', {
   with_mock(
     `autovarCore:::coefficient_of_skewness` = function(...) {
       called_count_coefficient <<- called_count_coefficient + 1
-      expect_equal(list(...), list(resid(varest)[, called_count_coefficient]))
+      expect_equal(list(...), list(unname(resid(varest))[, called_count_coefficient]))
       skewness_coeffs[called_count_coefficient]
     },
     `autovarCore:::z_skewness` = function(...) {
