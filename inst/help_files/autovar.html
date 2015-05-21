@@ -52,7 +52,7 @@
 </li>
 <li> <code>significance_levels</code> - A vector with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to <code>c(0.05, 0.01, 0.005)</code>. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.
 </li>
-<li> <code>test_names</code> - The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to <code>c('portmanteau', 'portmanteau_squared', 'skewness')</code>. The possible tests are <code>c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis')</code>. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.
+<li> <code>test_names</code> - The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to <code>c('portmanteau', 'portmanteau_squared', 'skewness')</code>. The possible tests are <code>c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis', 'joint_sktest')</code>. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.
 </li>
 <li> <code>criterion</code> - The information criterion used to sort the models. Valid options are 'AIC' (the default) or 'BIC'.
 </li>

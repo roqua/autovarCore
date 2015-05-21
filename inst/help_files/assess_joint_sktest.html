@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>run_tests. autovarCore 1.0-0</title>
+<title>assess_joint_sktest. autovarCore 1.0-0</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -35,26 +35,24 @@
         
       </header>
       
-      <h1>Execute a series of model validity assumptions</h1>
+      <h1>Tests the skewness and kurtosis of a VAR model</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>run_tests(varest, test_names)</div></pre>
+    <pre><div>assess_joint_sktest(varest)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
       <dt>varest</dt>
       <dd>A <code>varest</code> model.</dd>
-      <dt>test_names</dt>
-      <dd>A vector of names of tests given as character strings. Supported tests are specified in the <code>autovarCore:::supported_test_names()</code> function.</dd>
     </dl>
     
     <div class="Value">
       <h2>Value</h2>
 
       <p><dl>
-This function returns a vector of p-levels.
+This function returns a p-level.
 </dl></p>
   
     </div>
@@ -62,7 +60,7 @@ This function returns a vector of p-levels.
     <div class="Description">
       <h2>Description</h2>
 
-      <p>This function returns the given suite of tests on for the given VAR model. For each test, the result is the minimum p-level of all the assumptions and p-levels checked within the test. In other words, the result of a test is the p-level that should be used as a threshold below which outcomes are considered statistically significant (e.g., a result of 0.06 is better than a result of 0.03). The <code>run_tests</code> function returns a vector of results, one for each test, in the order corresponding to the <code>test_names</code> argument.</p>
+      <p>This function tests the joint skewness and kurtosis for the residuals of the endogenous variables in the specified VAR model. This function uses an implementation equivalent to STATA's <code>sktest</code>. Of the p-levels resulting from assessing the significance of the joint sktest for the residuals of that variable, the minimum is returned.</p>
   
     </div>
     
@@ -71,14 +69,14 @@ This function returns a vector of p-levels.
 data_matrix[, ] &lt;- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
 colnames(data_matrix) &lt;- c(&#39;rumination&#39;, &#39;happiness&#39;, &#39;activity&#39;)
 varest &lt;- autovarCore:::run_var(data_matrix, NULL, 1)
-autovarCore:::run_tests(varest, &#39;portmanteau&#39;)
+autovarCore:::assess_joint_sktest(varest)
 </div>
-<div class='output'>[1] 0.3006213
+<div class='output'>[1] 0.04588452
 </div></pre>
   </div>
   <div class="span4">
     <!-- <ul>
-      <li>run_tests</li>
+      <li>assess_joint_sktest</li>
     </ul>
     <ul>
       
