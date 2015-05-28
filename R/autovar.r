@@ -76,7 +76,9 @@ autovar <- function(raw_dataframe, params) {
                                                    exo_matrix = exo_matrix,
                                                    lag = lag,
                                                    outlier_dummies = outlier_dummies,
-                                                   test_names = params$test_names),
+                                                   test_names = params$test_names,
+                                                   criterion = params$criterion,
+                                                   use_logtansform = use_logtransform),
                                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
         #print(model_vector)
         # for each model in model_vector, best <- compete(best, model)
@@ -89,7 +91,8 @@ autovar <- function(raw_dataframe, params) {
   "Hello world!"
 }
 
-evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_dummies, test_names) {
+evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag,
+                           outlier_dummies, test_names, criterion, use_logtransform) {
   if (outlier_mask != 0) {
     selected_column_indices <- selected_columns(outlier_mask)
     exploded_outlier_dummies <- explode_dummies(as.matrix(outlier_dummies[, selected_column_indices]))
@@ -100,5 +103,6 @@ evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_d
     return(NULL)
   # TODO: run tests and return all test values or just the minimum
   significance_p_values <- run_tests(varest, test_names)
+  score <- model_score(varest, criterion, use_logtransform)
   NULL
 }
