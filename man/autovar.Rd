@@ -24,6 +24,26 @@ JSON dictionary with two elements: \code{dynamic_network} and \code{contemporane
 \description{
 This function finds the best VAR model for the given data set and parameters, and returns a JSON dictionary with contemporaneous relations, dynamic relations, and a top three for the dynamic relations.
 }
+\details{
+Selecting the best model happens in the following way:
+Until the very end, we always keep track of two "best models," namely the best model of the logtransformed data and the best model of the original (non-logtransformed) data. Thus, we only compare a "logtransformed" model with another "logtransformed" model or a "nonlogtransformed" model with another "nonlogtransformed" model. For these comparisons, the following rules apply: \enumerate{
+\item For a model to be considered, it has to pass the Eigenvalue stability test. Any model that does not pass this test is immediately discarded.
+\item The significance bucket is the most important. If the two models being compared are in different significance buckets, choose the one with the highest significance bucket, otherwise proceed to step 3.
+
+The significance buckets are formed between each of the (decreasingly sorted) specified \code{significance_levels} in the parameters to the autovar function call. For example, if the \code{signifance_levels} are \code{c(0.05, 0.01, 0.005)}, then the significance buckets are \code{(0.05 <= x), (0.01 <= x < 0.05), (0.005 <= x < 0.01),} and \code{(x < 0.005)}. The metric used to place a model into a bucket is the maximum p-level that can be chosen as cut-off for determining whether an outcome is statistically significant such that all residual tests will still pass ("pass" meaning not invalidating the assumption that the residuals are normally distributed). In other words: it is the minimum p-value of all three residual tests of all endogenous variables in the model.
+\item If the two models being compared are in the same significance bucket, the number of outlier columns is most important. If the two models being compared have a different amount of outlier columns, choose the one with the least amount of outlier columns, otherwise proceed to step 4.
+
+For this count of outlier columns, the following rules apply: \itemize{
+\item Day-part dummies do not add to the count. This is because when they are included, they are included for each model and thus never have any discriminatory power.
+\item Day dummies count as one outlier column each (so including day dummies will add six outlier columns).
+\item Outlier dummy variables are split up such that each time point that is considered an outlier has its own dummy outlier variable and adds one to the count of outlier columns. The outliers are, for each variable, the measurements at >2.5 times the standard deviation away from the mean of the residuals or of the squared residuals. Checks are in place to ensure that a time point identified as an outlier by multiple variables only adds a single dummy outlier column to the equation.
+}
+\item When the bucket and number of outlier columns for the two models being compared are the same, select the one with the lowest AIC/BIC score. Whether the AIC or BIC is used here depends on the  \code{criterion} option specified in the parameters to the autovar function call.
+}
+In the end, we should have one best logtransformed model and one best nonlogtransformed model. We then compare these two models in the same way as we have compared all other models up to this point with one exception: we do not compare the number of outlier columns. Comparing the number of outliers would have likely favored logtransformed models over models without logtransform, as logtransformations typically have the effect of reducing the outliers of a sample. Thus, we instead compare by bucket first and AIC/BIC score second.
+
+We are able to compare the AIC/BIC scores of logtransformed and nonlogtransformed models fairly because we compensate the AIC/BIC scores to account for the effect of the logtransformation. We compensate for the logtransformation by adjusting the loglikelihood score of the logtransformed models in the calculation of their AIC/BIC scores (by subtracting the sum of the logtransformed data).
+}
 \examples{
 data_matrix <- matrix(nrow = 40, ncol = 3)
 data_matrix[, ] <- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
