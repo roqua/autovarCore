@@ -21,11 +21,11 @@ test_that('autovar function returns hello world', {
     `parallel::stopCluster` = function(...) {
       NULL
     },
-    expect_equal(autovar(testdata_raw_dataframe(),
+    expect_equal(class(autovar(testdata_raw_dataframe(),
                          list(selected_column_names = c('rumination',
                                                         'happiness',
                                                         'activity'),
-                              imputation_iterations = 1)),
-                 "Hello world!")
+                              imputation_iterations = 1))),
+                 "list")
   )
 })

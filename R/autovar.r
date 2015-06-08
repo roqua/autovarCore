@@ -66,8 +66,11 @@ autovar <- function(raw_dataframe, params) {
                          methods = FALSE)
   all_outlier_masks <- 0:(2^(number_of_endo_vars) - 1)
   significance_buckets <- c(params$significance_levels, 0)
-  best_model <- list(model_score = Inf, bucket = 0)
+  returned_model <- list(model_score = Inf, bucket = 0)
   for (use_logtransform in c(FALSE, TRUE)) {
+    best_model <- list(model_score = Inf, bucket = 0,
+                       varest = list(datamat = matrix(nrow = 40, ncol = 3,
+                                     dimnames = list(NULL, c('a', 'b', 'c')))))
     if (use_logtransform)
       endo_matrix <- ln_data_matrix[, params$selected_column_names]
     else
@@ -102,15 +105,16 @@ autovar <- function(raw_dataframe, params) {
                                    SIMPLIFY = FALSE, USE.NAMES = FALSE)
         for (model in model_vector) {
           if (is.null(model)) next
-          #print(model)
-          # for each model in model_vector, best <- compete(best, model)
-          # TODO: add code
+          best_model <- compete(best_model, model, TRUE)
         }
       }
     }
+    returned_model <- compete(returned_model, best_model, FALSE)
   }
   stopCluster(cluster)
-  "Hello world!"
+  if (is.infinite(returned_model$model_score))
+    return(NULL)
+  returned_model
 }
 
 evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_dummies,
