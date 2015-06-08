@@ -96,7 +96,7 @@ Until the very end, we always keep track of two "best models," namely the best m
       <p>For this count of outlier columns, the following rules apply: <ul>
 <li> Day-part dummies do not add to the count. This is because when they are included, they are included for each model and thus never have any discriminatory power.
 </li>
-<li> Day dummies count as one outlier column each (so including day dummies will add six outlier columns).
+<li> Day dummies count as one outlier column in total (so including day dummies will add one outlier column). This is because we do not necessarily want to punish models if the data happens to exhibit weekly cyclicity, but models that do not need the day dummies and are equally likely should be preferred.
 </li>
 <li> Outlier dummy variables are split up such that each time point that is considered an outlier has its own dummy outlier variable and adds one to the count of outlier columns. The outliers are, for each variable, the measurements at >2.5 times the standard deviation away from the mean of the residuals or of the squared residuals. Checks are in place to ensure that a time point identified as an outlier by multiple variables only adds a single dummy outlier column to the equation.
 </li>
