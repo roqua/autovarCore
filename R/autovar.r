@@ -21,14 +21,12 @@
 #'
 #' We are able to compare the AIC/BIC scores of logtransformed and nonlogtransformed models fairly because we compensate the AIC/BIC scores to account for the effect of the logtransformation. We compensate for the logtransformation by adjusting the loglikelihood score of the logtransformed models in the calculation of their AIC/BIC scores (by subtracting the sum of the logtransformed data).
 #' @param raw_dataframe The raw, unimputed data frame. This can include columns other than the \code{selected_column_names}, as those may be helpful for the imputation.
-#' @param params A \code{list} with the following named entries: \itemize{
-#' \item \code{selected_column_names} - The endogenous variables in the models, specified as a vector of character strings. This argument is required. The selected column names should be a subset of the column names of \code{raw_dataframe}.
-#' \item \code{significance_levels} - A vector with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to \code{c(0.05, 0.01, 0.005)}. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.
-#' \item \code{test_names} - The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to \code{c('portmanteau', 'portmanteau_squared', 'skewness')}. The possible tests are \code{c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis', 'joint_sktest')}. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.
-#' \item \code{criterion} - The information criterion used to sort the models. Valid options are 'AIC' (the default) or 'BIC'.
-#' \item \code{imputation_iterations} - The number of times we average over one Amelia call for imputing the data set. Since one Amelia call averages over five imputations on its own, the actual number of imputations is five times the number specified here. The default value for this parameter is \code{30}.
-#' \item \code{measurements_per_day} - The number of measurements per day in the time series data. The default value for this parameter is \code{1}. If this value is \code{0}, then daypart- and day-dummies variables are not included for any models.
-#' }
+#' @param selected_column_names The endogenous variables in the models, specified as a vector of character strings. This argument is required. The selected column names should be a subset of the column names of \code{raw_dataframe}.
+#' @param significance_levels A vector with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to \code{c(0.05, 0.01, 0.005)}. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.
+#' @param test_names The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to \code{c('portmanteau', 'portmanteau_squared', 'skewness')}. The possible tests are \code{c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis', 'joint_sktest')}. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.
+#' @param criterion The information criterion used to sort the models. Valid options are 'AIC' (the default) or 'BIC'.
+#' @param imputation_iterations The number of times we average over one Amelia call for imputing the data set. Since one Amelia call averages over five imputations on its own, the actual number of imputations is five times the number specified here. The default value for this parameter is \code{30}.
+#' @param measurements_per_day The number of measurements per day in the time series data. The default value for this parameter is \code{1}. If this value is \code{0}, then daypart- and day-dummies variables are not included for any models.
 #' @return JSON dictionary with two elements: \code{dynamic_network} and \code{contemporaneous_network}.
 #' @examples
 #' data_matrix <- matrix(nrow = 40, ncol = 3)
@@ -37,18 +35,25 @@
 #'   data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] <- NA
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' dataframe <- as.data.frame(data_matrix)
-#' autovar(dataframe, list(selected_column_names = c('rumination', 'happiness'),
-#'                         significance_levels = c(0.05, 0.01, 0.005),
-#'                         test_names = c('portmanteau',
-#'                                        'portmanteau_squared',
-#'                                        'skewness'),
-#'                         criterion = 'AIC',
-#'                         imputation_iterations = 30,
-#'                         measurements_per_day = 1))
+#' autovar(dataframe, selected_column_names = c('rumination', 'happiness'),
+#'                    significance_levels = c(0.05, 0.01, 0.005),
+#'                    test_names = c('portmanteau',
+#'                                   'portmanteau_squared',
+#'                                   'skewness'),
+#'                    criterion = 'AIC',
+#'                    imputation_iterations = 30,
+#'                    measurements_per_day = 1)
 #' @export
-autovar <- function(raw_dataframe, params) {
+autovar <- function(raw_dataframe, selected_column_names, significance_levels = c(0.05, 0.01, 0.005),
+                    test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),
+                    criterion = 'AIC', imputation_iterations = 30, measurements_per_day = 1) {
   data_matrix <- validate_raw_dataframe(raw_dataframe)
-  params <- validate_params(data_matrix, params)
+  params <- validate_params(data_matrix, list(selected_column_names = selected_column_names,
+                                              significance_levels = significance_levels,
+                                              test_names = test_names,
+                                              criterion = criterion,
+                                              imputation_iterations = imputation_iterations,
+                                              measurements_per_day = measurements_per_day))
   data_matrix <- impute_datamatrix(data_matrix,
                                    params$measurements_per_day,
                                    params$imputation_iterations)

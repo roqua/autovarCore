@@ -22,10 +22,10 @@ test_that('autovar function returns hello world', {
       NULL
     },
     expect_equal(class(autovar(testdata_raw_dataframe(),
-                         list(selected_column_names = c('rumination',
-                                                        'happiness',
-                                                        'activity'),
-                              imputation_iterations = 1))),
+                         selected_column_names = c('rumination',
+                                                   'happiness',
+                                                   'activity'),
+                         imputation_iterations = 1)),
                  "list")
   )
 })
