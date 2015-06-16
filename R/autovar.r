@@ -78,18 +78,19 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
       endo_matrix <- ln_data_matrix[, params$selected_column_names]
     else
       endo_matrix <- data_matrix[, params$selected_column_names]
-    for (use_daydummies in c(FALSE, TRUE)) {
-      if (use_daydummies) {
-        if (is.null(day_dummy_data)) next
-        seasonal_dummies <- cbind(daypart_dummy_data, day_dummy_data)
-      } else {
-        seasonal_dummies <- daypart_dummy_data
-      }
-      for (lag in 1:2) {
-        if (needs_trend(endo_matrix, lag))
-          exo_matrix <- cbind(seasonal_dummies, trend_column_matrix)
-        else
-          exo_matrix <- seasonal_dummies
+    for (lag in 1:2) {
+      if (needs_trend(endo_matrix, lag))
+        trend_dummies <- cbind(daypart_dummy_data, trend_column_matrix)
+      else
+        trend_dummies <- daypart_dummy_data
+      best_model_in_lag <- list(model_score = Inf, bucket = 0, nr_dummy_variables = Inf)
+      for (use_daydummies in c(FALSE, TRUE)) {
+        if (use_daydummies) {
+          if (is.null(day_dummy_data)) next
+          exo_matrix <- cbind(trend_dummies, day_dummy_data)
+        } else {
+          exo_matrix <- trend_dummies
+        }
         outlier_dummies <- residual_outliers(residuals(run_var(endo_matrix,
                                                                exo_matrix,
                                                                lag)),
@@ -109,12 +110,23 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
         best_model <- list(model_score = Inf, bucket = 0, nr_dummy_variables = Inf)
         for (model in model_vector) {
           if (is.null(model)) next
+          # Compare with models with more or fewer outlier dummies. Prefer models with fewer outlier dummies.
           best_model <- compete(best_model, model, TRUE)
         }
-        if (!is.infinite(best_model$model_score))
-          best_models <- insert_model_into_list(best_model, best_models, TRUE)
+        # Compare with models with/without day dummies, here we just look at what gives the better model.
+        # Here we are not necessarily interested in which model needs more or fewer outliers, since that
+        # is affected by the inclusion of day dummies.
+        best_model_in_lag <- compete(best_model_in_lag, best_model, FALSE)
       }
+      # Compare with models of other lags, here we are interested in which lag needs fewer dummies.
+      # The assumption here is that if weekly cyclicity is present, it would be present on models
+      # of all lags, and therefore what we are comparing here is merely which lag needs fewer outliers
+      # dummies to find a model in the same significance bucket.
+      if (!is.infinite(best_model_in_lag$model_score))
+        best_models <- insert_model_into_list(best_model_in_lag, best_models, TRUE)
     }
+    # Merge models with/without logtransform. Since logtransform affects outliers, don't compare those.
+    # The reasoning follows from above when including day dummies.
     returned_models <- merge_model_lists(returned_models, best_models, FALSE)
   }
   stopCluster(cluster)
