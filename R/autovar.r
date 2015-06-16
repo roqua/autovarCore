@@ -71,11 +71,9 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
                          methods = FALSE)
   all_outlier_masks <- 0:(2^(number_of_endo_vars) - 1)
   significance_buckets <- c(params$significance_levels, 0)
-  returned_model <- list(model_score = Inf, bucket = 0)
+  returned_model <- list(model_score = Inf, bucket = 0, nr_dummy_variables = Inf)
   for (use_logtransform in c(FALSE, TRUE)) {
-    best_model <- list(model_score = Inf, bucket = 0,
-                       varest = list(datamat = matrix(nrow = 40, ncol = 3,
-                                     dimnames = list(NULL, c('a', 'b', 'c')))))
+    best_model <- list(model_score = Inf, bucket = 0, nr_dummy_variables = Inf)
     if (use_logtransform)
       endo_matrix <- ln_data_matrix[, params$selected_column_names]
     else
@@ -145,5 +143,30 @@ evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_d
        lag = lag,
        varest = varest,
        model_score = score,
-       bucket = significance_bucket)
+       bucket = significance_bucket,
+       nr_dummy_variables = nr_dummy_variables(varest))
+}
+
+nr_dummy_variables <- function(varest) {
+  outlier_dummies <- length(grep("^outlier_[0-9]+$", colnames(varest$datamat)))
+  day_dummies <- length(grep("^day_[0-9]+$", colnames(varest$datamat)))
+  if (day_dummies > 0)
+    day_dummies <- 1
+  outlier_dummies + day_dummies
+}
+
+insert_model_into_list <- function(model, model_list, compare_outliers) {
+  if (length(model_list) == 0) return(list(model))
+  if (challenger_wins(model, model_list[[length(model_list)]], compare_outliers))
+    return(append(model_list, model))
+  left <- 1
+  right <- length(model_list)
+  while (left != right) {
+    middle <- (left + right)%/%2
+    if (challenger_wins(model_list[[middle]], model, compare_outliers))
+      right <- middle
+    else
+      left <- middle + 1
+  }
+  append(model_list, model, after = left - 1)
 }

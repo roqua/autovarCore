@@ -29,3 +29,25 @@ test_that('autovar function returns hello world', {
                  "list")
   )
 })
+
+
+test_that('nr_dummy_variables calls its subfunctions correctly', {
+  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'day_1', 'day_2'))))
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 1)
+  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'day_1', 'c'))))
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 1)
+  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'outlier_1', 'c'))))
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 1)
+  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'outlier_2', 'outlier_4'))))
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 2)
+  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('day_2', 'outlier_2', 'outlier_4'))))
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 3)
+  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('day_2', 'day_4', 'outlier_3'))))
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 2)
+})
+
+test_that('nr_dummy_variables works with 0 dummy variables', {
+  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'b', 'c'))))
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 0)
+})
+
