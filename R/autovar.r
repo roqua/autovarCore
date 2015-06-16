@@ -120,7 +120,7 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
       }
       # Compare with models of other lags, here we are interested in which lag needs fewer dummies.
       # The assumption here is that if weekly cyclicity is present, it would be present on models
-      # of all lags, and therefore what we are comparing here is merely which lag needs fewer outliers
+      # of all lags, and therefore what we are comparing here is merely which lag needs fewer outlier
       # dummies to find a model in the same significance bucket.
       if (!is.infinite(best_model_in_lag$model_score))
         best_models <- insert_model_into_list(best_model_in_lag, best_models, TRUE)
