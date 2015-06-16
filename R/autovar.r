@@ -158,7 +158,7 @@ nr_dummy_variables <- function(varest) {
 insert_model_into_list <- function(model, model_list, compare_outliers) {
   if (length(model_list) == 0) return(list(model))
   if (challenger_wins(model, model_list[[length(model_list)]], compare_outliers))
-    return(append(model_list, model))
+    return(append(model_list, list(model)))
   left <- 1
   right <- length(model_list)
   while (left != right) {
@@ -168,5 +168,27 @@ insert_model_into_list <- function(model, model_list, compare_outliers) {
     else
       left <- middle + 1
   }
-  append(model_list, model, after = left - 1)
+  append(model_list, list(model), after = left - 1)
+}
+
+merge_model_lists <- function(list_a, list_b, compare_outliers) {
+  pos_a <- 1
+  pos_b <- 1
+  result <- list()
+  len_a <- length(list_a)
+  len_b <- length(list_b)
+  while (pos_a <= len_a && pos_b <= len_b) {
+    if (challenger_wins(list_a[[pos_a]], list_b[[pos_b]], compare_outliers)) {
+      result <- append(result, list(list_b[[pos_b]]))
+      pos_b <- pos_b + 1
+    } else {
+      result <- append(result, list(list_a[[pos_a]]))
+      pos_a <- pos_a + 1
+    }
+  }
+  if (pos_a <= len_a)
+    result <- append(result, list_a[pos_a:len_a])
+  if (pos_b <= len_b)
+    result <- append(result, list_b[pos_b:len_b])
+  result
 }
