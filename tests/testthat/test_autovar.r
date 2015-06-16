@@ -51,3 +51,70 @@ test_that('nr_dummy_variables works with 0 dummy variables', {
   expect_equal(autovarCore:::nr_dummy_variables(varest), 0)
 })
 
+
+test_that('insert_model_into_list works when an empty list of models is given', {
+  model <- list(bucket = 0.05, nr_dummy_variables = 1, model_score = 100)
+  expected_result <- list(model)
+  expect_equal(autovarCore:::insert_model_into_list(model, list(), TRUE),
+               expected_result)
+})
+
+test_that('insert_model_into_list works when the model is to be appended to the end of the list', {
+  model <- list(bucket = 0.05, nr_dummy_variables = 1, model_score = 100)
+  model_list <- list(list(bucket = 0.05, nr_dummy_variables = 0, model_score = 100))
+  expected_result <- append(model_list, model)
+  expect_equal(autovarCore:::insert_model_into_list(model, model_list, TRUE),
+               expected_result)
+})
+
+test_that('insert_model_into_list works when the model is to be prepended to the list', {
+  model <- list(bucket = 0.05, nr_dummy_variables = 1, model_score = 100)
+  model_list <- list(list(bucket = 0.05, nr_dummy_variables = 1, model_score = 101))
+  expected_result <- append(model_list, model, after = 0)
+  expect_equal(autovarCore:::insert_model_into_list(model, model_list, TRUE),
+               expected_result)
+})
+
+test_that('insert_model_into_list inserts the model at the correct position', {
+  model_list <- list(list(bucket = 0.05, nr_dummy_variables = 1, model_score = 103),
+                     list(bucket = 0.05, nr_dummy_variables = 2, model_score = 101),
+                     list(bucket = 0.01, nr_dummy_variables = 1, model_score = 99),
+                     list(bucket = 0.01, nr_dummy_variables = 1, model_score = 101),
+                     list(bucket = 0.01, nr_dummy_variables = 2, model_score = 101),
+                     list(bucket = 0.005, nr_dummy_variables = 0, model_score = 101),
+                     list(bucket = 0.005, nr_dummy_variables = 0, model_score = 102))
+  model <- list(bucket = 0.01, nr_dummy_variables = 1, model_score = 100)
+  expected_result <- append(model_list, model, after = 3)
+  expect_equal(autovarCore:::insert_model_into_list(model, model_list, TRUE),
+               expected_result)
+  model <- list(bucket = 0.01, nr_dummy_variables = 0, model_score = 100)
+  expected_result <- append(model_list, model, after = 2)
+  expect_equal(autovarCore:::insert_model_into_list(model, model_list, TRUE),
+               expected_result)
+  model <- list(bucket = 0.05, nr_dummy_variables = 1, model_score = 105)
+  expected_result <- append(model_list, model, after = 1)
+  expect_equal(autovarCore:::insert_model_into_list(model, model_list, TRUE),
+               expected_result)
+})
+
+test_that('insert_model_into_list handles the compare_outliers argument correctly', {
+  model_list <- list(list(bucket = 0.05, nr_dummy_variables = 1, model_score = 103),
+                     list(bucket = 0.05, nr_dummy_variables = 2, model_score = 101),
+                     list(bucket = 0.01, nr_dummy_variables = 1, model_score = 99),
+                     list(bucket = 0.01, nr_dummy_variables = 1, model_score = 101),
+                     list(bucket = 0.01, nr_dummy_variables = 2, model_score = 101),
+                     list(bucket = 0.005, nr_dummy_variables = 0, model_score = 101),
+                     list(bucket = 0.005, nr_dummy_variables = 0, model_score = 102))
+  model <- list(bucket = 0.01, nr_dummy_variables = 3, model_score = 100)
+  expected_result <- append(model_list, model, after = 3)
+  expect_equal(autovarCore:::insert_model_into_list(model, model_list, FALSE),
+               expected_result)
+  model <- list(bucket = 0.01, nr_dummy_variables = 0, model_score = 100)
+  expected_result <- append(model_list, model, after = 3)
+  expect_equal(autovarCore:::insert_model_into_list(model, model_list, FALSE),
+               expected_result)
+  model <- list(bucket = 0.05, nr_dummy_variables = 1, model_score = 105)
+  expected_result <- append(model_list, model, after = 2)
+  expect_equal(autovarCore:::insert_model_into_list(model, model_list, FALSE),
+               expected_result)
+})
