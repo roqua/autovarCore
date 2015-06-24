@@ -14,6 +14,18 @@
 <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
 
   <body>
@@ -71,7 +83,7 @@ colnames(data_matrix) &lt;- c(&#39;rumination&#39;, &#39;happiness&#39;, &#39;ac
 varest &lt;- autovarCore:::run_var(data_matrix, NULL, 1)
 autovarCore:::assess_portmanteau(varest)
 </div>
-<div class='output'>[1] 0.02741071
+<div class='output'>[1] 0.1513263
 </div></pre>
   </div>
   <div class="span4">

@@ -1,11 +1,19 @@
 #' Return a JSON array of network data
 #'
-#' This function finds the best VAR model for the given data set and parameters, and returns a JSON dictionary with contemporaneous relations, dynamic relations, and a top three for the dynamic relations.
+#' This function finds the best VAR model for the given data set of time series data and parameters, and returns an sorted list of the best models found. The first item in this list is the "best model" found.
 #'
-#' Selecting the best model happens in the following way:
-#' Until the very end, we always keep track of two "best models," namely the best model of the logtransformed data and the best model of the original (non-logtransformed) data. Thus, we only compare a "logtransformed" model with another "logtransformed" model or a "nonlogtransformed" model with another "nonlogtransformed" model. For these comparisons, the following rules apply: \enumerate{
-#' \item For a model to be considered, it has to pass the Eigenvalue stability test. Any model that does not pass this test is immediately discarded.
-#' \item The significance bucket is the most important. If the two models being compared are in different significance buckets, choose the one with the highest significance bucket, otherwise proceed to step 3.
+#' AutovarCore evaluates eight kinds of models: models with and without log transforming the data, lag 1 and lag 2 models, and with and without day dummy variables. For each of these 8 model configurations, we evaluate all possible combinations for including outlier dummies (at 2.5x the standard deviation of the residuals) and retain the best model (the procedure for selecting the best model is described in more detail below).
+#'
+#' These eight models are further reduced to four models because AutovarCore determines whether adding daydummies improves the model fit (considering only significance bucket and the AIC/BIC score, NOT the number of outlier dummy columns), and only when the best model found with day dummies is a "better model" than the best model found without day dummies (other parameters kept the same), do we include the model with daydummies and discard the one without day dummies. Otherwise, we include only the model without daydummies and discard the one with daydummies.
+#'
+#' Thus, AutovarCore always returns four models (assuming that we find enough models that pass the Eigenvalue stability test: models that do not pass this test are immediately discarded). There are three points in the code where we determine the best model, which is done according to what we refer to as algorithm A or algorithm B, which we explain below.
+#'
+#' When evaluating all possible combinations of outlier dummies for otherwise identical model configurations, we use algorithm A to determine the best model. When comparing whether the best model found without day dummy columns is better than the best model found with day dummy columns, we use algorithm B. For sorting the two models with differing lag but both being either logtransformed or not, we again use algorithm A. Then at the end we merge the two lists of two models (with and without logtransform) to obtain the final list of four models. The sorting comparison here uses algorithm B.
+#'
+#' The reason for the different sorting algorithms is that in some cases we want to select the model with the fewest outlier dummy columns (i.e., the model that retains most of the original data), while in other cases we know that a certain operation (such as adding day dummies or logtransforming the data set) will affect the amount of day dummies in the model and so a fair comparison would exclude this property.
+#'
+#' Algorithm A applies the following rules for comparing two models in order: \enumerate{
+#' \item We first consider the significance bucket. If the two models being compared are in different significance buckets, choose the one with the highest significance bucket, otherwise proceed to step 2.
 #'
 #' The significance buckets are formed between each of the (decreasingly sorted) specified \code{significance_levels} in the parameters to the autovar function call. For example, if the \code{signifance_levels} are \code{c(0.05, 0.01, 0.005)}, then the significance buckets are \code{(0.05 <= x), (0.01 <= x < 0.05), (0.005 <= x < 0.01),} and \code{(x < 0.005)}. The metric used to place a model into a bucket is the maximum p-level that can be chosen as cut-off for determining whether an outcome is statistically significant such that all residual tests will still pass ("pass" meaning not invalidating the assumption that the residuals are normally distributed). In other words: it is the minimum p-value of all three residual tests of all endogenous variables in the model.
 #' \item If the two models being compared are in the same significance bucket, the number of outlier columns is most important. If the two models being compared have a different amount of outlier columns, choose the one with the least amount of outlier columns, otherwise proceed to step 4.
@@ -13,11 +21,16 @@
 #' For this count of outlier columns, the following rules apply: \itemize{
 #' \item Day-part dummies do not add to the count. This is because when they are included, they are included for each model and thus never have any discriminatory power.
 #' \item Day dummies count as one outlier column in total (so including day dummies will add one outlier column). This is because we do not necessarily want to punish models if the data happens to exhibit weekly cyclicity, but models that do not need the day dummies and are equally likely should be preferred.
+#'
 #' \item Outlier dummy variables are split up such that each time point that is considered an outlier has its own dummy outlier variable and adds one to the count of outlier columns. The outliers are, for each variable, the measurements at >2.5 times the standard deviation away from the mean of the residuals or of the squared residuals. Checks are in place to ensure that a time point identified as an outlier by multiple variables only adds a single dummy outlier column to the equation.
 #' }
 #' \item When the bucket and number of outlier columns for the two models being compared are the same, select the one with the lowest AIC/BIC score. Whether the AIC or BIC is used here depends on the  \code{criterion} option specified in the parameters to the autovar function call.
 #' }
-#' In the end, we should have one best logtransformed model and one best nonlogtransformed model. We then compare these two models in the same way as we have compared all other models up to this point with one exception: we do not compare the number of outlier columns. Comparing the number of outliers would have likely favored logtransformed models over models without logtransform, as logtransformations typically have the effect of reducing the outliers of a sample. Thus, we instead compare by bucket first and AIC/BIC score second.
+#'
+#'
+#' In the end, we should have one best logtransformed model and one best nonlogtransformed model. We then compare these two models in the same way as we have compared all other models up to this point with one exception: we do not compare the number of outlier columns. Comparing the number of outliers would have likely favored logtransformed models over models without logtransform, as logtransformations typically have the effect of reducing the outliers of a sample.
+#'
+#' Algorithm B is identical to algorithm A, except that we skip the step comparing the number of outlier dummy variables. Thus, we instead compare by bucket first and AIC/BIC score second. Notice that, if we may assume that the presence or absence of day dummies does not vary between the four models for any particular invocation of the autovar method (which is not an unreasonable assumption to make), that then the arbitrary choice of letting all daydummy columns together add one to the outlier count does not matter at all, since the only times where we are comparing the outlier dummy counts is when both models either both have or both do not have day dummy columns.
 #'
 #' We are able to compare the AIC/BIC scores of logtransformed and nonlogtransformed models fairly because we compensate the AIC/BIC scores to account for the effect of the logtransformation. We compensate for the logtransformation by adjusting the loglikelihood score of the logtransformed models in the calculation of their AIC/BIC scores (by subtracting the sum of the logtransformed data).
 #' @param raw_dataframe The raw, unimputed data frame. This can include columns other than the \code{selected_column_names}, as those may be helpful for the imputation.
@@ -27,7 +40,7 @@
 #' @param criterion The information criterion used to sort the models. Valid options are 'AIC' (the default) or 'BIC'.
 #' @param imputation_iterations The number of times we average over one Amelia call for imputing the data set. Since one Amelia call averages over five imputations on its own, the actual number of imputations is five times the number specified here. The default value for this parameter is \code{30}.
 #' @param measurements_per_day The number of measurements per day in the time series data. The default value for this parameter is \code{1}. If this value is \code{0}, then daypart- and day-dummies variables are not included for any models.
-#' @return JSON dictionary with two elements: \code{dynamic_network} and \code{contemporaneous_network}.
+#' @return A sorted list of "valid" models. A "model" is a list with the properties \code{logtransformed}, \code{lag}, \code{varest}, \code{model_score}, \code{bucket}, and \code{nr_dummy_variables}.
 #' @examples
 #' data_matrix <- matrix(nrow = 40, ncol = 3)
 #' data_matrix[, ] <- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
