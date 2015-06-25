@@ -9,15 +9,13 @@ Authors@R: c(person("Ando","Emerencia",role = c("aut","cre"),
 Maintainer: Ando Emerencia <ando.emerencia@gmail.com>
 Description: Find contemporaneous and dynamic relations in time series data and return them as a graph.
 License: Unlimited
-Depends:
-    Amelia,
-    jsonlite,
-    parallel,
-    Rcpp,
-    urca,
-    vars
 Suggests:
     testthat,
     roxygen2
-Imports: Rcpp (>= 0.11.4)
+Imports: Rcpp (>= 0.11.4),
+    Amelia,
+    jsonlite,
+    parallel,
+    urca,
+    vars
 LinkingTo: Rcpp
