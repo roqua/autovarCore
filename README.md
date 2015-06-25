@@ -13,6 +13,28 @@ To install, type the following:
 For more information on Autovar, see [autovar.nl](https://autovar.nl).
 
 
+#### Should I use Autovar or AutovarCore?
+
+You should use Autovar if you
+
+* Prefer a slightly better model fit over a model with less outlier dummies (less outlier dummies means that the model explains more of the measurements).
+* Are okay with Autovar sometimes returning NULL because it could not find any models that passed all residual tests.
+* Need VAR models with more than one lag or with zero lags.
+* Need models with automatically determined restrictions.
+* Need debugging information such as a full list of all evaluated models.
+* Want detailed summary information such as a plot of contemporaneous correlations or Granger causalities.
+* Need named dummy variables for interpretation (e.g., "morning", "afternoon", "Monday", "Tuesday" instead of "day\_part\_1", "day\_part\_1", "day\_3", "day\_4")
+
+You should use AutovarCore if you
+
+* Prefer a model with less outlier dummies over a model with a slightly better model fit (less outlier dummies means that the model explains more of the measurements).
+* Always want a list of best models even if those do not pass all residual tests at the default p-level (this is indicated by the 'bucket' property, see ?autovar for details).
+* Are not interested in any models except for models with lag 1 and models with lag 2 where the second lag is autoregressive only.
+* May have missing data (i.e., NA values). Autovar also has a function "impute\_dataframe" to impute values, but AutovarCore does this automatically (if needed).
+* Need more flexibility as to which residual tests should constitute model validity (e.g., portmanteau, portmanteau\_squared, skewness, kurtosis, joint_sktest). Autovar uses a fixed set of residual tests.
+* Deem performance to be an issue and prefer memory-efficient and fast code.
+
+
 #### Example use
 
     library('autovarCore')
@@ -40,24 +62,3 @@ For more information on Autovar, see [autovar.nl](https://autovar.nl).
     # Show details for the best model found
     print(models_found[[1]])
 
-
-#### Should I use Autovar or AutovarCore?
-
-You should use Autovar if you
-
-* Prefer a slightly better model fit over a model with less outlier dummies (less outlier dummies means that the model explains more of the measurements).
-* Are okay with Autovar sometimes returning NULL because it could not find any models that passed all residual tests.
-* Need VAR models with more than one lag or with zero lags.
-* Need models with automatically determined restrictions.
-* Need debugging information such as a full list of all evaluated models.
-* Want detailed summary information such as a plot of contemporaneous correlations or Granger causalities.
-* Need named dummy variables for interpretation (e.g., "morning", "afternoon", "Monday", "Tuesday" instead of "day\_part\_1", "day\_part\_1", "day\_3", "day\_4")
-
-You should use AutovarCore if you
-
-* Prefer a model with less outlier dummies over a model with a slightly better model fit (less outlier dummies means that the model explains more of the measurements).
-* Always want a list of best models even if those do not pass all residual tests at the default p-level (this is indicated by the 'bucket' property, see ?autovar for details).
-* Are not interested in any models except for models with lag 1 and models with lag 2 where the second lag is autoregressive only.
-* May have missing data (i.e., NA values). Autovar also has a function "impute\_dataframe" to impute values, but AutovarCore does this automatically (if needed).
-* Need more flexibility as to which residual tests should constitute model validity (e.g., portmanteau, portmanteau\_squared, skewness, kurtosis, joint_sktest). Autovar uses a fixed set of residual tests.
-* Deem performance to be an issue and prefer memory-efficient and fast code.
