@@ -53,16 +53,68 @@
 
 <h1>AutovarCore</h1>
 
-<p>AutovarCore generates networks given a data frame. AutovarCore is a simplified version of <a href="https://github.com/roqua/autovar">Autovar</a>.</p>
+<p>AutovarCore generates networks given a data frame. AutovarCore is a simplified/efficient version of <a href="https://github.com/roqua/autovar">Autovar</a>.</p>
 
 <p>To install, type the following:</p>
 
 <pre><code>install.packages(&#39;devtools&#39;)
-require(&#39;devtools&#39;)
-install_github(&#39;roqua/autovarCore&#39;)
+devtools::install_github(&#39;roqua/autovarCore&#39;)
 </code></pre>
 
 <p>For more information on Autovar, see <a href="https://autovar.nl">autovar.nl</a>.</p>
+
+<h4>Should I use Autovar or AutovarCore?</h4>
+
+<p>You should use Autovar if you</p>
+
+<ul>
+<li>Prefer a slightly better model fit over a model with less outlier dummies (less outlier dummies means that the model explains more of the measurements).</li>
+<li>Are okay with Autovar sometimes returning NULL because it could not find any models that passed all residual tests.</li>
+<li>Need VAR models with more than one lag or with zero lags.</li>
+<li>Need models with automatically determined restrictions.</li>
+<li>Need debugging information such as a full list of all evaluated models.</li>
+<li>Want detailed summary information such as a plot of contemporaneous correlations or Granger causalities.</li>
+<li>Need named dummy variables for interpretation (e.g., &ldquo;morning&rdquo;, &ldquo;afternoon&rdquo;, &ldquo;Monday&rdquo;, &ldquo;Tuesday&rdquo; instead of &ldquo;day_part_1&rdquo;, &ldquo;day_part_1&rdquo;, &ldquo;day_3&rdquo;, &ldquo;day_4&rdquo;)</li>
+</ul>
+
+<p>You should use AutovarCore if you</p>
+
+<ul>
+<li>Prefer a model with less outlier dummies over a model with a slightly better model fit (less outlier dummies means that the model explains more of the measurements).</li>
+<li>Always want a list of best models even if those do not pass all residual tests at the default p-level (this is indicated by the &#39;bucket&#39; property, see ?autovar for details).</li>
+<li>Are not interested in any models except for models with lag 1 and models with lag 2 where the second lag is autoregressive only.</li>
+<li>May have missing data (i.e., NA values). Autovar also has a function &ldquo;impute_dataframe&rdquo; to impute values, but AutovarCore does this automatically (if needed).</li>
+<li>Need more flexibility as to which residual tests should constitute model validity (e.g., portmanteau, portmanteau_squared, skewness, kurtosis, joint_sktest). Autovar uses a fixed set of residual tests.</li>
+<li>Deem performance to be an issue and prefer memory-efficient and fast code.</li>
+</ul>
+
+<h4>Example use</h4>
+
+<pre><code>library(&#39;autovarCore&#39;)
+
+# AutovarCore requires input data in data.frame format.
+# If you have data in a .csv, .dta, or .sav file, use
+# the &#39;foreign&#39; library to load this data into R first.
+# (You may need to type:
+#    install.packages(&#39;foreign&#39;)
+#  if you do not have the foreign library installed on
+#  your system.)
+library(&#39;foreign&#39;)
+
+# This example data set can be downloaded from
+# https://autovar.nl/datasets/aug_pp5_da.sav
+suppressWarnings(dfile &lt;- read.spss(&#39;~/Downloads/aug_pp5_da.sav&#39;))
+dframe &lt;- data.frame(Activity = dfile$Activity, Depression = dfile$Depression)
+
+# Call autovar with the given data frame. Type:
+#   ?autovar
+# (after having typed &quot;library(&#39;autovarCore&#39;)&quot;) to see 
+# which other options are available.
+models_found &lt;- autovar(dframe, selected_column_names = c(&#39;Activity&#39;, &#39;Depression&#39;))
+
+# Show details for the best model found
+print(models_found[[1]])
+</code></pre>
 
 
     <h2>Help topics</h2>
@@ -94,7 +146,7 @@ install_github(&#39;roqua/autovarCore&#39;)
         <code><a href="autovar.html">autovar</a></code><br />Return a JSON array of network data</li>
             
       <li>
-        <code><a href="autovarCore-package.html">autovarCore-package</a></code><br />
+        <code><a href="autovarCore-package.html">autovarCore-package</a></code><br />Automated Vector Autoregression Networks
 </li>
             
       <li>
@@ -158,8 +210,8 @@ install_github(&#39;roqua/autovarCore&#39;)
         
     <h2>Dependencies</h2>
     <ul>
-      <li><strong>Depends</strong>: Amelia, jsonlite, parallel, urca, vars</li>
-      <li><strong>Imports</strong>: Rcpp</li>
+      
+      <li><strong>Imports</strong>: Rcpp, Amelia, jsonlite, parallel, urca, vars</li>
       <li><strong>Suggests</strong>: testthat, roxygen2</li>
       
     </ul>

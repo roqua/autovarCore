@@ -152,7 +152,7 @@ autovar(dataframe, selected_column_names = c(&#39;rumination&#39;, &#39;happines
 [1] FALSE
 
 [[1]]$lag
-[1] 2
+[1] 1
 
 [[1]]$varest
 
@@ -162,24 +162,24 @@ VAR Estimation Results:
 Estimated coefficients for equation rumination: 
 =============================================== 
 Call:
-rumination = rumination.l1 + happiness.l1 + rumination.l2 + const 
+rumination = rumination.l1 + happiness.l1 + const + index + index2 
 
-rumination.l1  happiness.l1 rumination.l2         const 
-  -0.13821681   -0.09919423   -0.24888259   28.55701204 
+rumination.l1  happiness.l1         const         index        index2 
+  -0.15873083   -0.19459488   34.23585265   -1.19432486    0.03291592 
 
 
 Estimated coefficients for equation happiness: 
 ============================================== 
 Call:
-happiness = rumination.l1 + happiness.l1 + happiness.l2 + const 
+happiness = rumination.l1 + happiness.l1 + const + index + index2 
 
-rumination.l1  happiness.l1  happiness.l2         const 
-  -0.32103366    0.08006116   -0.30462200   34.95506135 
+rumination.l1  happiness.l1         const         index        index2 
+  -0.01438971   -0.30019479   11.36467224    1.57884305   -0.02669752 
 
 
 
 [[1]]$model_score
-[1] 572.8409
+[1] 590.4771
 
 [[1]]$bucket
 [1] 0.05
@@ -193,7 +193,7 @@ rumination.l1  happiness.l1  happiness.l2         const
 [1] FALSE
 
 [[2]]$lag
-[1] 1
+[1] 2
 
 [[2]]$varest
 
@@ -203,30 +203,34 @@ VAR Estimation Results:
 Estimated coefficients for equation rumination: 
 =============================================== 
 Call:
-rumination = rumination.l1 + happiness.l1 + const 
+rumination = rumination.l1 + happiness.l1 + rumination.l2 + const + index + index2 + day_1 + day_2 + day_3 + day_4 + day_5 + day_6 + outlier_24 
 
-rumination.l1  happiness.l1         const 
-  -0.11439333   -0.02986661   21.70219053 
+rumination.l1  happiness.l1 rumination.l2         const         index        index2         day_1         day_2         day_3         day_4         day_5 
+  -0.04030173   -0.27756919   -0.17621892   31.49342276   -1.22108296    0.03457980   11.26008926   -2.17316251   -1.64138128   10.93396735    5.19948502 
+        day_6    outlier_24 
+   5.88149274   31.35901252 
 
 
 Estimated coefficients for equation happiness: 
 ============================================== 
 Call:
-happiness = rumination.l1 + happiness.l1 + const 
+happiness = rumination.l1 + happiness.l1 + happiness.l2 + const + index + index2 + day_1 + day_2 + day_3 + day_4 + day_5 + day_6 + outlier_24 
 
-rumination.l1  happiness.l1         const 
-  -0.29646943    0.09673965   26.66557797 
+rumination.l1  happiness.l1  happiness.l2         const         index        index2         day_1         day_2         day_3         day_4         day_5 
+  -0.07045469   -0.26483901    0.12836752   12.92148320    1.05010988   -0.01691931    0.31646154    4.34437048    3.64422508    1.28648870    4.66302012 
+        day_6    outlier_24 
+  -3.08614440    5.84497682 
 
 
 
 [[2]]$model_score
-[1] 593.5457
+[1] 576.3145
 
 [[2]]$bucket
 [1] 0.05
 
 [[2]]$nr_dummy_variables
-[1] 0
+[1] 2
 
 
 [[3]]
@@ -234,7 +238,7 @@ rumination.l1  happiness.l1         const
 [1] TRUE
 
 [[3]]$lag
-[1] 1
+[1] 2
 
 [[3]]$varest
 
@@ -244,30 +248,30 @@ VAR Estimation Results:
 Estimated coefficients for equation rumination: 
 =============================================== 
 Call:
-rumination = rumination.l1 + happiness.l1 + const + index + index2 + outlier_8 + outlier_17 
+rumination = rumination.l1 + happiness.l1 + rumination.l2 + const + index + index2 + outlier_31 
 
-rumination.l1  happiness.l1         const         index        index2     outlier_8    outlier_17 
- -0.114314907   0.128851250   2.504864092   0.048571051  -0.001300563  -2.615250259  -2.628612891 
+rumination.l1  happiness.l1 rumination.l2         const         index        index2    outlier_31 
+ -0.047902358  -0.239886228  -0.086040313   4.000206146  -0.044543431   0.001527608  -2.564159531 
 
 
 Estimated coefficients for equation happiness: 
 ============================================== 
 Call:
-happiness = rumination.l1 + happiness.l1 + const + index + index2 + outlier_8 + outlier_17 
+happiness = rumination.l1 + happiness.l1 + happiness.l2 + const + index + index2 + outlier_31 
 
-rumination.l1  happiness.l1         const         index        index2     outlier_8    outlier_17 
--0.2267615375 -0.1889483775  3.2621935166  0.0599129692 -0.0007285142  1.0914028512  0.0153193302 
+rumination.l1  happiness.l1  happiness.l2         const         index        index2    outlier_31 
+-0.0373361098 -0.0942856586  0.2060585839  2.2519917671  0.0388669695 -0.0005434423 -0.2489242479 
 
 
 
 [[3]]$model_score
-[1] 615.4163
+[1] 603.2947
 
 [[3]]$bucket
-[1] 0.005
+[1] 0.01
 
 [[3]]$nr_dummy_variables
-[1] 2
+[1] 1
 
 
 [[4]]
@@ -275,7 +279,7 @@ rumination.l1  happiness.l1         const         index        index2     outlie
 [1] TRUE
 
 [[4]]$lag
-[1] 2
+[1] 1
 
 [[4]]$varest
 
@@ -285,34 +289,30 @@ VAR Estimation Results:
 Estimated coefficients for equation rumination: 
 =============================================== 
 Call:
-rumination = rumination.l1 + happiness.l1 + rumination.l2 + const + index + index2 + day_1 + day_2 + day_3 + day_4 + day_5 + day_6 + outlier_5 + outlier_27 
+rumination = rumination.l1 + happiness.l1 + const + index + index2 + outlier_31 
 
-rumination.l1  happiness.l1 rumination.l2         const         index        index2         day_1         day_2         day_3         day_4         day_5 
- -0.186002129  -0.135339993  -0.246332310   3.134264143   0.096123384  -0.001926587  -0.063531018   0.473060145  -0.292800655   0.780376577   0.162734220 
-        day_6     outlier_5    outlier_27 
-  0.263132321   0.953548734  -0.007580164 
+rumination.l1  happiness.l1         const         index        index2    outlier_31 
+ -0.089010314  -0.249016784   4.010939964  -0.053495811   0.001695247  -2.614237534 
 
 
 Estimated coefficients for equation happiness: 
 ============================================== 
 Call:
-happiness = rumination.l1 + happiness.l1 + happiness.l2 + const + index + index2 + day_1 + day_2 + day_3 + day_4 + day_5 + day_6 + outlier_5 + outlier_27 
+happiness = rumination.l1 + happiness.l1 + const + index + index2 + outlier_31 
 
-rumination.l1  happiness.l1  happiness.l2         const         index        index2         day_1         day_2         day_3         day_4         day_5 
-  -0.13839994    0.03181172   -0.16614936    3.89270334   -0.03992816    0.00112779    0.47676060   -0.04945921    0.15463666    0.18422714    0.30825319 
-        day_6     outlier_5    outlier_27 
-   0.41470628   -2.70449896   -1.50390078 
+rumination.l1  happiness.l1         const         index        index2    outlier_31 
+  0.061478270  -0.135713875   2.060877894   0.098777021  -0.001712067  -0.239177093 
 
 
 
 [[4]]$model_score
-[1] 611.3583
+[1] 607.0424
 
 [[4]]$bucket
-[1] 0.005
+[1] 0.01
 
 [[4]]$nr_dummy_variables
-[1] 3
+[1] 1
 
 
 </div></pre>
