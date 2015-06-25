@@ -15,30 +15,30 @@ For more information on Autovar, see [autovar.nl](https://autovar.nl).
 
 #### Example use
 
-		library('autovarCore')
+    library('autovarCore')
     
     # AutovarCore requires input data in data.frame format.
-		# If you have data in a .csv, .dta, or .sav file, use
-		# the 'foreign' library to load this data into R first.
-		# (You may need to type:
-		#    install.packages('foreign')
-		#  if you do not have the foreign library installed on
-		#  your system.)
-		library('foreign')
-		
-		# This example data set can be found on
-		# https://autovar.nl/datasets/aug_pp5_da.sav
-		suppressWarnings(dfile <- read.spss('~/Downloads/aug_pp5_da.sav'))
-		dframe <- data.frame(Activity = dfile$Activity, Depression = dfile$Depression)
-		
-		# Call autovar with the given data frame. Type:
-		#   ?autovar
-		# (after having typed "library('autovarCore')") to see 
-		# which other options are available.
-		models_found <- autovar(dframe, selected_column_names = c('Activity', 'Depression'))
-		
-		# Show details for the best model found
-		print(models_found[[1]])
+    # If you have data in a .csv, .dta, or .sav file, use
+    # the 'foreign' library to load this data into R first.
+    # (You may need to type:
+    #    install.packages('foreign')
+    #  if you do not have the foreign library installed on
+    #  your system.)
+    library('foreign')
+    
+    # This example data set can be found on
+    # https://autovar.nl/datasets/aug_pp5_da.sav
+    suppressWarnings(dfile <- read.spss('~/Downloads/aug_pp5_da.sav'))
+    dframe <- data.frame(Activity = dfile$Activity, Depression = dfile$Depression)
+    
+    # Call autovar with the given data frame. Type:
+    #   ?autovar
+    # (after having typed "library('autovarCore')") to see 
+    # which other options are available.
+    models_found <- autovar(dframe, selected_column_names = c('Activity', 'Depression'))
+    
+    # Show details for the best model found
+    print(models_found[[1]])
 
 
 #### Should I use Autovar or AutovarCore?
