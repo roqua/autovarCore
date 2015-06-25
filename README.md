@@ -26,7 +26,7 @@ For more information on Autovar, see [autovar.nl](https://autovar.nl).
     #  your system.)
     library('foreign')
     
-    # This example data set can be found on
+    # This example data set can be downloaded from
     # https://autovar.nl/datasets/aug_pp5_da.sav
     suppressWarnings(dfile <- read.spss('~/Downloads/aug_pp5_da.sav'))
     dframe <- data.frame(Activity = dfile$Activity, Depression = dfile$Depression)
