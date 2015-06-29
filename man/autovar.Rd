@@ -2,7 +2,7 @@
 % Please edit documentation in R/autovar.r
 \name{autovar}
 \alias{autovar}
-\title{Return a JSON array of network data}
+\title{Return the best VAR models found for a time series data set}
 \usage{
 autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
   0.01, 0.005), test_names = c("portmanteau", "portmanteau_squared",
@@ -28,7 +28,7 @@ autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
 A sorted list of "valid" models. A "model" is a list with the properties \code{logtransformed}, \code{lag}, \code{varest}, \code{model_score}, \code{bucket}, and \code{nr_dummy_variables}.
 }
 \description{
-This function finds the best VAR model for the given data set of time series data and parameters, and returns an sorted list of the best models found. The first item in this list is the "best model" found.
+This function evaluates possible VAR models for the given time series data set and returns a sorted list of the best models found. The first item in this list is the "best model" found.
 }
 \details{
 AutovarCore evaluates eight kinds of models: models with and without log transforming the data, lag 1 and lag 2 models, and with and without day dummy variables. For each of these 8 model configurations, we evaluate all possible combinations for including outlier dummies (at 2.5x the standard deviation of the residuals) and retain the best model (the procedure for selecting the best model is described in more detail below).
