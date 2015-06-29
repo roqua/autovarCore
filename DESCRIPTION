@@ -2,7 +2,7 @@ Package: autovarCore
 Type: Package
 Title: Automated Vector Autoregression Models and Networks
 Version: 1.0-0
-Date: 2015-03-03
+Date: 2015-06-29
 Authors@R: c(person("Ando","Emerencia",role = c("aut","cre"),
     email = "ando.emerencia@gmail.com"))
 Maintainer: Ando Emerencia <ando.emerencia@gmail.com>
