@@ -8,6 +8,7 @@ test:
     - R CMD check ~/autovarCore/autovarCore_1.0-0.tar.gz --no-manual --no-build-vignettes --as-cran
   post:
     - mv autovarCore.Rcheck/tests/testthat.Rout* $CIRCLE_ARTIFACTS/.
+    - mv autovarCore.Rcheck/*.log $CIRCLE_ARTIFACTS/.
 dependencies:
   cache_directories:
     - "~/lib/R"
