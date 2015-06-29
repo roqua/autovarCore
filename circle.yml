@@ -15,3 +15,4 @@ dependencies:
   pre:
     - mkdir -p ~/lib/R/library
     - ./inst/bash/install-package-dependencies.sh
+    - echo "options(repos = c(CRAN='http://cran.r-project.org'))" >> ~/.Rprofile
