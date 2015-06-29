@@ -42,6 +42,7 @@
 #' @param measurements_per_day The number of measurements per day in the time series data. The default value for this parameter is \code{1}. If this value is \code{0}, then daypart- and day-dummies variables are not included for any models.
 #' @return A sorted list of "valid" models. A "model" is a list with the properties \code{logtransformed}, \code{lag}, \code{varest}, \code{model_score}, \code{bucket}, and \code{nr_dummy_variables}.
 #' @examples
+#' \dontrun{
 #' data_matrix <- matrix(nrow = 40, ncol = 3)
 #' data_matrix[, ] <- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
 #' while (sum(is.na(data_matrix)) == 0)
@@ -56,6 +57,7 @@
 #'                    criterion = 'AIC',
 #'                    imputation_iterations = 30,
 #'                    measurements_per_day = 1)
+#' }
 #' @export
 autovar <- function(raw_dataframe, selected_column_names, significance_levels = c(0.05, 0.01, 0.005),
                     test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),

@@ -63,6 +63,7 @@ Algorithm B is identical to algorithm A, except that we skip the step comparing 
 We are able to compare the AIC/BIC scores of logtransformed and nonlogtransformed models fairly because we compensate the AIC/BIC scores to account for the effect of the logtransformation. We compensate for the logtransformation by adjusting the loglikelihood score of the logtransformed models in the calculation of their AIC/BIC scores (by subtracting the sum of the logtransformed data).
 }
 \examples{
+\dontrun{
 data_matrix <- matrix(nrow = 40, ncol = 3)
 data_matrix[, ] <- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
 while (sum(is.na(data_matrix)) == 0)
@@ -77,5 +78,6 @@ autovar(dataframe, selected_column_names = c('rumination', 'happiness'),
                    criterion = 'AIC',
                    imputation_iterations = 30,
                    measurements_per_day = 1)
+}
 }
 
