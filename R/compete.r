@@ -6,8 +6,10 @@
 #' @param compare_outliers A boolean. When \code{FALSE}, the model comparison does not take the number of dummy variables into account.
 #' @return This function returns the best model of the two given models.
 #' @examples
-#' model1 <- list(logtransformed = FALSE, lag = 1, nr_dummy_variables = 1, model_score = 100, bucket = 0.05)
-#' model2 <- list(logtransformed = FALSE, lag = 2, nr_dummy_variables = 2, model_score = 200, bucket = 0.01)
+#' model1 <- list(logtransformed = FALSE, lag = 1, nr_dummy_variables = 1,
+#'                model_score = 100, bucket = 0.05)
+#' model2 <- list(logtransformed = FALSE, lag = 2, nr_dummy_variables = 2,
+#'                model_score = 200, bucket = 0.01)
 #' autovarCore:::compete(model1, model2, TRUE)
 #' @export
 compete <- function(best, challenger, compare_outliers) {

@@ -20,7 +20,8 @@ A \code{varest} object with the VAR estimation result.
 This function calls the \code{vars::var} function to calculate the VAR model and applies restrictions if needed. We set the intercept to 1 for restricted equations because calculations go wrong otherwise (this is a bug in the vars library).
 }
 \examples{
-endo_matrix <- matrix(rnorm(120), ncol = 2, nrow = 60, dimnames = list(NULL, c("rumination", "activity")))
+endo_matrix <- matrix(rnorm(120), ncol = 2, nrow = 60,
+                      dimnames = list(NULL, c("rumination", "activity")))
 autovarCore:::run_var(endo_matrix, NULL, 1)
 }
 

@@ -6,7 +6,8 @@
 #' @param lag A nonnegative integer specifying the lag length of the model. Specifying 0 for the lag results in calculating a lag 1 model with all lag-1 terms restricted.
 #' @return A \code{varest} object with the VAR estimation result.
 #' @examples
-#' endo_matrix <- matrix(rnorm(120), ncol = 2, nrow = 60, dimnames = list(NULL, c("rumination", "activity")))
+#' endo_matrix <- matrix(rnorm(120), ncol = 2, nrow = 60,
+#'                       dimnames = list(NULL, c("rumination", "activity")))
 #' autovarCore:::run_var(endo_matrix, NULL, 1)
 #' @export
 run_var <- function(endo_matrix, exo_matrix, lag) {
