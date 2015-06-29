@@ -81,8 +81,10 @@ This function returns the best model of the two given models.
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>model1 &lt;- list(logtransformed = FALSE, lag = 1, nr_dummy_variables = 1, model_score = 100, bucket = 0.05)
-model2 &lt;- list(logtransformed = FALSE, lag = 2, nr_dummy_variables = 2, model_score = 200, bucket = 0.01)
+    <pre class="examples"><div class='input'>model1 &lt;- list(logtransformed = FALSE, lag = 1, nr_dummy_variables = 1,
+               model_score = 100, bucket = 0.05)
+model2 &lt;- list(logtransformed = FALSE, lag = 2, nr_dummy_variables = 2,
+               model_score = 200, bucket = 0.01)
 autovarCore:::compete(model1, model2, TRUE)
 </div>
 <div class='output'>$logtransformed

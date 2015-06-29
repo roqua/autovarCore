@@ -81,7 +81,8 @@ A <code>varest</code> object with the VAR estimation result.
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>endo_matrix &lt;- matrix(rnorm(120), ncol = 2, nrow = 60, dimnames = list(NULL, c(&quot;rumination&quot;, &quot;activity&quot;)))
+    <pre class="examples"><div class='input'>endo_matrix &lt;- matrix(rnorm(120), ncol = 2, nrow = 60,
+                      dimnames = list(NULL, c(&quot;rumination&quot;, &quot;activity&quot;)))
 autovarCore:::run_var(endo_matrix, NULL, 1)
 </div>
 <div class='output'>
@@ -94,7 +95,7 @@ Call:
 rumination = rumination.l1 + activity.l1 + const 
 
 rumination.l1   activity.l1         const 
-  -0.22705904    0.08564162   -0.16554807 
+   -0.2079975    -0.1487079     0.1747737 
 
 
 Estimated coefficients for equation activity: 
@@ -103,7 +104,7 @@ Call:
 activity = rumination.l1 + activity.l1 + const 
 
 rumination.l1   activity.l1         const 
-  -0.25461205   -0.01682884    0.10581613 
+  0.009941151  -0.081066060   0.235352706 
 
 
 </div></pre>

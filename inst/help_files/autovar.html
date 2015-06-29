@@ -132,189 +132,22 @@ A sorted list of "valid" models. A "model" is a list with the properties <code>l
     </div>
     
     <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>data_matrix &lt;- matrix(nrow = 40, ncol = 3)
-data_matrix[, ] &lt;- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
-while (sum(is.na(data_matrix)) == 0)
-  data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] &lt;- NA
-colnames(data_matrix) &lt;- c(&#39;rumination&#39;, &#39;happiness&#39;, &#39;activity&#39;)
-dataframe &lt;- as.data.frame(data_matrix)
-autovar(dataframe, selected_column_names = c(&#39;rumination&#39;, &#39;happiness&#39;),
-                   significance_levels = c(0.05, 0.01, 0.005),
-                   test_names = c(&#39;portmanteau&#39;,
-                                  &#39;portmanteau_squared&#39;,
-                                  &#39;skewness&#39;),
-                   criterion = &#39;AIC&#39;,
-                   imputation_iterations = 30,
-                   measurements_per_day = 1)
-</div>
-<div class='output'>[[1]]
-[[1]]$logtransformed
-[1] FALSE
-
-[[1]]$lag
-[1] 1
-
-[[1]]$varest
-
-VAR Estimation Results:
-======================= 
-
-Estimated coefficients for equation rumination: 
-=============================================== 
-Call:
-rumination = rumination.l1 + happiness.l1 + const + index + index2 
-
-rumination.l1  happiness.l1         const         index        index2 
-  -0.15873083   -0.19459488   34.23585265   -1.19432486    0.03291592 
-
-
-Estimated coefficients for equation happiness: 
-============================================== 
-Call:
-happiness = rumination.l1 + happiness.l1 + const + index + index2 
-
-rumination.l1  happiness.l1         const         index        index2 
-  -0.01438971   -0.30019479   11.36467224    1.57884305   -0.02669752 
-
-
-
-[[1]]$model_score
-[1] 590.4771
-
-[[1]]$bucket
-[1] 0.05
-
-[[1]]$nr_dummy_variables
-[1] 0
-
-
-[[2]]
-[[2]]$logtransformed
-[1] FALSE
-
-[[2]]$lag
-[1] 2
-
-[[2]]$varest
-
-VAR Estimation Results:
-======================= 
-
-Estimated coefficients for equation rumination: 
-=============================================== 
-Call:
-rumination = rumination.l1 + happiness.l1 + rumination.l2 + const + index + index2 + day_1 + day_2 + day_3 + day_4 + day_5 + day_6 + outlier_24 
-
-rumination.l1  happiness.l1 rumination.l2         const         index        index2         day_1         day_2         day_3         day_4         day_5 
-  -0.04030173   -0.27756919   -0.17621892   31.49342276   -1.22108296    0.03457980   11.26008926   -2.17316251   -1.64138128   10.93396735    5.19948502 
-        day_6    outlier_24 
-   5.88149274   31.35901252 
-
-
-Estimated coefficients for equation happiness: 
-============================================== 
-Call:
-happiness = rumination.l1 + happiness.l1 + happiness.l2 + const + index + index2 + day_1 + day_2 + day_3 + day_4 + day_5 + day_6 + outlier_24 
-
-rumination.l1  happiness.l1  happiness.l2         const         index        index2         day_1         day_2         day_3         day_4         day_5 
-  -0.07045469   -0.26483901    0.12836752   12.92148320    1.05010988   -0.01691931    0.31646154    4.34437048    3.64422508    1.28648870    4.66302012 
-        day_6    outlier_24 
-  -3.08614440    5.84497682 
-
-
-
-[[2]]$model_score
-[1] 576.3145
-
-[[2]]$bucket
-[1] 0.05
-
-[[2]]$nr_dummy_variables
-[1] 2
-
-
-[[3]]
-[[3]]$logtransformed
-[1] TRUE
-
-[[3]]$lag
-[1] 2
-
-[[3]]$varest
-
-VAR Estimation Results:
-======================= 
-
-Estimated coefficients for equation rumination: 
-=============================================== 
-Call:
-rumination = rumination.l1 + happiness.l1 + rumination.l2 + const + index + index2 + outlier_31 
-
-rumination.l1  happiness.l1 rumination.l2         const         index        index2    outlier_31 
- -0.047902358  -0.239886228  -0.086040313   4.000206146  -0.044543431   0.001527608  -2.564159531 
-
-
-Estimated coefficients for equation happiness: 
-============================================== 
-Call:
-happiness = rumination.l1 + happiness.l1 + happiness.l2 + const + index + index2 + outlier_31 
-
-rumination.l1  happiness.l1  happiness.l2         const         index        index2    outlier_31 
--0.0373361098 -0.0942856586  0.2060585839  2.2519917671  0.0388669695 -0.0005434423 -0.2489242479 
-
-
-
-[[3]]$model_score
-[1] 603.2947
-
-[[3]]$bucket
-[1] 0.01
-
-[[3]]$nr_dummy_variables
-[1] 1
-
-
-[[4]]
-[[4]]$logtransformed
-[1] TRUE
-
-[[4]]$lag
-[1] 1
-
-[[4]]$varest
-
-VAR Estimation Results:
-======================= 
-
-Estimated coefficients for equation rumination: 
-=============================================== 
-Call:
-rumination = rumination.l1 + happiness.l1 + const + index + index2 + outlier_31 
-
-rumination.l1  happiness.l1         const         index        index2    outlier_31 
- -0.089010314  -0.249016784   4.010939964  -0.053495811   0.001695247  -2.614237534 
-
-
-Estimated coefficients for equation happiness: 
-============================================== 
-Call:
-happiness = rumination.l1 + happiness.l1 + const + index + index2 + outlier_31 
-
-rumination.l1  happiness.l1         const         index        index2    outlier_31 
-  0.061478270  -0.135713875   2.060877894   0.098777021  -0.001712067  -0.239177093 
-
-
-
-[[4]]$model_score
-[1] 607.0424
-
-[[4]]$bucket
-[1] 0.01
-
-[[4]]$nr_dummy_variables
-[1] 1
-
-
+    <pre class="examples"><div class='input'>## &lt;strong&gt;Not run&lt;/strong&gt;: 
+# data_matrix &lt;- matrix(nrow = 40, ncol = 3)
+# data_matrix[, ] &lt;- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
+# while (sum(is.na(data_matrix)) == 0)
+#   data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] &lt;- NA
+# colnames(data_matrix) &lt;- c(&#39;rumination&#39;, &#39;happiness&#39;, &#39;activity&#39;)
+# dataframe &lt;- as.data.frame(data_matrix)
+# autovar(dataframe, selected_column_names = c(&#39;rumination&#39;, &#39;happiness&#39;),
+#                    significance_levels = c(0.05, 0.01, 0.005),
+#                    test_names = c(&#39;portmanteau&#39;,
+#                                   &#39;portmanteau_squared&#39;,
+#                                   &#39;skewness&#39;),
+#                    criterion = &#39;AIC&#39;,
+#                    imputation_iterations = 30,
+#                    measurements_per_day = 1)
+# ## &lt;strong&gt;End(Not run)&lt;/strong&gt;
 </div></pre>
   </div>
   <div class="span4">
