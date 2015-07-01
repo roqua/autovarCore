@@ -26,6 +26,7 @@ Imports: Rcpp (>= 0.11.4),
     Amelia,
     jsonlite,
     parallel,
+    stats,
     urca,
     vars
 LinkingTo: Rcpp
