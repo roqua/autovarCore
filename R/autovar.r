@@ -80,10 +80,10 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
                                 params$measurements_per_day)
   trend_column_matrix <- trend_columns(number_of_measurements)
   number_of_endo_vars <- length(params$selected_column_names)
-  cluster <- makeCluster(detectCores(),
-                         type = "PSOCK",
-                         useXDR = FALSE,
-                         methods = FALSE)
+  #cluster <- makeCluster(detectCores(),
+  #                       type = "PSOCK",
+  #                       useXDR = FALSE,
+  #                       methods = FALSE)
   all_outlier_masks <- 0:(2^(number_of_endo_vars) - 1)
   significance_buckets <- c(params$significance_levels, 0)
   returned_models <- list()
@@ -112,7 +112,7 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
                                              number_of_measurements)
         outlier_masks <- select_valid_masks(all_outlier_masks,
                                             invalid_mask(outlier_dummies))
-        model_vector <- clusterMap(cluster, evaluate_model, outlier_masks,
+        model_vector <- mapply(evaluate_model, outlier_masks,
                                    MoreArgs = list(endo_matrix = endo_matrix,
                                                    exo_matrix = exo_matrix,
                                                    lag = lag,
@@ -144,7 +144,7 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
     # The reasoning follows from above when including day dummies.
     returned_models <- merge_model_lists(returned_models, best_models, FALSE)
   }
-  stopCluster(cluster)
+  #stopCluster(cluster)
   returned_models
 }
 

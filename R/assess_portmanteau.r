@@ -24,14 +24,26 @@ portmanteau_test_data <- function(data) {
   if (port_lags < 1)
     stop("Not enough observations in the data")
   minimum_p_level_port <- Inf
+  port_test_statistics <- portmanteau_test_statistics(data)
   for (column_index in 1:nr_cols) {
-    column_data <- data[, column_index]
-    port_test_statistic <- portmanteau_test_statistic(column_data, nr_rows, port_lags)
+    port_test_statistic <- port_test_statistics[column_index]
     p_level_port <- chi_squared_prob(port_test_statistic, port_lags)
     if (p_level_port < minimum_p_level_port)
       minimum_p_level_port <- p_level_port
   }
   minimum_p_level_port
+}
+
+portmanteau_test_statistics2 <- function(data) {
+  nr_rows <- nrow(data)
+  port_lags <- determine_portmanteau_lags(data)
+  result <- NULL
+  nr_cols <- ncol(data)
+  for (column_index in 1:nr_cols) {
+    column_data <- data[, column_index]
+    result <- c(result, portmanteau_test_statistic(column_data, nr_rows, port_lags))
+  }
+  result
 }
 
 determine_portmanteau_lags <- function(data) {

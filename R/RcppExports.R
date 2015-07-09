@@ -8,3 +8,11 @@ rcpp_hello_world <- function() {
     .Call('autovarCore_rcpp_hello_world', PACKAGE = 'autovarCore')
 }
 
+#' A faster version of portmanteau_test_statistic.
+#'
+#' @param matrix the matrix of residuals or squared residuals.
+#' @export
+portmanteau_test_statistics <- function(matrix) {
+    .Call('autovarCore_portmanteau_test_statistics', PACKAGE = 'autovarCore', matrix)
+}
+

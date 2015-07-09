@@ -15,3 +15,14 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// portmanteau_test_statistics
+NumericVector portmanteau_test_statistics(NumericMatrix matrix);
+RcppExport SEXP autovarCore_portmanteau_test_statistics(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type matrix(matrixSEXP);
+    __result = Rcpp::wrap(portmanteau_test_statistics(matrix));
+    return __result;
+END_RCPP
+}

@@ -16,7 +16,7 @@ run_var <- function(endo_matrix, exo_matrix, lag) {
   resmat_nrow <- ncol(varest$y)
   restrictions <- restrictions_for_lag(lag, resmat_nrow, resmat_ncol)
   if (!is.null(restrictions)) {
-    varest <- restrict(varest, method = "manual", resmat = restrictions)
+    varest <- myrestrict(varest, method = "manual", resmat = restrictions)
     for (i in 1:length(varest$varresult))
       attr(varest$varresult[[i]]$terms, "intercept") <- 1
   }
