@@ -16,9 +16,9 @@ assess_skewness <- function(varest) {
   if (is.null(nr_cols) || nr_cols < 1 || is.null(nr_rows) || nr_rows < 1)
     stop("No residuals found")
   minimum_p_level_skew <- Inf
+  coefficients_of_skew <- coefficients_of_skewness(resids)
   for (column_index in 1:nr_cols) {
-    column_resids <- resids[, column_index]
-    coef_of_skewness <- coefficient_of_skewness(column_resids)
+    coef_of_skewness <- coefficients_of_skew[column_index]
     z_skew <- z_skewness(coef_of_skewness, nr_rows)
     p_level_skew <- 2 - 2 * pnorm(abs(z_skew))
     if (p_level_skew < minimum_p_level_skew)
@@ -39,12 +39,12 @@ z_skewness <- function(g1, n) {
 
 coefficient_of_skewness <- function(x) {
   # This function is also used by assess_joint_sktest.
-  m3 <- rth_moment_about_the_mean(x, 3)
-  m2 <- rth_moment_about_the_mean(x, 2)
+  m3 <- rth_moment_about_the_mean2(x, 3)
+  m2 <- rth_moment_about_the_mean2(x, 2)
   m3 * m2^(-3/2)
 }
 
-rth_moment_about_the_mean <- function(x, r) {
+rth_moment_about_the_mean2 <- function(x, r) {
   # This function is also used by assess_kurtosis.
   mu <- mean(x)
   n <- length(x)

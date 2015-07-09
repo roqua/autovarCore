@@ -34,42 +34,9 @@ portmanteau_test_data <- function(data) {
   minimum_p_level_port
 }
 
-portmanteau_test_statistics2 <- function(data) {
-  nr_rows <- nrow(data)
-  port_lags <- determine_portmanteau_lags(data)
-  result <- NULL
-  nr_cols <- ncol(data)
-  for (column_index in 1:nr_cols) {
-    column_data <- data[, column_index]
-    result <- c(result, portmanteau_test_statistic(column_data, nr_rows, port_lags))
-  }
-  result
-}
-
 determine_portmanteau_lags <- function(data) {
   # This is the default value used in STATA.
   min(floor(nrow(data)/2) - 2, 40)
-}
-
-portmanteau_test_statistic <- function(data, n, h) {
-  data <- data - mean(data)
-  suma <- 0
-  for (k in 1:h)
-    suma <- suma + (sample_autocorrelation(data, k, n)^2)/(n - k)
-  q <- n * (n + 2) * suma
-  q
-}
-
-sample_autocorrelation <- function(data, k, n) {
-  res <- 0
-  for (t in (k + 1):n)
-    res <- res + data[t] * data[t - k]
-  # See the paper of Ljung-Box test for this definition of autocorrelation.
-  denom <- 0
-  for (t in 1:n)
-    denom <- denom + data[t]^2
-  res <- res/denom
-  res
 }
 
 chi_squared_prob <- function(q, h) {

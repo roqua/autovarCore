@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{portmanteau_test_statistics}
 \alias{portmanteau_test_statistics}
-\title{A faster version of portmanteau_test_statistic.}
+\title{An implementation of the portmanteau test.}
 \usage{
 portmanteau_test_statistics(matrix)
 }
@@ -10,6 +10,6 @@ portmanteau_test_statistics(matrix)
 \item{matrix}{the matrix of residuals or squared residuals.}
 }
 \description{
-A faster version of portmanteau_test_statistic.
+See the paper of Ljung-Box test for the used definition of autocorrelation.
 }
 

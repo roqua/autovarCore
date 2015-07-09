@@ -1,28 +1,16 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//' Simple function using Rcpp
+//' An implementation of the portmanteau test.
 //'
-//' @export
-// [[Rcpp::export]]
-List rcpp_hello_world() {
-
-    CharacterVector x = CharacterVector::create( "foo", "bar" )  ;
-    NumericVector y   = NumericVector::create( 0.0, 1.0 ) ;
-    List z            = List::create( x, y ) ;
-
-    return z ;
-}
-
-
-//' A faster version of portmanteau_test_statistic.
+//' See the paper of Ljung-Box test for the used definition of autocorrelation.
 //'
 //' @param matrix the matrix of residuals or squared residuals.
 //' @export
 // [[Rcpp::export]]
 NumericVector portmanteau_test_statistics(NumericMatrix matrix) {
   int nrows = matrix.nrow(), ncols = matrix.ncol();
-  int port_lags = (nrows/2) - 2; // refactor this later
+  int port_lags = (nrows/2) - 2;
   if (port_lags > 40)
     port_lags = 40;
   NumericVector result(ncols);
