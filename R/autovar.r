@@ -80,10 +80,7 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
                                 params$measurements_per_day)
   trend_column_matrix <- trend_columns(number_of_measurements)
   number_of_endo_vars <- length(params$selected_column_names)
-  cluster <- makeCluster(detectCores(),
-                         type = "PSOCK",
-                         useXDR = FALSE,
-                         methods = FALSE)
+  cluster <- Rmpi::makeMPIcluster(Rmpi::mpi.universe.size())
   all_outlier_masks <- 0:(2^(number_of_endo_vars) - 1)
   significance_buckets <- c(params$significance_levels, 0)
   returned_models <- list()
@@ -145,6 +142,7 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
     returned_models <- merge_model_lists(returned_models, best_models, FALSE)
   }
   stopCluster(cluster)
+  Rmpi::mpi.exit()
   returned_models
 }
 
