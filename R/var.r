@@ -80,7 +80,7 @@ myVAR <- function (y, p = 1, type = c("const", "trend", "both", "none"),
   equation <- list()
   for (i in 1:K) {
     y <- yend[, i]
-    equation[[colnames(yend)[i]]] <- lm(y ~ -1 + ., data = datamat)
+    equation[[colnames(yend)[i]]] <- RcppArmadillo::fastLm(y ~ -1 + ., data = datamat)
     equation[[colnames(yend)[i]]]$terms <- list()
     if (any(c("const", "both") %in% type)) {
       attr(equation[[colnames(yend)[i]]]$terms, "intercept") <- 1
@@ -121,7 +121,7 @@ myrestrict <- function (x, method = c("ser", "manual"), thresh = 2, resmat = NUL
           cnames <- colnames(datares)
           datares <- as.data.frame(datares[, -1 * which.min(tvals)])
           colnames(datares) <- cnames[-1 * which.min(tvals)]
-          lmres <- lm(y ~ -1 + ., data = datares)
+          lmres <- RcppArmadillo::fastLm(y ~ -1 + ., data = datares)
           lmres$terms <- list()
           tvals <- abs(coef(summary(lmres))[, 3])
         }
@@ -164,7 +164,7 @@ myrestrict <- function (x, method = c("ser", "manual"), thresh = 2, resmat = NUL
       colnames(datares) <- colnames(datasub)[which(x$restrictions[i,
                                                                   ] == 1)]
       y <- yendog[, i]
-      lmres <- lm(y ~ -1 + ., data = datares)
+      lmres <- RcppArmadillo::fastLm(y ~ -1 + ., data = datares)
       lmres$terms <- list()
       x$varresult[[i]] <- lmres
     }
