@@ -3,7 +3,7 @@
 AutovarCore
 ===========
 
-AutovarCore generates networks given a data frame. AutovarCore is a simplified/efficient version of [Autovar](https://github.com/roqua/autovar).
+AutovarCore finds the best fitting VAR models for a given time series data set that pass the selected set of residual assumptions. AutovarCore will also generate Granger causality networks given a data frame (this functionality is not yet implemented). AutovarCore is a simplified/efficient version of [Autovar](https://github.com/roqua/autovar).
 
 To install, type the following:
 
