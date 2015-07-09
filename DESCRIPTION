@@ -28,5 +28,6 @@ Imports: Rcpp (>= 0.11.4),
     parallel,
     stats,
     urca,
-    vars
+    vars,
+    RcppArmadillo
 LinkingTo: Rcpp
