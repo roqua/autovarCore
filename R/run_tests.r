@@ -13,18 +13,7 @@
 #' @export
 run_tests <- function(varest, test_names) {
   results <- NULL
-  for (test_name in test_names) {
-    #results <- c(results, run_test(test_name)(varest))
-    if (test_name == 'portmanteau')
-      results <- c(results, assess_portmanteau(varest))
-    if (test_name == 'portmanteau_squared')
-      results <- c(results, assess_portmanteau_squared(varest))
-    if (test_name == 'skewness')
-      results <- c(results, assess_skewness(varest))
-    if (test_name == 'kurtosis')
-      results <- c(results, assess_kurtosis(varest))
-    if (test_name == 'joint_sktest')
-      results <- c(results, assess_joint_sktest(varest))
-  }
+  for (test_name in test_names)
+    results <- c(results, run_test(test_name)(varest))
   results
 }
