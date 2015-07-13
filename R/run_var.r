@@ -11,12 +11,12 @@
 #' autovarCore:::run_var(endo_matrix, NULL, 1)
 #' @export
 run_var <- function(endo_matrix, exo_matrix, lag) {
-  varest <- myVAR(y = endo_matrix, p = max(lag, 1), exogen = exo_matrix)
+  varest <- VAR(y = endo_matrix, p = max(lag, 1), exogen = exo_matrix)
   resmat_ncol <- length(colnames(varest$datamat)[!(colnames(varest$datamat) %in% colnames(varest$y))])
   resmat_nrow <- ncol(varest$y)
   restrictions <- restrictions_for_lag(lag, resmat_nrow, resmat_ncol)
   if (!is.null(restrictions)) {
-    varest <- myrestrict(varest, method = "manual", resmat = restrictions)
+    varest <- restrict(varest, method = "manual", resmat = restrictions)
     for (i in 1:length(varest$varresult))
       attr(varest$varresult[[i]]$terms, "intercept") <- 1
   }

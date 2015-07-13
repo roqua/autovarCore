@@ -5,6 +5,17 @@
 
 using namespace Rcpp;
 
+// coefficients_of_kurtosis
+NumericVector coefficients_of_kurtosis(NumericMatrix matrix);
+RcppExport SEXP autovarCore_coefficients_of_kurtosis(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type matrix(matrixSEXP);
+    __result = Rcpp::wrap(coefficients_of_kurtosis(matrix));
+    return __result;
+END_RCPP
+}
 // coefficients_of_skewness
 NumericVector coefficients_of_skewness(NumericMatrix matrix);
 RcppExport SEXP autovarCore_coefficients_of_skewness(SEXP matrixSEXP) {

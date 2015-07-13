@@ -16,10 +16,11 @@ assess_joint_sktest <- function(varest) {
   if (is.null(nr_cols) || nr_cols < 1 || is.null(nr_rows) || nr_rows < 1)
     stop("No residuals found")
   minimum_p_level_sktest <- Inf
+  coefficients_of_skew <- coefficients_of_skewness(resids)
+  coefficients_of_kurt <- coefficients_of_kurtosis(resids)
   for (column_index in 1:nr_cols) {
-    column_resids <- resids[, column_index]
-    coef_of_skewness <- coefficient_of_skewness(column_resids)
-    coef_of_kurtosis <- coefficient_of_kurtosis(column_resids)
+    coef_of_skewness <- coefficients_of_skew[column_index]
+    coef_of_kurtosis <- coefficients_of_kurt[column_index]
     z_skew <- z_skewness(coef_of_skewness, nr_rows)
     z_kurt <- z_kurtosis(coef_of_kurtosis, nr_rows)
     p_level_sktest <- sktest_joint_p(z_skew, z_kurt, nr_rows)

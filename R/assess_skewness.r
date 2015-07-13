@@ -36,21 +36,3 @@ z_skewness <- function(g1, n) {
   Z1 <- (1/(sqrt(log(sqrt(W2))))) * log((Y/a) + sqrt((Y/a)^2 + 1))
   Z1
 }
-
-coefficient_of_skewness <- function(x) {
-  # This function is also used by assess_joint_sktest.
-  m3 <- rth_moment_about_the_mean2(x, 3)
-  m2 <- rth_moment_about_the_mean2(x, 2)
-  m3 * m2^(-3/2)
-}
-
-rth_moment_about_the_mean2 <- function(x, r) {
-  # This function is also used by assess_kurtosis.
-  mu <- mean(x)
-  n <- length(x)
-  tsum <- 0
-  for (i in 1:n)
-    tsum <- tsum + (x[[i]] - mu)^r
-  tsum <- (1/n)*tsum
-  tsum
-}

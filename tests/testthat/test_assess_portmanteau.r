@@ -71,6 +71,11 @@ test_that('portmanteau_test_data calls its subfunctions', {
       expect_equal(list(...), list(unname(resid(varest))))
       17
     },
+    `autovarCore:::portmanteau_test_statistics` = function(...) {
+      called_count_statistic <<- called_count_statistic + 1
+      expect_equal(list(...), list(unname(resid(varest))))
+      portmanteau_statistics
+    },
     `autovarCore:::chi_squared_prob` = function(...) {
       called_count_chi_squared <<- called_count_chi_squared + 1
       expect_equal(list(...), list(portmanteau_statistics[called_count_chi_squared], 17))
@@ -78,7 +83,7 @@ test_that('portmanteau_test_data calls its subfunctions', {
     },
     expect_less_than(abs(autovarCore:::assess_portmanteau(varest) - 0.6), 0.0000001)
   )
-  expect_equal(called_count_statistic, 3)
+  expect_equal(called_count_statistic, 1)
   expect_equal(called_count_chi_squared, 3)
   expect_equal(called_count_pt_lags, 1)
   rm(list = c('called_count_statistic',
