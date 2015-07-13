@@ -53,20 +53,20 @@ test_that('assess_joint_sktest calls its subfunctions', {
   kurtosis_coeffs <<- c(0.1, 0.2, 0.3)
   z_kurtosises <<- c(1.2, 1.3, 1.4)
   with_mock(
-    `autovarCore:::coefficient_of_skewness` = function(...) {
+    `autovarCore:::coefficients_of_skewness` = function(...) {
       called_count_coef_skew <<- called_count_coef_skew + 1
-      expect_equal(list(...), list(unname(resid(varest))[, called_count_coef_skew]))
-      skewness_coeffs[called_count_coef_skew]
+      expect_equal(list(...), list(unname(resid(varest))))
+      skewness_coeffs
     },
     `autovarCore:::z_skewness` = function(...) {
       called_count_z_skewness <<- called_count_z_skewness + 1
       expect_equal(list(...), list(skewness_coeffs[called_count_z_skewness], 39))
       z_skewnesses[called_count_z_skewness]
     },
-    `autovarCore:::coefficient_of_kurtosis` = function(...) {
+    `autovarCore:::coefficients_of_kurtosis` = function(...) {
       called_count_coef_kurt <<- called_count_coef_kurt + 1
-      expect_equal(list(...), list(unname(resid(varest))[, called_count_coef_kurt]))
-      kurtosis_coeffs[called_count_coef_kurt]
+      expect_equal(list(...), list(unname(resid(varest))))
+      kurtosis_coeffs
     },
     `autovarCore:::z_kurtosis` = function(...) {
       called_count_z_kurtosis <<- called_count_z_kurtosis + 1
@@ -75,9 +75,9 @@ test_that('assess_joint_sktest calls its subfunctions', {
     },
     expect_less_than(abs(autovarCore:::assess_joint_sktest(varest) - 0.0786804), 0.0000001)
   )
-  expect_equal(called_count_coef_skew, 3)
+  expect_equal(called_count_coef_skew, 1)
   expect_equal(called_count_z_skewness, 3)
-  expect_equal(called_count_coef_kurt, 3)
+  expect_equal(called_count_coef_kurt, 1)
   expect_equal(called_count_z_kurtosis, 3)
   rm(list = c('called_count_coef_skew',
               'called_count_z_skewness',

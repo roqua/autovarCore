@@ -43,16 +43,16 @@ test_that('assess_skewness returns the correct result', {
 })
 
 test_that('assess_skewness calls its subfunctions', {
-  called_count_coefficient <<- 0
+  called_count_coefficients <<- 0
   called_count_z_skewness <<- 0
   varest <<- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
   skewness_coeffs <<- c(0.4, 0.5, 0.6)
   z_skewnesses <<- c(1.6, 1.7, 1.8)
   with_mock(
-    `autovarCore:::coefficient_of_skewness` = function(...) {
-      called_count_coefficient <<- called_count_coefficient + 1
-      expect_equal(list(...), list(unname(resid(varest))[, called_count_coefficient]))
-      skewness_coeffs[called_count_coefficient]
+    `autovarCore:::coefficients_of_skewness` = function(...) {
+      called_count_coefficients <<- called_count_coefficients + 1
+      expect_equal(list(...), list(unname(resid(varest))))
+      skewness_coeffs
     },
     `autovarCore:::z_skewness` = function(...) {
       called_count_z_skewness <<- called_count_z_skewness + 1
@@ -61,9 +61,9 @@ test_that('assess_skewness calls its subfunctions', {
     },
     expect_less_than(abs(autovarCore:::assess_skewness(varest) - 0.07186064), 0.0000001)
   )
-  expect_equal(called_count_coefficient, 3)
+  expect_equal(called_count_coefficients, 1)
   expect_equal(called_count_z_skewness, 3)
-  rm(list = c('called_count_coefficient',
+  rm(list = c('called_count_coefficients',
               'called_count_z_skewness',
               'varest', 'skewness_coeffs', 'z_skewnesses'), pos = '.GlobalEnv')
 })

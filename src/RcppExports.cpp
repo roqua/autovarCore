@@ -5,13 +5,36 @@
 
 using namespace Rcpp;
 
-// rcpp_hello_world
-List rcpp_hello_world();
-RcppExport SEXP autovarCore_rcpp_hello_world() {
+// coefficients_of_kurtosis
+NumericVector coefficients_of_kurtosis(NumericMatrix matrix);
+RcppExport SEXP autovarCore_coefficients_of_kurtosis(SEXP matrixSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    __result = Rcpp::wrap(rcpp_hello_world());
+    Rcpp::traits::input_parameter< NumericMatrix >::type matrix(matrixSEXP);
+    __result = Rcpp::wrap(coefficients_of_kurtosis(matrix));
+    return __result;
+END_RCPP
+}
+// coefficients_of_skewness
+NumericVector coefficients_of_skewness(NumericMatrix matrix);
+RcppExport SEXP autovarCore_coefficients_of_skewness(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type matrix(matrixSEXP);
+    __result = Rcpp::wrap(coefficients_of_skewness(matrix));
+    return __result;
+END_RCPP
+}
+// portmanteau_test_statistics
+NumericVector portmanteau_test_statistics(NumericMatrix matrix);
+RcppExport SEXP autovarCore_portmanteau_test_statistics(SEXP matrixSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type matrix(matrixSEXP);
+    __result = Rcpp::wrap(portmanteau_test_statistics(matrix));
     return __result;
 END_RCPP
 }
