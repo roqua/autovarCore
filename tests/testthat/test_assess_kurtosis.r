@@ -43,16 +43,16 @@ test_that('assess_kurtosis returns the correct result', {
 })
 
 test_that('assess_kurtosis calls its subfunctions', {
-  called_count_coefficient <<- 0
+  called_count_coefficients <<- 0
   called_count_z_kurtosis <<- 0
   varest <<- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
   kurtosis_coeffs <<- c(0.4, 0.5, 0.6)
   z_kurtosises <<- c(1.6, 1.7, 1.8)
   with_mock(
-    `autovarCore:::coefficient_of_kurtosis` = function(...) {
-      called_count_coefficient <<- called_count_coefficient + 1
-      expect_equal(list(...), list(unname(resid(varest))[, called_count_coefficient]))
-      kurtosis_coeffs[called_count_coefficient]
+    `autovarCore:::coefficients_of_kurtosis` = function(...) {
+      called_count_coefficients <<- called_count_coefficients + 1
+      expect_equal(list(...), list(unname(resid(varest))))
+      kurtosis_coeffs
     },
     `autovarCore:::z_kurtosis` = function(...) {
       called_count_z_kurtosis <<- called_count_z_kurtosis + 1
@@ -61,9 +61,9 @@ test_that('assess_kurtosis calls its subfunctions', {
     },
     expect_less_than(abs(autovarCore:::assess_kurtosis(varest) - 0.07186064), 0.0000001)
   )
-  expect_equal(called_count_coefficient, 3)
+  expect_equal(called_count_coefficients, 1)
   expect_equal(called_count_z_kurtosis, 3)
-  rm(list = c('called_count_coefficient',
+  rm(list = c('called_count_coefficients',
               'called_count_z_kurtosis',
               'varest', 'kurtosis_coeffs', 'z_kurtosises'), pos = '.GlobalEnv')
 })

@@ -15,7 +15,7 @@
 model_score <- function(varest, criterion, logtransformed) {
   if (!(criterion %in% c('AIC', 'BIC')))
     stop(paste("Unknown criterion:", criterion))
-  nr_observations <- summary(varest)$obs
+  nr_observations <- varest$obs
   nr_estimated_params <- nr_estimated_parameters(varest)
   loglikelihood <- determine_loglikelihood(varest, logtransformed)
   switch(criterion,
@@ -27,7 +27,7 @@ determine_loglikelihood <- function(varest, logtransformed) {
   if (logtransformed)
     loglikelihood_for_logtransformed(varest)
   else
-    summary(varest)$logLik
+    loglikelihood_for_normal(varest)
 }
 
 loglikelihood_for_logtransformed <- function(varest) {
@@ -40,6 +40,16 @@ loglikelihood_for_logtransformed <- function(varest) {
   r <- -(nr_observations * var_dimension/2) * log(2 * pi) - (nr_observations/2) * log(det(sigma)) -
     (1/2) * sum(diag(resids %*% solve(sigma) %*% t(resids)))
   r <- r - sum(varest$y)
+  r
+}
+
+loglikelihood_for_normal <- function(varest) {
+  nr_observations <- varest$obs
+  var_dimension <- varest$K
+  resids <- resid(varest)
+  sigma <- crossprod(resids)/nr_observations
+  r <- -(nr_observations * var_dimension/2) * log(2 * pi) - (nr_observations/2) * log(det(sigma)) -
+    (1/2) * sum(diag(resids %*% solve(sigma) %*% t(resids)))
   r
 }
 

@@ -16,9 +16,9 @@ assess_kurtosis <- function(varest) {
   if (is.null(nr_cols) || nr_cols < 1 || is.null(nr_rows) || nr_rows < 1)
     stop("No residuals found")
   minimum_p_level_kurt <- Inf
+  coefficients_of_kurt <- coefficients_of_kurtosis(resids)
   for (column_index in 1:nr_cols) {
-    column_resids <- resids[, column_index]
-    coef_of_kurtosis <- coefficient_of_kurtosis(column_resids)
+    coef_of_kurtosis <- coefficients_of_kurt[column_index]
     z_kurt <- z_kurtosis(coef_of_kurtosis, nr_rows)
     p_level_kurt <- 2 - 2 * pnorm(abs(z_kurt))
     if (p_level_kurt < minimum_p_level_kurt)
@@ -37,11 +37,4 @@ z_kurtosis <- function(b2, n) {
   A <- 6 + (8/sqrtB1b2) * ((2/sqrtB1b2) + sqrt(1 + (4/(sqrtB1b2^2))))
   Z2 <- (1/sqrt(2/(9 * A))) * ((1 - (2/(9 * A))) - ((1 - (2/A))/(1 + X * sqrt(2/(A - 4))))^(1/3))
   Z2
-}
-
-coefficient_of_kurtosis <- function(x) {
-  # This function is also used by assess_joint_sktest.
-  m4 <- rth_moment_about_the_mean(x, 4)
-  m2 <- rth_moment_about_the_mean(x, 2)
-  m4 * m2^(-2)
 }
