@@ -147,10 +147,11 @@ test_that('autovar function returns the correct result', {
                           list(logtransformed = TRUE, lag = 2, model_score = 984.385604338168, bucket = 0.01, nr_dummy_variables = 1),
                           list(logtransformed = TRUE, lag = 1, model_score = 974.100179278787, bucket = 0.01, nr_dummy_variables = 3))
   for (i in 1:length(expected_result)) {
-    expect_equal(expected_result[[i]]$logtransformed, result[[i]]$logtransformed)
-    expect_equal(expected_result[[i]]$lag, result[[i]]$lag)
-    expect_equal(expected_result[[i]]$bucket, result[[i]]$bucket)
-    expect_equal(expected_result[[i]]$nr_dummy_variables, result[[i]]$nr_dummy_variables)
+    expect_equal(result[[i]]$logtransformed, expected_result[[i]]$logtransformed)
+    expect_equal(result[[i]]$lag, expected_result[[i]]$lag)
+    expect_equal(result[[i]]$bucket, expected_result[[i]]$bucket)
+    expect_equal(result[[i]]$nr_dummy_variables, expected_result[[i]]$nr_dummy_variables)
+    expect_equal(class(result[[i]]$varest), 'varest')
   }
 })
 

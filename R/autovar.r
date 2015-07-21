@@ -88,7 +88,7 @@ autovar <- function(raw_dataframe, selected_column_names, significance_levels = 
   # For two otherwise identical models, determine if it is best to
   # use day dummies or to exclude them.
   returned_models <- list()
-  for (model_index in seq(1,length(model_vector),2)) {
+  for (model_index in seq(1, length(model_vector), 2)) {
     model_a <- model_vector[[model_index]]
     model_b <- model_vector[[model_index + 1]]
     if (is.null(model_a)) {
