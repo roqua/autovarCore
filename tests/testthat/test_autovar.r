@@ -1,12 +1,51 @@
 context('autovar')
 
 testdata_raw_dataframe <- function() {
-  data_matrix <- matrix(nrow = 40, ncol = 3)
-  data_matrix[, ] <- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
-  while (sum(is.na(data_matrix)) == 0)
-    data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] <- NA
-  colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
-  as.data.frame(data_matrix)
+  structure(
+    list(
+      rumination = c(
+        22.0498365059029, 13.7556330349762,
+        1.12600634549744, 19.4934884810355, 2.12431976594962, 18.5035418637563,
+        36.2637048461474, 22.106039338978, 18.0223064755555, 20.397312000161,
+        26.7140026984271, 28.0641057349276, 22.8392348790076, 4.29615786997601,
+        23.2614698370453, 33.4261048948392, 17.7002976678777, 20.3717190609314,
+        33.1659396707546, 22.0509548110422, 8.26298083714209, 37.6884919439908,
+        17.0951514896005, 16.2395389752928, 10.0850188396871, 19.7272866712883,
+        36.9513760886621, 37.9791649165563, 7.24803966959007, 35.1132334060967,
+        35.1022829490248, 26.2616432390641, 12.4874693590682, 7.41035538236611,
+        11.5265842466615, 17.9134388491511, 3.85930333053693, 39.5830543811899,
+        15.067377386149, 30.0495747770183
+      ),
+      happiness = c(
+        22.3655248954892,
+        33.6771771111526, 3.72705079917796, 21.0977141472977, 14.2264274307527,
+        11.6071200596634, 23.5072757238522, 28.1464020458516, 16.2355209640227,
+        5.90715246228501, 1.26519997627474, 10.311950607691, 37.454937344417,
+        35.9414219921455, 1.93139720126055, 17.5918050890323, 23.1004054662772,
+        27.1278329880442, 18.5734860950615, 18.1643585511483, 25.0268857011106,
+        13.6762579416391, 9.07419587648474, 32.668052862864, 23.8196294836234,
+        34.1260621207766, 12.2675732355565, 18.907452121377, 29.5313550031278,
+        39.0869346635882, 15.9832937850151, 26.6078605798539, 33.3663012310863,
+        5.06355713354424, 36.1682156927418, 18.102151152445, 2.09795465716161,
+        20.0529668643139, 7.18797522597015, 1.50905575742945
+      ),
+      activity = c(
+        8.87191353109665,
+        6.98173534474336, 37.1547176258173, 1.28608571132645, 10.3756857647095,
+        9.62140130670741, 6.13882541330531, 35.8949988353997, 24.2078910968266,
+        15.1650266021024, 25.634772279067, 9.39684240031056, 36.7090148224961,
+        20.8206333729904, 6.54581666714512, 33.699392670067, 13.2509857458062,
+        12.6292747203261, 27.2395489164628, 13.7238693498075, 32.4840221388731,
+        22.4499390814453, 16.9208111725748, 38.0835367485415, 36.8387764561921,
+        39.67750506429, 12.1550839571282, 27.3066828290466, 20.7485413104296,
+        23.6820655749179, 6.02523313020356, 28.5607256460935, 1.4447026795242,
+        9.62964772200212, 33.7790037628729, 19.7501181352418, 8.83124557416886,
+        24.528027726803, 8.68957389448769, 29.3185801885556
+      )
+    ),
+    .Names = c("rumination",
+               "happiness", "activity"), row.names = c(NA,-40L), class = "data.frame"
+  )
 }
 
 testdata_data_matrix <- function() {
@@ -46,6 +85,23 @@ testdata_data_matrix <- function() {
                                                                        "activity")))
 }
 
+testdata_day_dummies <- function() {
+  structure(c(1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+              0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+              0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+              0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+              0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+              0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+              0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+              0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+              1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+              1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+              0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1,
+              0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0), .Dim = c(40L, 6L), .Dimnames = list(
+                NULL, c("day_1", "day_2", "day_3", "day_4", "day_5", "day_6"
+                )))
+}
+
 testdata_residual_outliers <- function() {
   structure(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -58,7 +114,17 @@ testdata_residual_outliers <- function() {
                                                         "activity")))
 }
 
-test_that('autovar function returns hello world', {
+testdata_trend_columns <- function() {
+  structure(c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+              16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+              32, 33, 34, 35, 36, 37, 38, 39, 40, 1, 4, 9, 16, 25, 36, 49,
+              64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400,
+              441, 484, 529, 576, 625, 676, 729, 784, 841, 900, 961, 1024,
+              1089, 1156, 1225, 1296, 1369, 1444, 1521, 1600),
+            .Dim = c(40L, 2L), .Dimnames = list(NULL, c("index", "index2")))
+}
+
+test_that('autovar function returns the correct result', {
   with_mock(
     `parallel::clusterMap` = function(cluster, ...) {
       mapply(...)
@@ -69,14 +135,25 @@ test_that('autovar function returns hello world', {
     `parallel::stopCluster` = function(...) {
       NULL
     },
-    expect_equal(class(autovar(testdata_raw_dataframe(),
+    result <- autovar(testdata_raw_dataframe(),
                          selected_column_names = c('rumination',
                                                    'happiness',
                                                    'activity'),
-                         imputation_iterations = 1)),
-                 "list")
+                         imputation_iterations = 1)
   )
+  expect_equal(class(result), 'list')
+  expected_result <- list(list(logtransformed = FALSE, lag = 2, model_score = 889.947044325758, bucket = 0.05, nr_dummy_variables = 0),
+                          list(logtransformed = FALSE, lag = 1, model_score = 911.467590883197, bucket = 0.05, nr_dummy_variables = 0),
+                          list(logtransformed = TRUE, lag = 2, model_score = 984.385604338168, bucket = 0.01, nr_dummy_variables = 1),
+                          list(logtransformed = TRUE, lag = 1, model_score = 974.100179278787, bucket = 0.01, nr_dummy_variables = 3))
+  for (i in 1:length(expected_result)) {
+    expect_equal(expected_result[[i]]$logtransformed, result[[i]]$logtransformed)
+    expect_equal(expected_result[[i]]$lag, result[[i]]$lag)
+    expect_equal(expected_result[[i]]$bucket, result[[i]]$bucket)
+    expect_equal(expected_result[[i]]$nr_dummy_variables, result[[i]]$nr_dummy_variables)
+  }
 })
+
 
 test_that('evaluate_model_config calls its subfunctions correctly without daydummies and trend', {
   lagg <<- 1
@@ -191,6 +268,8 @@ test_that('evaluate_model_config calls its subfunctions correctly with daydummie
   called_count_select_valid <<- 0
   called_count_evaluate_model <<- 0
   called_count_compete <<- 0
+  called_count_day_dummies <<- 0
+  called_count_trend_columns <<- 0
   expected_result <-  list(model_score = 42,
                            lag = lagg,
                            bucket = 0.05,
@@ -199,12 +278,17 @@ test_that('evaluate_model_config calls its subfunctions correctly with daydummie
     `autovarCore:::needs_trend` = function(...) {
       called_count_needs_trend <<- called_count_needs_trend + 1
       expect_equal(list(...), list(data_matrix, lagg))
-      FALSE
+      TRUE
     },
     `autovarCore:::daypart_dummies` = function(...) {
       called_count_daypart_dummies <<- called_count_daypart_dummies + 1
       expect_equal(list(...), list(40, 1))
       NULL
+    },
+    `autovarCore:::day_dummies` = function(...) {
+      called_count_day_dummies <<- called_count_day_dummies + 1
+      expect_equal(list(...), list(40, 1))
+      testdata_day_dummies()
     },
     `autovarCore:::residual_outliers` = function(...) {
       called_count_residual_outliers <<- called_count_residual_outliers + 1
@@ -222,11 +306,16 @@ test_that('evaluate_model_config calls its subfunctions correctly with daydummie
       expect_equal(list(...), list(0:7, 0))
       0:7
     },
+    `autovarCore:::trend_columns` = function(...) {
+      called_count_trend_columns <<- called_count_trend_columns + 1
+      expect_equal(list(...), list(40))
+      testdata_trend_columns()
+    },
     `autovarCore:::evaluate_model` = function(...) {
       called_count_evaluate_model <<- called_count_evaluate_model + 1
       expect_equal(list(...), list(called_count_evaluate_model - 1,
                                    data_matrix,
-                                   NULL,
+                                   cbind(testdata_trend_columns(),testdata_day_dummies()),
                                    lagg,
                                    res_outliers,
                                    test_names,
@@ -247,11 +336,13 @@ test_that('evaluate_model_config calls its subfunctions correctly with daydummie
       expect_equal(list(...)[[2]], challenger_model)
       challenger_model
     },
-    expect_equal(autovarCore:::evaluate_model_config(0, data_matrix, test_names,
+    expect_equal(autovarCore:::evaluate_model_config(1, data_matrix, test_names,
                                                      criterion, significance_buckets, 1),
                  expected_result)
   )
   expect_equal(called_count_needs_trend, 1)
+  expect_equal(called_count_day_dummies, 1)
+  expect_equal(called_count_trend_columns, 1)
   expect_equal(called_count_daypart_dummies, 1)
   expect_equal(called_count_residual_outliers, 1)
   expect_equal(called_count_invalid_mask, 1)
@@ -265,6 +356,8 @@ test_that('evaluate_model_config calls its subfunctions correctly with daydummie
               'called_count_select_valid',
               'called_count_evaluate_model',
               'called_count_compete',
+              'called_count_day_dummies',
+              'called_count_trend_columns',
               'res_outliers',
               'data_matrix',
               'test_names',
