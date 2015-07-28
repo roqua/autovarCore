@@ -1,6 +1,7 @@
 useDynLib(autovarCore)
 # exportPattern("^[[:alpha:]]+")
 export(autovar)
+export(autovar_network)
 importFrom(Rcpp, evalCpp)
 importFrom(Amelia, amelia)
 importFrom(jsonlite, toJSON)
