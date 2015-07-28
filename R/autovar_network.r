@@ -29,8 +29,12 @@
 #'                 criterion = 'AIC',
 #'                 imputation_iterations = 30,
 #'                 measurements_per_day = 1,
-#'                 signs = list(rumination = 'negative', happiness = 'positive', activity = 'positive'),
-#'                 labels = list(rumination = 'Rumination', happiness = 'Happiness', activity = 'Activity'))
+#'                 signs = list(rumination = 'negative',
+#'                              happiness = 'positive',
+#'                              activity = 'positive'),
+#'                 labels = list(rumination = 'Rumination',
+#'                               happiness = 'Happiness',
+#'                               activity = 'Activity'))
 #' }
 #' @export
 autovar_network <- function(raw_dataframe, selected_column_names, significance_levels = c(0.05, 0.01, 0.005),
