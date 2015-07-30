@@ -61,7 +61,7 @@
       <dt>selected_column_names</dt>
       <dd>The endogenous variables in the models, specified as a vector of character strings. This argument is required. The selected column names should be a subset of the column names of <code>raw_dataframe</code>.</dd>
       <dt>significance_levels</dt>
-      <dd>A vector with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to <code>c(0.05, 0.01, 0.005)</code>. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.</dd>
+      <dd>The significance levels used for evaluating the significance of the residual tests. The variable <code>significance_levels</code> is a vector with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to <code>c(0.05, 0.01, 0.005)</code>. More, fewer, and/or different significance levels can be specified. In practice, specifying more significance levels gives more weight to the outcomes of the residual tests, while having fewer significance levels gives more weight to the AIC/BIC scores and the number of dummy variables. If a test for a model has a lower p-level than the minimum specified significance level, it can still be returned by the program, but it will be assigned the special significance bucket <code>0</code>.</dd>
       <dt>test_names</dt>
       <dd>The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to <code>c('portmanteau', 'portmanteau_squared', 'skewness')</code>. The possible tests are <code>c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis', 'joint_sktest')</code>. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.</dd>
       <dt>criterion</dt>
@@ -76,7 +76,7 @@
       <h2>Value</h2>
 
       <p><dl>
-A sorted list of "valid" models. A "model" is a list with the properties <code>logtransformed</code>, <code>lag</code>, <code>varest</code>, <code>model_score</code>, <code>bucket</code>, and <code>nr_dummy_variables</code>.
+A sorted list of the best models found. A "model" is a list with the properties <code>logtransformed</code>, <code>lag</code>, <code>varest</code>, <code>model_score</code>, <code>bucket</code>, and <code>nr_dummy_variables</code>. The number of models returned is at most four. In rare cases, where the Eigenvalue stability test fails for multiple models, a list with fewer than four models is returned. When the Eigenvalue test fails for all tested models (which is unlikely to happen in practice), an empty <code>list()</code> is returned.
 </dl></p>
   
     </div>
