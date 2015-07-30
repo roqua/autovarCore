@@ -79,6 +79,18 @@ test_that('assert_param_range throws an error when the given integer is not in r
   expect_null(autovarCore:::assert_param_range(6, 2, 10, 'param_name'))
 })
 
+test_that('assert_param_positive throws an error when the given number is zero or negative', {
+  expected_error_message <- 'The param_name has to be a positive number'
+  expect_error(autovarCore:::assert_param_positive(0, 'param_name'), expected_error_message)
+  expect_error(autovarCore:::assert_param_positive(0.0, 'param_name'), expected_error_message)
+  expect_error(autovarCore:::assert_param_positive(-0.3, 'param_name'), expected_error_message)
+  expect_error(autovarCore:::assert_param_positive(-4, 'param_name'), expected_error_message)
+  # The statements below should not throw errors.
+  expect_null(autovarCore:::assert_param_positive(0.0001, 'param_name'))
+  expect_null(autovarCore:::assert_param_positive(1, 'param_name'))
+  expect_null(autovarCore:::assert_param_positive(6, 'param_name'))
+})
+
 test_that('assert_param_nrow checks the number of rows in data frames', {
   expect_error(autovarCore:::assert_param_nrow(testdata_raw_dataframe(),
                                                minimum = 6),

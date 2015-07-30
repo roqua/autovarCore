@@ -103,6 +103,13 @@ test_that('validate_significance_levels returns the input sorted decreasingly', 
                 c(0.7, 0.5, 0.3))
 })
 
+test_that('validate_significance_levels does not accept 0 or negative numbers', {
+  expect_error(autovarCore:::validate_significance_levels(testdata_data_matrix(), c(0.5, 0.0, 0.7)),
+               "The significance level has to be a positive number")
+  expect_error(autovarCore:::validate_significance_levels(testdata_data_matrix(), c(0.5, -0.2, 0.7)),
+               "The significance level has to be a positive number")
+})
+
 test_that('validate_significance_levels accepts only numeric vectors', {
   data_matrix <- testdata_data_matrix()
   expect_error(autovarCore:::validate_significance_levels(data_matrix, NULL),

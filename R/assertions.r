@@ -44,6 +44,15 @@ assert_param_range <- function(given_param, min, max, param_name) {
                min, "-", max, sep = ""))
 }
 
+assert_param_positive <- function(given_param, param_name) {
+  # precondition: given_param is numeric
+  if (given_param <= 0)
+    stop(paste("The ",
+               param_name,
+               " has to be a positive number",
+               sep = ""))
+}
+
 assert_param_nrow <- function(data_frame, minimum = NULL, maximum = NULL) {
   if (!is.null(minimum) && nrow(data_frame) < minimum)
     stop(paste("The number of rows in the data frame is below the minimum of", minimum))

@@ -63,6 +63,8 @@ validate_selected_column_names <- function(data_matrix, given_param) {
 validate_significance_levels <- function(data_matrix, given_param) {
   assert_param_not_null(given_param)
   assert_param_class(given_param, 'numeric')
+  for (significance_level in given_param)
+    assert_param_positive(significance_level, "significance level")
   sort(given_param, decreasing = TRUE)
 }
 

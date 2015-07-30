@@ -14,7 +14,7 @@ autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
 
 \item{selected_column_names}{The endogenous variables in the models, specified as a vector of character strings. This argument is required. The selected column names should be a subset of the column names of \code{raw_dataframe}.}
 
-\item{significance_levels}{A vector with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to \code{c(0.05, 0.01, 0.005)}. For example, with the default configuration, a model whose worst (lowest) p-level for any test is 0.03 is always seen as a better model than one whose worst p-level for any test is 0.009, no matter the AIC/BIC score of that model. Also, the lowest significance level indicates the minimum p-level for any test of a valid model. Thus, if a test for a model has a lower p-level than the minimum specified significance level, it is considered invalid.}
+\item{significance_levels}{The significance levels used for evaluating the significance of the residual tests. The variable \code{significance_levels} is a vector with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to \code{c(0.05, 0.01, 0.005)}. More, fewer, and/or different significance levels can be specified. In practice, specifying more significance levels gives more weight to the outcomes of the residual tests, while having fewer significance levels gives more weight to the AIC/BIC scores and the number of dummy variables. If a test for a model has a lower p-level than the minimum specified significance level, it can still be returned by the program, but it will be assigned the special significance bucket \code{0}.}
 
 \item{test_names}{The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to \code{c('portmanteau', 'portmanteau_squared', 'skewness')}. The possible tests are \code{c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis', 'joint_sktest')}. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.}
 
@@ -25,7 +25,7 @@ autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
 \item{measurements_per_day}{The number of measurements per day in the time series data. The default value for this parameter is \code{1}. If this value is \code{0}, then daypart- and day-dummies variables are not included for any models.}
 }
 \value{
-A sorted list of "valid" models. A "model" is a list with the properties \code{logtransformed}, \code{lag}, \code{varest}, \code{model_score}, \code{bucket}, and \code{nr_dummy_variables}.
+A sorted list of the best models found. A "model" is a list with the properties \code{logtransformed}, \code{lag}, \code{varest}, \code{model_score}, \code{bucket}, and \code{nr_dummy_variables}. The number of models returned is at most four. In rare cases, where the Eigenvalue stability test fails for multiple models, a list with fewer than four models is returned. When the Eigenvalue test fails for all tested models (which is unlikely to happen in practice), an empty \code{list()} is returned.
 }
 \description{
 This function evaluates possible VAR models for the given time series data set and returns a sorted list of the best models found. The first item in this list is the "best model" found.
