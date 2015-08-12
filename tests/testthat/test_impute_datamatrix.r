@@ -115,12 +115,12 @@ test_that('impute_datamatrix calls amelia the specified amount of times', {
                                                  1, 5),
                                                  expected_result)
   )
-  expect_equal(amelia_counter, 5)
+  expect_equal(amelia_counter, 1)
   amelia_counter <<- 0
   with_mock(
     `Amelia::amelia` = function(...) {
       amelia_counter <<- amelia_counter + 1
-      list(imputations = 5)
+      list(imputations = 1)
     },
     expect_equal(autovarCore:::impute_datamatrix(testdata_matrix_with_missings(),
                                                  1, 1),

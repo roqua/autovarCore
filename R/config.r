@@ -4,7 +4,7 @@ default_autovar_params <- function() {
   list(significance_levels = c(0.05, 0.01, 0.005),
        test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),
        criterion = 'AIC',
-       imputation_iterations = 30,
+       imputation_iterations = 100,
        measurements_per_day = 1)
 }
 

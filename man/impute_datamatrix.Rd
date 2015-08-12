@@ -11,7 +11,7 @@ impute_datamatrix(data_matrix, measurements_per_day, imputation_iterations)
 
 \item{measurements_per_day}{The number of measurements per day. This variable is used for adding day part dummy variables to aid the imputation.}
 
-\item{imputation_iterations}{The amount of times the Amelia call should be averaged over. The actual number of imputations is five times the value for \code{imputation_iterations}, since Amelia's values are already averaged over five runs.}
+\item{imputation_iterations}{The amount of times the Amelia imputation should be averaged over.}
 }
 \value{
 This function returns the modified matrix.
@@ -27,6 +27,6 @@ while (sum(is.na(data_matrix)) == 0)
   data_matrix[as.logical(round(runif(ncol(data_matrix) * nrow(data_matrix), -0.3, 0.7)))] <- NA
 colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 data_matrix
-autovarCore:::impute_datamatrix(data_matrix, 1, 30)
+autovarCore:::impute_datamatrix(data_matrix, 1, 100)
 }
 

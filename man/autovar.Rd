@@ -6,7 +6,7 @@
 \usage{
 autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
   0.01, 0.005), test_names = c("portmanteau", "portmanteau_squared",
-  "skewness"), criterion = "AIC", imputation_iterations = 30,
+  "skewness"), criterion = "AIC", imputation_iterations = 100,
   measurements_per_day = 1)
 }
 \arguments{
@@ -16,11 +16,11 @@ autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
 
 \item{significance_levels}{The significance levels used for evaluating the significance of the residual tests. The variable \code{significance_levels} is a vector with descending p values that indicate cut-offs placing models in different buckets. If it is not specified, this parameter defaults to \code{c(0.05, 0.01, 0.005)}. More, fewer, and/or different significance levels can be specified. In practice, specifying more significance levels gives more weight to the outcomes of the residual tests, while having fewer significance levels gives more weight to the AIC/BIC scores and the number of dummy variables. If a test for a model has a lower p-level than the minimum specified significance level, it can still be returned by the program, but it will be assigned the special significance bucket \code{0}.}
 
-\item{test_names}{The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to \code{c('portmanteau', 'portmanteau_squared', 'skewness')}. The possible tests are \code{c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis', 'joint_sktest')}. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.}
+\item{test_names}{The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to \code{c('portmanteau', 'portmanteau_squared', 'skewness')}, which are used to test the assumptions of independence, homoscedasticity, and normality, respectively. The possible tests are \code{c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis', 'joint_sktest')}. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.}
 
 \item{criterion}{The information criterion used to sort the models. Valid options are 'AIC' (the default) or 'BIC'.}
 
-\item{imputation_iterations}{The number of times we average over one Amelia call for imputing the data set. Since one Amelia call averages over five imputations on its own, the actual number of imputations is five times the number specified here. The default value for this parameter is \code{30}.}
+\item{imputation_iterations}{The amount of times the Amelia imputation should be averaged over. The default value for this parameter is \code{100}.}
 
 \item{measurements_per_day}{The number of measurements per day in the time series data. The default value for this parameter is \code{1}. If this value is \code{0}, then daypart- and day-dummies variables are not included for any models.}
 }
@@ -76,7 +76,7 @@ autovar(dataframe, selected_column_names = c('rumination', 'happiness'),
                                   'portmanteau_squared',
                                   'skewness'),
                    criterion = 'AIC',
-                   imputation_iterations = 30,
+                   imputation_iterations = 100,
                    measurements_per_day = 1)
 }
 }
