@@ -41,7 +41,7 @@ autovar_network <- function(raw_dataframe, selected_column_names, significance_l
   test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),
   criterion = 'AIC', imputation_iterations = 30, measurements_per_day = 1,
   signs = list(), labels = list()) {
-  imputed_dataframe <- as.data.frame(impute_datamatrix(as.matrix(raw_dataframe)))
+  imputed_dataframe <- as.data.frame(impute_datamatrix(as.matrix(raw_dataframe), measurements_per_day, 30))
   # TODO: check the given parameters
   # TODO: rewrite to use Granger causality instead of coefficients directly
   edges <- NULL
