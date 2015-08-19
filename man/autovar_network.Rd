@@ -7,8 +7,8 @@
 autovar_network(raw_dataframe, selected_column_names,
   significance_levels = c(0.05, 0.01, 0.005), test_names = c("portmanteau",
   "portmanteau_squared", "skewness"), criterion = "AIC",
-  imputation_iterations = 30, measurements_per_day = 1, signs = list(),
-  labels = list())
+  imputation_iterations = 30, measurements_per_day = 1, subnet_size = 4,
+  signs = list(), labels = list())
 }
 \arguments{
 \item{raw_dataframe}{The raw, unimputed data frame. This can include columns other than the \code{selected_column_names}, as those may be helpful for the imputation.}

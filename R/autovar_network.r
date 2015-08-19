@@ -39,11 +39,13 @@
 #' @export
 autovar_network <- function(raw_dataframe, selected_column_names, significance_levels = c(0.05, 0.01, 0.005),
   test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),
-  criterion = 'AIC', imputation_iterations = 30, measurements_per_day = 1,
+  criterion = 'AIC', imputation_iterations = 30, measurements_per_day = 1, subnet_size = 4,
   signs = list(), labels = list()) {
   imputed_dataframe <- as.data.frame(impute_datamatrix(as.matrix(raw_dataframe), measurements_per_day, 30))
   # TODO: check the given parameters
   # TODO: rewrite to use Granger causality instead of coefficients directly
+
+  calculate_combinations(selected_column_names, subnet_size)
   edges <- NULL
   for (idx1 in 2:length(selected_column_names)) {
     var1 <- selected_column_names[[idx1]]
@@ -55,6 +57,27 @@ autovar_network <- function(raw_dataframe, selected_column_names, significance_l
   }
   # convert edges to graph and then return as JSON
   edges
+}
+
+calculate_combinations <- function(selected_column_names, subnet_size) {
+  column_count <- length(selected_column_names)
+  calculate_combination <- function(idx, cnt, mask) {
+    if (idx == column_count) {
+      if (cnt == 0) {
+        result <- NULL
+        for (bitpos in 0:(column_count - 1))
+          if (bitwAnd(mask, bitwShiftL(1, bitpos)) != 0)
+            result <- c(result, selected_column_names[bitpos + 1])
+        cat(result, "\n")
+        return(NULL)
+      }
+      return(NULL)
+    }
+    if (cnt > 0)
+      calculate_combination(idx + 1, cnt - 1, bitwOr(mask, bitwShiftL(1, idx)))
+    calculate_combination(idx + 1, cnt, mask)
+  }
+  calculate_combination(0, subnet_size, 0)
 }
 
 pair_edges <- function(raw_dataframe, selected_column_names, significance_levels,
