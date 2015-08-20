@@ -1,6 +1,6 @@
-#' Calculate day dummy variables
+#' Calculate weekday dummy variables
 #'
-#' This function returns either \code{NULL} (if \code{measurements_per_day} is 0) or a matrix of day dummy variables specified number of rows and measurements per day. In the latter case, we return a matrix of six columns.
+#' This function returns either \code{NULL} (if \code{measurements_per_day} is 0) or a matrix of weekday dummy variables specified number of rows and measurements per day. In the latter case, we return a matrix of six columns.
 #' @param number_of_rows the number of rows in the input data set.
 #' @param measurements_per_day the number of measurements per day in the input data set.
 #' @return Either \code{NULL} or a matrix with \code{number_of_rows} rows and \code{6} columns.

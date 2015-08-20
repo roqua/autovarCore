@@ -2,7 +2,7 @@
 % Please edit documentation in R/day_dummies.r
 \name{day_dummies}
 \alias{day_dummies}
-\title{Calculate day dummy variables}
+\title{Calculate weekday dummy variables}
 \usage{
 day_dummies(number_of_rows, measurements_per_day)
 }
@@ -15,7 +15,7 @@ day_dummies(number_of_rows, measurements_per_day)
 Either \code{NULL} or a matrix with \code{number_of_rows} rows and \code{6} columns.
 }
 \description{
-This function returns either \code{NULL} (if \code{measurements_per_day} is 0) or a matrix of day dummy variables specified number of rows and measurements per day. In the latter case, we return a matrix of six columns.
+This function returns either \code{NULL} (if \code{measurements_per_day} is 0) or a matrix of weekday dummy variables specified number of rows and measurements per day. In the latter case, we return a matrix of six columns.
 }
 \examples{
 autovarCore:::day_dummies(16, 2)
