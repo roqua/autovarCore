@@ -44,7 +44,7 @@ testdata_raw_dataframe <- function() {
       )
     ),
     .Names = c("rumination",
-               "happiness", "activity"), row.names = c(NA,-40L), class = "data.frame"
+               "happiness", "activity"), row.names = c(NA, -40L), class = "data.frame"
   )
 }
 
@@ -316,7 +316,7 @@ test_that('evaluate_model_config calls its subfunctions correctly with daydummie
       called_count_evaluate_model <<- called_count_evaluate_model + 1
       expect_equal(list(...), list(called_count_evaluate_model - 1,
                                    data_matrix,
-                                   cbind(testdata_trend_columns(),testdata_day_dummies()),
+                                   cbind(testdata_trend_columns(), testdata_day_dummies()),
                                    lagg,
                                    res_outliers,
                                    test_names,

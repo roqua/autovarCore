@@ -1,8 +1,8 @@
 #' Returns the winning model
 #'
 #' This function returns the best model as explained in the documentation for the \code{autovar} function.
-#' @param best A model given as a list with at least the properties \code{model_score, nr_dummy_variables,} and \code{bucket}.
-#' @param challenger Another model, also given as a list with properties \code{model_score, nr_dummy_variables,} and \code{bucket}.
+#' @param best A model given as a list with at least the properties \code{model_score}, \code{nr_dummy_variables}, and \code{bucket}.
+#' @param challenger Another model, also given as a list with properties \code{model_score}, \code{nr_dummy_variables}, and \code{bucket}.
 #' @param compare_outliers A boolean. When \code{FALSE}, the model comparison does not take the number of dummy variables into account.
 #' @return This function returns the best model of the two given models.
 #' @examples
