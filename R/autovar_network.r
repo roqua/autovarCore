@@ -39,28 +39,55 @@
 #' @export
 autovar_network <- function(raw_dataframe, selected_column_names, significance_levels = c(0.05, 0.01, 0.005),
   test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),
-  criterion = 'AIC', imputation_iterations = 30, measurements_per_day = 1, subnet_size = 4,
+  criterion = 'AIC', imputation_iterations = 30, measurements_per_day = 1, subnet_size = 5,
   signs = list(), labels = list()) {
   imputed_dataframe <- as.data.frame(impute_datamatrix(as.matrix(raw_dataframe), measurements_per_day, 30))
   # TODO: check the given parameters
-  # TODO: rewrite to use Granger causality instead of coefficients directly
-
-  calculate_combinations(selected_column_names, subnet_size)
-  edges <- NULL
-  for (idx1 in 2:length(selected_column_names)) {
-    var1 <- selected_column_names[[idx1]]
-    for (idx2 in 1:(idx1-1)) {
-      var2 <- selected_column_names[[idx2]]
-      edges <- rbind(edges, pair_edges(imputed_dataframe, c(var1, var2), significance_levels,
-                                       test_names, criterion, imputation_iterations, measurements_per_day))
-    }
-  }
-  # convert edges to graph and then return as JSON
-  edges
+  calculate_combinations(raw_dataframe,
+                         selected_column_names,
+                         significance_levels,
+                         test_names,
+                         criterion,
+                         imputation_iterations,
+                         measurements_per_day,
+                         subnet_size)
 }
 
-calculate_combinations <- function(selected_column_names, subnet_size) {
+calculate_combinations <- function(raw_dataframe, selected_column_names, significance_levels,
+                                   test_names, criterion, imputation_iterations, measurements_per_day, subnet_size) {
   column_count <- length(selected_column_names)
+  p_counts <- matrix(0, ncol = column_count, nrow = column_count)
+  p_sums <- matrix(0, ncol = column_count, nrow = column_count)
+  coef_sums <- matrix(0, ncol = column_count, nrow = column_count)
+  add_subnet_edges <- function(raw_dataframe, subnet_column_names, significance_levels,
+                           test_names, criterion, imputation_iterations, measurements_per_day) {
+    models <- autovar(raw_dataframe = raw_dataframe,
+                      selected_column_names = subnet_column_names,
+                      significance_levels = significance_levels,
+                      test_names = test_names,
+                      criterion = criterion,
+                      imputation_iterations = imputation_iterations,
+                      measurements_per_day = measurements_per_day)
+    if (length(models) == 0 || models[[1]]$bucket == 0)
+      return(NULL)
+    for (idx1 in 1:length(selected_column_names)) {
+      var_source <- selected_column_names[idx1]
+      if (!(var_source %in% subnet_column_names)) next
+      for (idx2 in 1:length(selected_column_names)) {
+        if (idx1 == idx2) next
+        var_target <- selected_column_names[idx2]
+        if (!(var_target %in% subnet_column_names)) next
+        for (model in models) {
+          if (model$bucket != significance_levels[[1]]) next
+          first_lag_of_source <- paste(var_source, '.l1', sep = '')
+          var_coef <- coef(summary(model$varest$varresult[[var_target]]))[first_lag_of_source, ]
+          p_counts[idx1, idx2] <<- p_counts[idx1, idx2] + 1
+          p_sums[idx1, idx2] <<- p_sums[idx1, idx2] + var_coef[['Pr(>|t|)']]
+          coef_sums[idx1, idx2] <<- coef_sums[idx1, idx2] + var_coef[['Estimate']]
+        }
+      }
+    }
+  }
   calculate_combination <- function(idx, cnt, mask) {
     if (idx == column_count) {
       if (cnt == 0) {
@@ -68,7 +95,8 @@ calculate_combinations <- function(selected_column_names, subnet_size) {
         for (bitpos in 0:(column_count - 1))
           if (bitwAnd(mask, bitwShiftL(1, bitpos)) != 0)
             result <- c(result, selected_column_names[bitpos + 1])
-        cat(result, "\n")
+        add_subnet_edges(raw_dataframe, result, significance_levels,
+                         test_names, criterion, imputation_iterations, measurements_per_day)
         return(NULL)
       }
       return(NULL)
@@ -78,44 +106,30 @@ calculate_combinations <- function(selected_column_names, subnet_size) {
     calculate_combination(idx + 1, cnt, mask)
   }
   calculate_combination(0, subnet_size, 0)
-}
-
-pair_edges <- function(raw_dataframe, selected_column_names, significance_levels,
-                       test_names, criterion, imputation_iterations, measurements_per_day) {
-  models <- autovar(raw_dataframe = raw_dataframe,
-                    selected_column_names = selected_column_names,
-                    significance_levels = significance_levels,
-                    test_names = test_names,
-                    criterion = criterion,
-                    imputation_iterations = imputation_iterations,
-                    measurements_per_day = measurements_per_day)
-  if (length(models) == 0 || models[[1]]$bucket == 0)
-    return(NULL)
+  p_sums <- p_sums / p_counts
+  coef_sums <- coef_sums / p_counts
+  print(p_counts)
+  print("=====")
+  print(p_sums)
+  print("----")
+  print(coef_sums)
   result <- NULL
   for (idx1 in 1:length(selected_column_names)) {
     var_source <- selected_column_names[idx1]
     for (idx2 in 1:length(selected_column_names)) {
       if (idx1 == idx2) next
+      if (p_counts[idx1, idx2] == 0) next
       var_target <- selected_column_names[idx2]
-      number_of_models <- 0
-      accumulated_sign <- 0
-      for (model in models) {
-        if (model$bucket == 0) next
-        first_lag_of_source <- paste(var_source, '.l1', sep = '')
-        var_coef <- coef(summary(model$varest$varresult[[var_target]]))[first_lag_of_source, ]
-        if (var_coef['Pr(>|t|)'] <= p_level_for_granger_significance()) {
-          # Granger causality is significant in this model
-          number_of_models <- number_of_models + 1
-          accumulated_sign <- accumulated_sign + (model$bucket * sign(var_coef[['Estimate']]))
-        }
-      }
-      if (number_of_models)
+      cur_p <- p_sums[idx1, idx2]
+      cur_coef <- coef_sums[idx1, idx2]
+      if (cur_p <= p_level_for_granger_significance()) {
         result <- rbind(result, data.frame(source = var_source,
                                            target = var_target,
-                                           sign = sign(accumulated_sign),
-                                           coef = number_of_models,
+                                           coef = cur_coef,
                                            stringsAsFactors = FALSE))
+      }
     }
   }
   result
 }
+
