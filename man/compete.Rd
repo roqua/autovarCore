@@ -7,9 +7,9 @@
 compete(best, challenger, compare_outliers)
 }
 \arguments{
-\item{best}{A model given as a list with at least the properties \code{model_score, nr_dummy_variables,} and \code{bucket}.}
+\item{best}{A model given as a list with at least the properties \code{model_score}, \code{nr_dummy_variables}, and \code{bucket}.}
 
-\item{challenger}{Another model, also given as a list with properties \code{model_score, nr_dummy_variables,} and \code{bucket}.}
+\item{challenger}{Another model, also given as a list with properties \code{model_score}, \code{nr_dummy_variables}, and \code{bucket}.}
 
 \item{compare_outliers}{A boolean. When \code{FALSE}, the model comparison does not take the number of dummy variables into account.}
 }
