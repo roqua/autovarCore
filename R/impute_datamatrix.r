@@ -1,6 +1,6 @@
 #' Imputes the missing values in the input data
 #'
-#' This function uses \code{Amelia::amelia} to try and impute missing (\code{NA}) values in the input data set. Amelia averages over five iterations, which is multiplied by the given \code{imputation_iterations} parameter.
+#' This function uses \code{Amelia::amelia} to impute missing (\code{NA}) values in the input data set. This function averages over multiple Amelia imputations to obtain more consistent results. The Amelia imputation model uses all variables of the supplied \code{data_matrix}, the first lag of those variables, time, time squared, and day-part dummies.
 #' @param data_matrix The raw, unimputed data matrix.
 #' @param measurements_per_day The number of measurements per day. This variable is used for adding day part dummy variables to aid the imputation.
 #' @param imputation_iterations The amount of times the Amelia imputation should be averaged over.

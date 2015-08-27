@@ -10,7 +10,7 @@ autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
   measurements_per_day = 1)
 }
 \arguments{
-\item{raw_dataframe}{The raw, unimputed data frame. This can include columns other than the \code{selected_column_names}, as those may be helpful for the imputation.}
+\item{raw_dataframe}{The raw, unimputed data frame. This can include columns other than the \code{selected_column_names}, as those may be helpful for the imputation. The measurements in the dataframe are expected to be sorted by time, and to be sequential. Missed measurements should be encoded as rows of \code{NA} values and will be imputed by EM imputation.}
 
 \item{selected_column_names}{The endogenous variables in the models, specified as a vector of character strings. This argument is required. The selected column names should be a subset of the column names of \code{raw_dataframe}.}
 
@@ -22,7 +22,7 @@ autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
 
 \item{imputation_iterations}{The amount of times the Amelia imputation should be averaged over. The default value for this parameter is \code{100}. For details on the Amelia imputation, please see \url{http://r.iq.harvard.edu/docs/amelia/amelia.pdf}.}
 
-\item{measurements_per_day}{The number of measurements per day in the time series data. The default value for this parameter is \code{1}. If this value is \code{0}, then daypart- and weekday dummies variables are not included for any models.}
+\item{measurements_per_day}{The number of measurements per day in the time series data. The default value for this parameter is \code{1}. All models considered include day-part dummy variables if there are multiple measurements per day. If this value is \code{0}, then daypart- and weekday dummies variables are not included for any models.}
 }
 \value{
 A sorted list of the best models found. A "model" is a list with the properties \code{logtransformed}, \code{lag}, \code{varest}, \code{model_score}, \code{bucket}, and \code{nr_dummy_variables}. The number of models returned is at most four. In rare cases, where the Eigenvalue stability test fails for multiple models, a list with fewer than four models is returned. When the Eigenvalue test fails for all tested models (which is unlikely to happen in practice), an empty \code{list()} is returned.
@@ -31,12 +31,12 @@ A sorted list of the best models found. A "model" is a list with the properties 
 This function evaluates possible VAR models for the given time series data set and returns a sorted list of the best models found. The first item in this list is the "best model" found.
 }
 \details{
-AutovarCore evaluates eight kinds of VAR models: models with and without log transforming the data, lag 1 and lag 2 models, and with and without weekday dummy variables. For each of these 8 model configurations, we evaluate all possible combinations for including outlier dummies (at 2.5x the standard deviation of the residuals) and retain the best model (the procedure for selecting the best model is described in more detail below).
+AutovarCore evaluates eight kinds of VAR models: models with and without log transforming the data, lag 1 and lag 2 models, and with and without weekday dummy variables. For the lag 2 models, all cross-lagged relations are constrained. For each of these 8 model configurations, we evaluate all possible combinations for including outlier dummies (at 2.5x the standard deviation of the residuals) and retain the best model (the procedure for selecting the best model is described in more detail below).
 
 These eight models are further reduced to four models by determining whether adding weekday dummies improves the model fit. AutovarCore does so based first on the significance bucket (determined by the outcomes of the residual tests) and secondly on the AIC/BIC score. If the best model found with weekday dummies is a "better model" than the best model found without weekday dummies, then AutovarCore includes the model with weekday dummies and discards the one without weekday dummies. Otherwise, AutovarCore includes only the model without weekday dummies and discards the one with weekday dummies. Thus, the comparison between models with and without weekday dummies is based on two steps:
 
 \enumerate{
-\item We first consider the significance bucket. If the two models being compared are in different significance buckets, AutovarCore chooses the one with the highest significance bucket, and otherwise proceeds to step 2. The significance buckets are formed between each of the (decreasingly sorted) specified \code{significance_levels} in the parameters to the autovar function call. For example, if the \code{signifance_levels} are \code{c(0.05, 0.01, 0.005)}, then the significance buckets are \code{(0.05 <= x)}, \code{(0.01 <= x < 0.05)}, \code{(0.005 <= x < 0.01)}, and \code{(x < 0.005)}. The metric used to place a model into a bucket is the maximum p-level at which all residual tests will still pass ("pass" meaning not invalidating the model assumptions of independence, homoskedasticity, and normality).
+\item We first consider the significance bucket. If the two models being compared are in different significance buckets, AutovarCore chooses the one with the highest significance bucket, and otherwise proceeds to step 2. The significance buckets are formed between each of the (decreasingly sorted) specified \code{significance_levels} in the parameters to the autovar function call. For example, if the \code{signifance_levels} are \code{c(0.05, 0.01, 0.005)}, then the significance buckets are \code{(0.05 <= x)}, \code{(0.01 <= x < 0.05)}, \code{(0.005 <= x < 0.01)}, and \code{(x < 0.005)}. The metric used to place a model into a bucket is the maximum p-level at which all residual tests will still pass ("pass" meaning not invalidating the model assumptions of independence, homoscedasticity, and normality).
 
 \item When the significance bucket for the two models being compared is the same, AutovarCore selects the model with the lowest AIC/BIC score. Whether the AIC or BIC is used here depends on the \code{criterion} option specified in the parameters to the autovar function call.
 }

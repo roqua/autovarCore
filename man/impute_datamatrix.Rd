@@ -17,7 +17,7 @@ impute_datamatrix(data_matrix, measurements_per_day, imputation_iterations)
 This function returns the modified matrix.
 }
 \description{
-This function uses \code{Amelia::amelia} to try and impute missing (\code{NA}) values in the input data set. Amelia averages over five iterations, which is multiplied by the given \code{imputation_iterations} parameter.
+This function uses \code{Amelia::amelia} to impute missing (\code{NA}) values in the input data set. This function averages over multiple Amelia imputations to obtain more consistent results. The Amelia imputation model uses all variables of the supplied \code{data_matrix}, the first lag of those variables, time, time squared, and day-part dummies.
 }
 \examples{
 # create a matrix with some missing values
