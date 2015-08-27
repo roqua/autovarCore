@@ -57,7 +57,7 @@
     <h2>Arguments</h2>
     <dl>
       <dt>raw_dataframe</dt>
-      <dd>The raw, unimputed data frame. This can include columns other than the <code>selected_column_names</code>, as those may be helpful for the imputation.</dd>
+      <dd>The raw, unimputed data frame. This can include columns other than the <code>selected_column_names</code>, as those may be helpful for the imputation. The measurements in the dataframe are expected to be sorted by time, and to be sequential. Missed measurements should be encoded as rows of <code>NA</code> values and will be imputed by EM imputation.</dd>
       <dt>selected_column_names</dt>
       <dd>The endogenous variables in the models, specified as a vector of character strings. This argument is required. The selected column names should be a subset of the column names of <code>raw_dataframe</code>.</dd>
       <dt>significance_levels</dt>
@@ -69,7 +69,7 @@
       <dt>imputation_iterations</dt>
       <dd>The amount of times the Amelia imputation should be averaged over. The default value for this parameter is <code>100</code>. For details on the Amelia imputation, please see <a href = 'http://r.iq.harvard.edu/docs/amelia/amelia.pdf'>http://r.iq.harvard.edu/docs/amelia/amelia.pdf</a>.</dd>
       <dt>measurements_per_day</dt>
-      <dd>The number of measurements per day in the time series data. The default value for this parameter is <code>1</code>. If this value is <code>0</code>, then daypart- and weekday dummies variables are not included for any models.</dd>
+      <dd>The number of measurements per day in the time series data. The default value for this parameter is <code>1</code>. All models considered include day-part dummy variables if there are multiple measurements per day. If this value is <code>0</code>, then daypart- and weekday dummies variables are not included for any models.</dd>
     </dl>
     
     <div class="Value">
@@ -91,12 +91,12 @@ A sorted list of the best models found. A "model" is a list with the properties 
     <div class="Details">
       <h2>Details</h2>
 
-      <p>AutovarCore evaluates eight kinds of VAR models: models with and without log transforming the data, lag 1 and lag 2 models, and with and without weekday dummy variables. For each of these 8 model configurations, we evaluate all possible combinations for including outlier dummies (at 2.5x the standard deviation of the residuals) and retain the best model (the procedure for selecting the best model is described in more detail below).</p>
+      <p>AutovarCore evaluates eight kinds of VAR models: models with and without log transforming the data, lag 1 and lag 2 models, and with and without weekday dummy variables. For the lag 2 models, all cross-lagged relations are constrained. For each of these 8 model configurations, we evaluate all possible combinations for including outlier dummies (at 2.5x the standard deviation of the residuals) and retain the best model (the procedure for selecting the best model is described in more detail below).</p>
   
       <p>These eight models are further reduced to four models by determining whether adding weekday dummies improves the model fit. AutovarCore does so based first on the significance bucket (determined by the outcomes of the residual tests) and secondly on the AIC/BIC score. If the best model found with weekday dummies is a "better model" than the best model found without weekday dummies, then AutovarCore includes the model with weekday dummies and discards the one without weekday dummies. Otherwise, AutovarCore includes only the model without weekday dummies and discards the one with weekday dummies. Thus, the comparison between models with and without weekday dummies is based on two steps:</p>
   
       <p><ol>
-<li> We first consider the significance bucket. If the two models being compared are in different significance buckets, AutovarCore chooses the one with the highest significance bucket, and otherwise proceeds to step 2. The significance buckets are formed between each of the (decreasingly sorted) specified <code>significance_levels</code> in the parameters to the autovar function call. For example, if the <code>signifance_levels</code> are <code>c(0.05, 0.01, 0.005)</code>, then the significance buckets are <code>(0.05 <= x)</code>, <code>(0.01 <= x < 0.05)</code>, <code>(0.005 <= x < 0.01)</code>, and <code>(x < 0.005)</code>. The metric used to place a model into a bucket is the maximum p-level at which all residual tests will still pass ("pass" meaning not invalidating the model assumptions of independence, homoskedasticity, and normality).</p>
+<li> We first consider the significance bucket. If the two models being compared are in different significance buckets, AutovarCore chooses the one with the highest significance bucket, and otherwise proceeds to step 2. The significance buckets are formed between each of the (decreasingly sorted) specified <code>significance_levels</code> in the parameters to the autovar function call. For example, if the <code>signifance_levels</code> are <code>c(0.05, 0.01, 0.005)</code>, then the significance buckets are <code>(0.05 <= x)</code>, <code>(0.01 <= x < 0.05)</code>, <code>(0.005 <= x < 0.01)</code>, and <code>(x < 0.005)</code>. The metric used to place a model into a bucket is the maximum p-level at which all residual tests will still pass ("pass" meaning not invalidating the model assumptions of independence, homoscedasticity, and normality).</p>
   
       <p></li>
 <li> When the significance bucket for the two models being compared is the same, AutovarCore selects the model with the lowest AIC/BIC score. Whether the AIC or BIC is used here depends on the <code>criterion</code> option specified in the parameters to the autovar function call.
