@@ -180,10 +180,12 @@ evaluate_model <- function(outlier_mask, endo_matrix, exo_matrix, lag, outlier_d
 
 nr_dummy_variables <- function(varest) {
   outlier_dummies <- length(grep("^outlier_[0-9]+$", colnames(varest$datamat)))
-  day_dummies <- length(grep("^day_[0-9]+$", colnames(varest$datamat)))
-  if (day_dummies > 0)
-    day_dummies <- 1
-  outlier_dummies + day_dummies
+  # Do not count day dummies:
+  # day_dummies <- length(grep("^day_[0-9]+$", colnames(varest$datamat)))
+  # if (day_dummies > 0)
+  #   day_dummies <- 1
+  # outlier_dummies + day_dummies
+  outlier_dummies
 }
 
 insert_model_into_list <- function(model, model_list, compare_outliers) {

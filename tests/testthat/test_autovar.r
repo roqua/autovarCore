@@ -144,8 +144,8 @@ test_that('autovar function returns the correct result', {
   expect_equal(class(result), 'list')
   expected_result <- list(list(logtransformed = FALSE, lag = 2, model_score = 889.947044325758, bucket = 0.05, nr_dummy_variables = 0),
                           list(logtransformed = FALSE, lag = 1, model_score = 911.467590883197, bucket = 0.05, nr_dummy_variables = 0),
-                          list(logtransformed = TRUE, lag = 2, model_score = 984.385604338168, bucket = 0.01, nr_dummy_variables = 1),
-                          list(logtransformed = TRUE, lag = 1, model_score = 974.100179278787, bucket = 0.01, nr_dummy_variables = 3))
+                          list(logtransformed = TRUE, lag = 2, model_score = 984.385604338168, bucket = 0.01, nr_dummy_variables = 0),
+                          list(logtransformed = TRUE, lag = 1, model_score = 974.100179278787, bucket = 0.01, nr_dummy_variables = 2))
   for (i in 1:length(expected_result)) {
     expect_equal(result[[i]]$logtransformed, expected_result[[i]]$logtransformed)
     expect_equal(result[[i]]$lag, expected_result[[i]]$lag)
@@ -376,24 +376,24 @@ test_that('evaluate_model_config returns the correct result', {
                                                 1)
   expect_equal(result$model_score, 936.893251367455)
   expect_equal(result$bucket, 0.005)
-  expect_equal(result$nr_dummy_variables, 2)
+  expect_equal(result$nr_dummy_variables, 1)
   expect_equal(result$lag, 1)
   expect_equal(result$logtransformed, FALSE)
 })
 
 test_that('nr_dummy_variables calls its subfunctions correctly', {
   varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'day_1', 'day_2'))))
-  expect_equal(autovarCore:::nr_dummy_variables(varest), 1)
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 0)
   varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'day_1', 'c'))))
-  expect_equal(autovarCore:::nr_dummy_variables(varest), 1)
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 0)
   varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'outlier_1', 'c'))))
   expect_equal(autovarCore:::nr_dummy_variables(varest), 1)
   varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'outlier_2', 'outlier_4'))))
   expect_equal(autovarCore:::nr_dummy_variables(varest), 2)
   varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('day_2', 'outlier_2', 'outlier_4'))))
-  expect_equal(autovarCore:::nr_dummy_variables(varest), 3)
-  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('day_2', 'day_4', 'outlier_3'))))
   expect_equal(autovarCore:::nr_dummy_variables(varest), 2)
+  varest <- list(datamat = matrix(nrow = 40, ncol = 3, dimnames = list(NULL, c('day_2', 'day_4', 'outlier_3'))))
+  expect_equal(autovarCore:::nr_dummy_variables(varest), 1)
 })
 
 test_that('nr_dummy_variables works with 0 dummy variables', {
