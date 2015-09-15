@@ -23,22 +23,19 @@ augmented_correlation_matrix <- function(varsum) {
     return(correlation_matrix)
   nr_rows <- dim(correlation_matrix)[[1]]
   nr_cols <- dim(correlation_matrix)[[2]]
-  aug_correlation_matrix <- matrix(nrow = 2 * nr_rows, ncol = nr_cols)
-  for (i in 1:nr_rows)
-    for (j in 1:nr_cols) {
-      if (i >= j) {
-        aug_correlation_matrix[2 * i - 1, j] <- correlation_matrix[i, j]
-        aug_correlation_matrix[2 * i, j] <- significance_from_pearson_coef(correlation_matrix[i, j], nresids)
-      } else {
-        aug_correlation_matrix[2 * i, j] <- NA
-        aug_correlation_matrix[2 * i - 1, j] <- NA
-      }
-    }
-  dimnames(aug_correlation_matrix)[[2]] <- dimnames(correlation_matrix)[[2]]
   aug_dimnames <- NULL
   for (i in 1:(length(dimnames(correlation_matrix)[[1]])))
     aug_dimnames <- c(aug_dimnames, dimnames(correlation_matrix)[[1]][[i]], "p")
-  dimnames(aug_correlation_matrix)[[1]] <- aug_dimnames
+  aug_correlation_matrix <- matrix(NA, nrow = 2 * nr_rows, ncol = nr_cols,
+                                   dimnames = list(aug_dimnames,
+                                                   dimnames(correlation_matrix)[[2]]))
+  for (i in 1:nr_rows)
+    for (j in 1:nr_cols)
+      if (i >= j) {
+        aug_correlation_matrix[2 * i - 1, j] <- correlation_matrix[i, j]
+        aug_correlation_matrix[2 * i, j] <- significance_from_pearson_coef(correlation_matrix[i, j],
+                                                                           nresids)
+      }
   aug_correlation_matrix
 }
 

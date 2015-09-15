@@ -39,8 +39,33 @@ testdata_data_matrix <- function() {
 
 test_that('print_correlation_matrix returns the correct result', {
   varest <- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
+  expected_result <- summary(varest)$corres
   expect_output({
-    result <<- autovarCore::print_correlation_matrix(varest)
+    result <- autovarCore::print_correlation_matrix(varest)
   }, "Correlation matrix of residuals")
-  #expect_less_than(abs())
+  expect_equal(dim(result),c(6,3))
+  expect_less_than(abs(result[1,1] - expected_result[1,1]), 0.0000001)
+  expect_less_than(abs(result[3,2] - expected_result[2,2]), 0.0000001)
+  expect_less_than(abs(result[5,3] - expected_result[3,3]), 0.0000001)
+  expect_less_than(abs(result[3,1] - expected_result[2,1]), 0.0000001)
+  expect_less_than(abs(result[3,1] - expected_result[1,2]), 0.0000001)
+  expect_less_than(abs(result[5,1] - expected_result[3,1]), 0.0000001)
+  expect_less_than(abs(result[5,1] - expected_result[1,3]), 0.0000001)
+  expect_less_than(abs(result[5,2] - expected_result[3,2]), 0.0000001)
+  expect_less_than(abs(result[5,2] - expected_result[2,3]), 0.0000001)
+  expect_less_than(abs(result[4,1] - 0.20724002), 0.0000001)
+})
+
+test_that('print_correlation_matrix calls its subfunctions correctly', {
+  called_count <<- 0
+  expected_input <- summary(1)
+  with_mock(
+    `autovarCore:::augmented_correlation_matrix` = function(...) {
+      called_count <<- called_count + 1
+      expect_equal(list(...), list(summary(1)))
+      "12345"
+    }, expect_output(expect_equal(autovarCore:::print_correlation_matrix(1), "12345"), "12345")
+  )
+  expect_equal(called_count, 1)
+  rm(list = 'called_count', pos = '.GlobalEnv')
 })
