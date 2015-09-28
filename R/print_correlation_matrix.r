@@ -1,6 +1,6 @@
 #' Print the correlation matrix of the residuals of a model annotated with p-values
 #'
-#' This function prints the correlation matrix of residuals of a model annotated with p-values.
+#' This function prints the correlation matrix of residuals of a model annotated with p-values. This is a lower triangular matrix, in the way that all elements in the upper triangular matrix are \code{NA} and the elementals on the "diagonal" are \code{1} (note that there is not really a diagonal because the matrix is rectangular). The odd rows of the returned matrix contain the correlations while the even rows are the associated p-values. For each correlation in row \code{x}, column \code{y}, its p-value is located in row \code{x+1}, column {y}.
 #' @param varest A \code{varest} model.
 #' @return This function returns the annotated correlation matrix.
 #' @examples
