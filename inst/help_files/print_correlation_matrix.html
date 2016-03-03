@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-<title>assess_skewness. autovarCore 1.0-0</title>
+<title>print_correlation_matrix. autovarCore 1.0-0</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="">
 
@@ -47,12 +47,12 @@
         
       </header>
       
-      <h1>Tests the skewness of a VAR model</h1>
+      <h1>Print the correlation matrix of the residuals of a model annotated with p-values</h1>
 
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>assess_skewness(varest)</div></pre>
+    <pre><div>print_correlation_matrix(varest)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
@@ -64,7 +64,7 @@
       <h2>Value</h2>
 
       <p><dl>
-This function returns a p-level.
+This function returns the annotated correlation matrix.
 </dl></p>
   
     </div>
@@ -72,7 +72,7 @@ This function returns a p-level.
     <div class="Description">
       <h2>Description</h2>
 
-      <p>This function tests the skewness for the residuals of the endogenous variables in the specified VAR model. This function uses an implementation equivalent to STATA's <code>sktest</code>. Of the p-levels resulting from assessing the significance of the skewness for the residuals of that variable, the minimum is returned.</p>
+      <p>This function prints the correlation matrix of residuals of a model annotated with p-values. This is a lower triangular matrix, in the way that all elements in the upper triangular matrix are <code>NA</code> and the elementals on the "diagonal" are <code>1</code> (note that there is not really a diagonal because the matrix is rectangular). The odd rows of the returned matrix contain the correlations while the even rows are the associated p-values. For each correlation in row <code>x</code>, column <code>y</code>, its p-value is located in row <code>x+1</code>, column y.</p>
   
     </div>
     
@@ -81,14 +81,22 @@ This function returns a p-level.
 data_matrix[, ] &lt;- runif(ncol(data_matrix) * nrow(data_matrix), 1, nrow(data_matrix))
 colnames(data_matrix) &lt;- c(&#39;rumination&#39;, &#39;happiness&#39;, &#39;activity&#39;)
 varest &lt;- autovarCore:::run_var(data_matrix, NULL, 1)
-autovarCore:::assess_skewness(varest)
+autovarCore::print_correlation_matrix(varest)
 </div>
-<div class='output'>[1] 0.2950781
+<div class='output'>
+Correlation matrix of residuals:
+           rumination   happiness activity
+rumination 1.00000000          NA       NA
+p          0.00000000          NA       NA
+happiness  0.18157330  1.00000000       NA
+p          0.26861445  0.00000000       NA
+activity   0.14223660 -0.12773168        1
+p          0.38771377  0.43839091        0
 </div></pre>
   </div>
   <div class="span4">
     <!-- <ul>
-      <li>assess_skewness</li>
+      <li>print_correlation_matrix</li>
     </ul>
     <ul>
       

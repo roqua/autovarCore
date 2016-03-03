@@ -52,7 +52,7 @@
 <div class="row">
   <div class="span8">
     <h2>Usage</h2>
-    <pre><div>autovar(raw_dataframe, selected_column_names, significance_levels&nbsp;=&nbsp;c(0.05, 0.01, 0.005), test_names&nbsp;=&nbsp;c("portmanteau", "portmanteau_squared", "skewness"), criterion&nbsp;=&nbsp;"AIC", imputation_iterations&nbsp;=&nbsp;100, measurements_per_day&nbsp;=&nbsp;1)</div></pre>
+    <pre><div>autovar(raw_dataframe, selected_column_names, significance_levels&nbsp;=&nbsp;c(0.05, 0.01, 0.005), test_names&nbsp;=&nbsp;c("portmanteau", "portmanteau_squared", "skewness"), criterion&nbsp;=&nbsp;"BIC", imputation_iterations&nbsp;=&nbsp;100, measurements_per_day&nbsp;=&nbsp;1)</div></pre>
     
     <h2>Arguments</h2>
     <dl>
@@ -65,7 +65,7 @@
       <dt>test_names</dt>
       <dd>The residual tests that should be performed, specified as a vector of character strings. If not specified, this parameter defaults to <code>c('portmanteau', 'portmanteau_squared', 'skewness')</code>, which are used to test the assumptions of independence, homoscedasticity, and normality, respectively. The possible tests are <code>c('portmanteau', 'portmanteau_squared', 'skewness', 'kurtosis', 'joint_sktest')</code>. In addition to the residual tests, please note that the Eigenvalue stability test is always performed.</dd>
       <dt>criterion</dt>
-      <dd>The information criterion used to sort the models. Valid options are 'AIC' (the default) or 'BIC'.</dd>
+      <dd>The information criterion used to sort the models. Valid options are 'BIC' (the default) or 'AIC'.</dd>
       <dt>imputation_iterations</dt>
       <dd>The amount of times the Amelia imputation should be averaged over. The default value for this parameter is <code>100</code>. For details on the Amelia imputation, please see <a href = 'http://r.iq.harvard.edu/docs/amelia/amelia.pdf'>http://r.iq.harvard.edu/docs/amelia/amelia.pdf</a>.</dd>
       <dt>measurements_per_day</dt>
