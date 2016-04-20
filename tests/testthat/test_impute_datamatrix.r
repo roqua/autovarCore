@@ -83,6 +83,15 @@ test_that('impute_datamatrix is able to handle constant columns', {
   expect_equal(sum(is.na(imputed_matrix)), 0)
 })
 
+test_that('impute_datamatrix is able to handle all columns being constant or NA', {
+  input_matrix <- matrix(5, nrow = 40, ncol = 3, dimnames = list(NULL, c('a', 'b', 'c')))
+  input_matrix[, 1] <- NA
+  expect_error(autovarCore:::impute_datamatrix(input_matrix,
+                                               1,
+                                               test_imputation_iterations),
+               "Could not impute all columns")
+})
+
 test_that('impute_datamatrix is able to handle some columns not having missing values', {
   input_matrix <- testdata_matrix_with_missings()
   without_missing_data <- testdata_matrix_without_missings()
