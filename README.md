@@ -10,7 +10,7 @@ To install, type the following:
     install.packages('devtools')
     devtools::install_github('roqua/autovarCore')
 
-For more information on Autovar, see [autovar.nl](https://autovar.nl).
+For more information on Autovar, see [autovar.nl](https://autovar.nl). Help documentation for AutovarCore can be found on [autovarcore.nl](http://autovarcore.nl).
 
 
 #### Should I use Autovar or AutovarCore?
