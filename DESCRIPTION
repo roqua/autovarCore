@@ -22,7 +22,8 @@ License: MIT + file LICENSE
 Suggests:
     testthat,
     roxygen2
-Imports: Rcpp (>= 0.11.4),
+Imports:
+    Rcpp (>= 0.11.4),
     Amelia,
     jsonlite,
     parallel,
@@ -30,3 +31,4 @@ Imports: Rcpp (>= 0.11.4),
     urca,
     vars
 LinkingTo: Rcpp
+RoxygenNote: 5.0.1

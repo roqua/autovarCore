@@ -1,6 +1,7 @@
 useDynLib(autovarCore)
 export(autovar)
 export(print_correlation_matrix)
+export(impute_datamatrix)
 importFrom(Rcpp, evalCpp)
 importFrom(Amelia, amelia)
 importFrom(jsonlite, toJSON)
