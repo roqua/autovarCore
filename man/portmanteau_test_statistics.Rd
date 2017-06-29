@@ -12,4 +12,3 @@ portmanteau_test_statistics(matrix)
 \description{
 See the paper of Ljung-Box test for the used definition of autocorrelation.
 }
-

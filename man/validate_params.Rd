@@ -34,4 +34,3 @@ autovarCore:::validate_params(data_matrix,
                               list(selected_column_names = c('tijdstip', 'home'),
                                    imputation_iterations = 20))
 }
-

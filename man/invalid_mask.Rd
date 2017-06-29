@@ -23,4 +23,3 @@ resid_matrix <- matrix(rnorm(39 * 3),
 outlier_dummies <- autovarCore:::residual_outliers(resid_matrix, 40)
 autovarCore:::invalid_mask(outlier_dummies)
 }
-

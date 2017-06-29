@@ -26,4 +26,3 @@ outlier_dummies[, 3] <- c(1, 0, 0, 0, 1)
 outlier_dummies
 autovarCore:::explode_dummies(outlier_dummies)
 }
-

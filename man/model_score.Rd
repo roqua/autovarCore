@@ -26,4 +26,3 @@ colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 autovarCore:::model_score(varest, 'AIC', FALSE)
 }
-

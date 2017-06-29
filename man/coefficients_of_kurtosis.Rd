@@ -12,4 +12,3 @@ coefficients_of_kurtosis(matrix)
 \description{
 Kurtosis coefficients.
 }
-
