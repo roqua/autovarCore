@@ -36,7 +36,7 @@ test_that('impute_datamatrix works for a column with just one value not NA', {
   input_matrix <- testdata_matrix_with_missings()
   input_matrix[2, 3] <- 27
   # Assert that there actually are missings:
-  expect_more_than(sum(is.na(input_matrix)), 0)
+  expect_gt(sum(is.na(input_matrix)), 0)
   expect_equal(sum(is.na(autovarCore:::impute_datamatrix(input_matrix,
                                                          3,
                                                          test_imputation_iterations))),
@@ -46,7 +46,7 @@ test_that('impute_datamatrix works for a column with just one value not NA', {
 test_that('impute_datamatrix imputes all missing values', {
   input_matrix <- testdata_matrix_with_missings()
   # Assert that there actually are missings:
-  expect_more_than(sum(is.na(input_matrix)), 0)
+  expect_gt(sum(is.na(input_matrix)), 0)
   expect_equal(sum(is.na(autovarCore:::impute_datamatrix(input_matrix,
                                                          1,
                                                          1))),
@@ -60,7 +60,7 @@ test_that('impute_datamatrix imputes all missing values', {
 
 test_that('impute_datamatrix does not change non missings', {
   input_matrix <- testdata_matrix_with_missings()
-  expect_less_than(sum(abs(input_matrix -
+  expect_lt(sum(abs(input_matrix -
                            autovarCore:::impute_datamatrix(input_matrix,
                                                            1,
                                                            test_imputation_iterations)),
@@ -73,13 +73,13 @@ test_that('impute_datamatrix is able to handle constant columns', {
   imputed_matrix <- autovarCore:::impute_datamatrix(input_matrix,
                                                     1,
                                                     test_imputation_iterations)
-  expect_less_than(sum(abs(input_matrix - imputed_matrix), na.rm = TRUE), 0.0001)
+  expect_lt(sum(abs(input_matrix - imputed_matrix), na.rm = TRUE), 0.0001)
   expect_equal(sum(is.na(imputed_matrix)), 0)
   input_matrix[c(1, 9, 23, 36), 'happiness'] <- NA
   imputed_matrix <- autovarCore:::impute_datamatrix(input_matrix,
                                                     1,
                                                     test_imputation_iterations)
-  expect_less_than(sum(abs(input_matrix - imputed_matrix), na.rm = TRUE), 0.0001)
+  expect_lt(sum(abs(input_matrix - imputed_matrix), na.rm = TRUE), 0.0001)
   expect_equal(sum(is.na(imputed_matrix)), 0)
 })
 
@@ -99,13 +99,13 @@ test_that('impute_datamatrix is able to handle some columns not having missing v
   imputed_matrix <- autovarCore:::impute_datamatrix(input_matrix,
                                                     1,
                                                     test_imputation_iterations)
-  expect_less_than(sum(abs(input_matrix - imputed_matrix), na.rm = TRUE), 0.0001)
+  expect_lt(sum(abs(input_matrix - imputed_matrix), na.rm = TRUE), 0.0001)
   expect_equal(sum(is.na(imputed_matrix)), 0)
   input_matrix[, 'activity'] <- without_missing_data[, 'activity']
   imputed_matrix <- autovarCore:::impute_datamatrix(input_matrix,
                                                     1,
                                                     test_imputation_iterations)
-  expect_less_than(sum(abs(input_matrix - imputed_matrix), na.rm = TRUE), 0.0001)
+  expect_lt(sum(abs(input_matrix - imputed_matrix), na.rm = TRUE), 0.0001)
   expect_equal(sum(is.na(imputed_matrix)), 0)
 })
 

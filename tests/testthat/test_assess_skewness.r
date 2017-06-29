@@ -39,7 +39,7 @@ testdata_data_matrix <- function() {
 
 test_that('assess_skewness returns the correct result', {
   varest <- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
-  expect_less_than(abs(autovarCore:::assess_skewness(varest) - 0.3871345), 0.0000001)
+  expect_lt(abs(autovarCore:::assess_skewness(varest) - 0.3871345), 0.0000001)
 })
 
 test_that('assess_skewness calls its subfunctions', {
@@ -59,7 +59,7 @@ test_that('assess_skewness calls its subfunctions', {
       expect_equal(list(...), list(skewness_coeffs[called_count_z_skewness], 39))
       z_skewnesses[called_count_z_skewness]
     },
-    expect_less_than(abs(autovarCore:::assess_skewness(varest) - 0.07186064), 0.0000001)
+    expect_lt(abs(autovarCore:::assess_skewness(varest) - 0.07186064), 0.0000001)
   )
   expect_equal(called_count_coefficients, 1)
   expect_equal(called_count_z_skewness, 3)
