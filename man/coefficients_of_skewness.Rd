@@ -12,4 +12,3 @@ coefficients_of_skewness(matrix)
 \description{
 Skewness coefficients.
 }
-

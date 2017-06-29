@@ -39,7 +39,7 @@ testdata_data_matrix <- function() {
 
 test_that('assess_portmanteau_squared returns the correct result', {
   varest <- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
-  expect_less_than(abs(autovarCore:::assess_portmanteau_squared(varest) - 0.1012259), 0.0000001)
+  expect_lt(abs(autovarCore:::assess_portmanteau_squared(varest) - 0.1012259), 0.0000001)
 })
 
 test_that('assess_portmanteau_squared calls its subfunctions', {

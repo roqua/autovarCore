@@ -29,4 +29,3 @@ colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 data_matrix
 autovarCore:::impute_datamatrix(data_matrix, 1, 100)
 }
-

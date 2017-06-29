@@ -39,7 +39,7 @@ testdata_data_matrix <- function() {
 
 test_that('assess_joint_sktest returns the correct result', {
   varest <- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
-  expect_less_than(abs(autovarCore:::assess_joint_sktest(varest) - 0.002976649), 0.0000001)
+  expect_lt(abs(autovarCore:::assess_joint_sktest(varest) - 0.002976649), 0.0000001)
 })
 
 test_that('assess_joint_sktest calls its subfunctions', {
@@ -73,7 +73,7 @@ test_that('assess_joint_sktest calls its subfunctions', {
       expect_equal(list(...), list(kurtosis_coeffs[called_count_z_kurtosis], 39))
       z_kurtosises[called_count_z_kurtosis]
     },
-    expect_less_than(abs(autovarCore:::assess_joint_sktest(varest) - 0.0786804), 0.0000001)
+    expect_lt(abs(autovarCore:::assess_joint_sktest(varest) - 0.0786804), 0.0000001)
   )
   expect_equal(called_count_coef_skew, 1)
   expect_equal(called_count_z_skewness, 3)

@@ -69,4 +69,3 @@ autovar(dataframe, selected_column_names = c('rumination', 'happiness'),
                    measurements_per_day = 1)
 }
 }
-

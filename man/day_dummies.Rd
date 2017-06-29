@@ -20,4 +20,3 @@ This function returns either \code{NULL} (if \code{measurements_per_day} is 0) o
 \examples{
 autovarCore:::day_dummies(16, 2)
 }
-

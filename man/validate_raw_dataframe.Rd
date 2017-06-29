@@ -21,4 +21,3 @@ raw_dataframe <- data.frame(id = rep(1, times = 5),
   home = c(1, 0, 0, NA, 1))
 autovarCore:::validate_raw_dataframe(raw_dataframe)
 }
-

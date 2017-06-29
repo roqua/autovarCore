@@ -29,4 +29,3 @@ resid_matrix[27, 3] <- 75
 resid_matrix
 autovarCore:::residual_outliers(resid_matrix, 40)
 }
-

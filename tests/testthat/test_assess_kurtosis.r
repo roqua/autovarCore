@@ -39,7 +39,7 @@ testdata_data_matrix <- function() {
 
 test_that('assess_kurtosis returns the correct result', {
   varest <- autovarCore:::run_var(testdata_data_matrix(), NULL, 1)
-  expect_less_than(abs(autovarCore:::assess_kurtosis(varest) - 0.0002066028), 0.0000001)
+  expect_lt(abs(autovarCore:::assess_kurtosis(varest) - 0.0002066028), 0.0000001)
 })
 
 test_that('assess_kurtosis calls its subfunctions', {
@@ -59,7 +59,7 @@ test_that('assess_kurtosis calls its subfunctions', {
       expect_equal(list(...), list(kurtosis_coeffs[called_count_z_kurtosis], 39))
       z_kurtosises[called_count_z_kurtosis]
     },
-    expect_less_than(abs(autovarCore:::assess_kurtosis(varest) - 0.07186064), 0.0000001)
+    expect_lt(abs(autovarCore:::assess_kurtosis(varest) - 0.07186064), 0.0000001)
   )
   expect_equal(called_count_coefficients, 1)
   expect_equal(called_count_z_kurtosis, 3)

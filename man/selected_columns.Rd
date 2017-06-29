@@ -19,4 +19,3 @@ This function returns an ordered vector of all the 1-toggled bits in the outlier
 outlier_mask <- 7
 autovarCore:::selected_columns(outlier_mask)
 }
-

@@ -25,4 +25,3 @@ colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 data_matrix
 autovarCore:::needs_trend(data_matrix, 1)
 }
-

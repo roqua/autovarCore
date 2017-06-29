@@ -18,4 +18,3 @@ This function returns a matrix of linear and quadratic trends.
 \examples{
 autovarCore:::trend_columns(10)
 }
-
