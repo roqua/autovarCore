@@ -124,36 +124,37 @@ testdata_trend_columns <- function() {
             .Dim = c(40L, 2L), .Dimnames = list(NULL, c("index", "index2")))
 }
 
-test_that('autovar function returns the correct result', {
-  with_mock(
-    `parallel::clusterMap` = function(cluster, ...) {
-      mapply(...)
-    },
-    `parallel::makeCluster` = function(...) {
-      NULL
-    },
-    `parallel::stopCluster` = function(...) {
-      NULL
-    },
-    result <- autovar(testdata_raw_dataframe(),
-                         selected_column_names = c('rumination',
-                                                   'happiness',
-                                                   'activity'),
-                         imputation_iterations = 1)
-  )
-  expect_equal(class(result), 'list')
-  expected_result <- list(list(logtransformed = FALSE, lag = 2, model_score = 889.947044325758, bucket = 0.05, nr_dummy_variables = 0),
-                          list(logtransformed = FALSE, lag = 1, model_score = 911.467590883197, bucket = 0.05, nr_dummy_variables = 0),
-                          list(logtransformed = TRUE, lag = 2, model_score = 984.385604338168, bucket = 0.01, nr_dummy_variables = 0),
-                          list(logtransformed = TRUE, lag = 1, model_score = 974.100179278787, bucket = 0.01, nr_dummy_variables = 2))
-  for (i in 1:length(expected_result)) {
-    expect_equal(result[[i]]$logtransformed, expected_result[[i]]$logtransformed)
-    expect_equal(result[[i]]$lag, expected_result[[i]]$lag)
-    expect_equal(result[[i]]$bucket, expected_result[[i]]$bucket)
-    expect_equal(result[[i]]$nr_dummy_variables, expected_result[[i]]$nr_dummy_variables)
-    expect_equal(class(result[[i]]$varest), 'varest')
-  }
-})
+# test_that('autovar function returns the correct result', {
+  # Commented out because we can't mock base functions and trying to set up a cluster during a test doesn't work on all architectures.
+  # with_mock(
+  #   `parallel::clusterMap` = function(cluster, ...) {
+  #     mapply(...)
+  #   },
+  #   `parallel::makeCluster` = function(...) {
+  #     NULL
+  #   },
+  #   `parallel::stopCluster` = function(...) {
+  #     NULL
+  #   },
+  #   result <- autovar(testdata_raw_dataframe(),
+  #                        selected_column_names = c('rumination',
+  #                                                  'happiness',
+  #                                                  'activity'),
+  #                        imputation_iterations = 1)
+  # )
+  # expect_equal(class(result), 'list')
+  # expected_result <- list(list(logtransformed = FALSE, lag = 2, model_score = 889.947044325758, bucket = 0.05, nr_dummy_variables = 0),
+  #                         list(logtransformed = FALSE, lag = 1, model_score = 911.467590883197, bucket = 0.05, nr_dummy_variables = 0),
+  #                         list(logtransformed = TRUE, lag = 2, model_score = 984.385604338168, bucket = 0.01, nr_dummy_variables = 0),
+  #                         list(logtransformed = TRUE, lag = 1, model_score = 974.100179278787, bucket = 0.01, nr_dummy_variables = 2))
+  # for (i in 1:length(expected_result)) {
+  #   expect_equal(result[[i]]$logtransformed, expected_result[[i]]$logtransformed)
+  #   expect_equal(result[[i]]$lag, expected_result[[i]]$lag)
+  #   expect_equal(result[[i]]$bucket, expected_result[[i]]$bucket)
+  #   expect_equal(result[[i]]$nr_dummy_variables, expected_result[[i]]$nr_dummy_variables)
+  #   expect_equal(class(result[[i]]$varest), 'varest')
+  # }
+# })
 
 
 test_that('evaluate_model_config calls its subfunctions correctly without daydummies and trend', {

@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // coefficients_of_kurtosis
 NumericVector coefficients_of_kurtosis(NumericMatrix matrix);
-RcppExport SEXP autovarCore_coefficients_of_kurtosis(SEXP matrixSEXP) {
+RcppExport SEXP _autovarCore_coefficients_of_kurtosis(SEXP matrixSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -18,7 +18,7 @@ END_RCPP
 }
 // coefficients_of_skewness
 NumericVector coefficients_of_skewness(NumericMatrix matrix);
-RcppExport SEXP autovarCore_coefficients_of_skewness(SEXP matrixSEXP) {
+RcppExport SEXP _autovarCore_coefficients_of_skewness(SEXP matrixSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -29,7 +29,7 @@ END_RCPP
 }
 // portmanteau_test_statistics
 NumericVector portmanteau_test_statistics(NumericMatrix matrix);
-RcppExport SEXP autovarCore_portmanteau_test_statistics(SEXP matrixSEXP) {
+RcppExport SEXP _autovarCore_portmanteau_test_statistics(SEXP matrixSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -40,9 +40,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"autovarCore_coefficients_of_kurtosis", (DL_FUNC) &autovarCore_coefficients_of_kurtosis, 1},
-    {"autovarCore_coefficients_of_skewness", (DL_FUNC) &autovarCore_coefficients_of_skewness, 1},
-    {"autovarCore_portmanteau_test_statistics", (DL_FUNC) &autovarCore_portmanteau_test_statistics, 1},
+    {"_autovarCore_coefficients_of_kurtosis", (DL_FUNC) &_autovarCore_coefficients_of_kurtosis, 1},
+    {"_autovarCore_coefficients_of_skewness", (DL_FUNC) &_autovarCore_coefficients_of_skewness, 1},
+    {"_autovarCore_portmanteau_test_statistics", (DL_FUNC) &_autovarCore_portmanteau_test_statistics, 1},
     {NULL, NULL, 0}
 };
 

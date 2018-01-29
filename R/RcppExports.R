@@ -6,7 +6,7 @@
 #' @param matrix the matrix of residuals.
 #' @export
 coefficients_of_kurtosis <- function(matrix) {
-    .Call('autovarCore_coefficients_of_kurtosis', PACKAGE = 'autovarCore', matrix)
+    .Call('_autovarCore_coefficients_of_kurtosis', PACKAGE = 'autovarCore', matrix)
 }
 
 #' Skewness coefficients.
@@ -14,7 +14,7 @@ coefficients_of_kurtosis <- function(matrix) {
 #' @param matrix the matrix of residuals.
 #' @export
 coefficients_of_skewness <- function(matrix) {
-    .Call('autovarCore_coefficients_of_skewness', PACKAGE = 'autovarCore', matrix)
+    .Call('_autovarCore_coefficients_of_skewness', PACKAGE = 'autovarCore', matrix)
 }
 
 #' An implementation of the portmanteau test.
@@ -24,6 +24,6 @@ coefficients_of_skewness <- function(matrix) {
 #' @param matrix the matrix of residuals or squared residuals.
 #' @export
 portmanteau_test_statistics <- function(matrix) {
-    .Call('autovarCore_portmanteau_test_statistics', PACKAGE = 'autovarCore', matrix)
+    .Call('_autovarCore_portmanteau_test_statistics', PACKAGE = 'autovarCore', matrix)
 }
 
