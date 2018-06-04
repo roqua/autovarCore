@@ -33,6 +33,9 @@ assess_joint_sktest <- function(varest) {
 
 #' SK test p-level
 #'
+#' @param Z1 The Z score for skewness.
+#' @param Z2 The Z score for kurtosis.
+#' @param n The number of rows in the residuals column.
 #' @importFrom stats pnorm
 #' @importFrom stats qnorm
 sktest_joint_p <- function(Z1, Z2, n) {

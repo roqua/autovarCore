@@ -2,10 +2,15 @@
 % Please edit documentation in R/print_correlation_matrix.r
 \name{significance_from_pearson_coef}
 \alias{significance_from_pearson_coef}
-\title{Calculate the significance of a Pearson correlation}
+\title{Calculate the significance of a Pearson correlation coefficient}
 \usage{
 significance_from_pearson_coef(p, n)
 }
+\arguments{
+\item{p}{The Pearson cofficient.}
+
+\item{n}{The degrees of freedom.}
+}
 \description{
-Calculate the significance of a Pearson correlation
+Calculate the significance of a Pearson correlation coefficient
 }

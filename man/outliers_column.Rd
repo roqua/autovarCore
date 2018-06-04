@@ -2,10 +2,17 @@
 % Please edit documentation in R/residual_outliers.r
 \name{outliers_column}
 \alias{outliers_column}
-\title{Determine the outliers column}
+\title{Determine the outliers column for the given column data}
 \usage{
 outliers_column(column_data, number_of_rows, std_factor)
 }
+\arguments{
+\item{column_data}{The column with data.}
+
+\item{number_of_rows}{The number of rows that the returned outliers column should have.}
+
+\item{std_factor}{The factor multiplied with the standard deviation that determines the threshold for the distance away from the mean at which data points switch over to outliers.}
+}
 \description{
-Determine the outliers column
+Determine the outliers column for the given column data
 }

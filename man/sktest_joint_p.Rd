@@ -6,6 +6,13 @@
 \usage{
 sktest_joint_p(Z1, Z2, n)
 }
+\arguments{
+\item{Z1}{The Z score for skewness.}
+
+\item{Z2}{The Z score for kurtosis.}
+
+\item{n}{The number of rows in the residuals column.}
+}
 \description{
 SK test p-level
 }

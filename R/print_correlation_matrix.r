@@ -40,8 +40,10 @@ augmented_correlation_matrix <- function(varsum) {
   aug_correlation_matrix
 }
 
-#' Calculate the significance of a Pearson correlation
+#' Calculate the significance of a Pearson correlation coefficient
 #'
+#' @param p The Pearson cofficient.
+#' @param n The degrees of freedom.
 #' @importFrom stats pt
 significance_from_pearson_coef <- function(p, n) {
   2 * pt(abs(p) * sqrt(n - 2) / sqrt(1 - (p * p)), n - 2, lower.tail = FALSE)

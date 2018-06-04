@@ -52,6 +52,7 @@
 #' @importFrom parallel clusterMap
 #' @importFrom parallel stopCluster
 #' @importFrom stats residuals
+#' @useDynLib autovarCore
 #' @export
 autovar <- function(raw_dataframe, selected_column_names, significance_levels = c(0.05, 0.01, 0.005),
                     test_names = c('portmanteau', 'portmanteau_squared', 'skewness'),
