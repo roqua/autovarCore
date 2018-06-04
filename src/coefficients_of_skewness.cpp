@@ -5,7 +5,6 @@ using namespace Rcpp;
 //' Skewness coefficients.
 //'
 //' @param matrix the matrix of residuals.
-//' @export
 // [[Rcpp::export]]
 NumericVector coefficients_of_skewness(NumericMatrix matrix) {
   int nrows = matrix.nrow(), ncols = matrix.ncol();

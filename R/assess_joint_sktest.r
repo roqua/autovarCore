@@ -9,6 +9,7 @@
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore:::assess_joint_sktest(varest)
+#' @importFrom stats resid
 assess_joint_sktest <- function(varest) {
   resids <- unname(resid(varest))
   nr_cols <- ncol(resids)
@@ -30,6 +31,10 @@ assess_joint_sktest <- function(varest) {
   minimum_p_level_sktest
 }
 
+#' SK test p-level
+#'
+#' @importFrom stats pnorm
+#' @importFrom stats qnorm
 sktest_joint_p <- function(Z1, Z2, n) {
   K2 <- Z1 * Z1 + Z2 * Z2
   ZC2 <- -qnorm(exp(-0.5 * K2))

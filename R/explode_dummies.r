@@ -13,7 +13,6 @@
 #' outlier_dummies[, 3] <- c(1, 0, 0, 0, 1)
 #' outlier_dummies
 #' autovarCore:::explode_dummies(outlier_dummies)
-#' @export
 explode_dummies <- function(outlier_dummies) {
   merged_vector <- merge_columns(outlier_dummies)
   result <- NULL

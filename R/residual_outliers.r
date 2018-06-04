@@ -15,7 +15,6 @@
 #' resid_matrix[27, 3] <- 75
 #' resid_matrix
 #' autovarCore:::residual_outliers(resid_matrix, 40)
-#' @export
 residual_outliers <- function(resid_matrix, number_of_rows) {
   result <- matrix(NA,
                    ncol = ncol(resid_matrix),
@@ -47,6 +46,9 @@ squared_outliers_column <- function(resid_column, number_of_rows) {
                   std_factor_for_squared_outliers())
 }
 
+#' Determine the outliers column
+#'
+#' @importFrom stats sd
 outliers_column <- function(column_data, number_of_rows, std_factor) {
   result <- as.numeric(abs(column_data - mean(column_data)) > std_factor * sd(column_data))
   if (length(result) < number_of_rows)

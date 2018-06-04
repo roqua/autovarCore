@@ -6,7 +6,6 @@
 #' @return Either \code{NULL} or a matrix with \code{number_of_rows} rows and \code{measurements_per_day - 1} columns.
 #' @examples
 #' autovarCore:::daypart_dummies(10, 3)
-#' @export
 daypart_dummies <- function(number_of_rows, measurements_per_day) {
   if (measurements_per_day == 0 || measurements_per_day == 1)
     return(NULL)

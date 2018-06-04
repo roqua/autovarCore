@@ -5,7 +5,6 @@ using namespace Rcpp;
 //' Kurtosis coefficients.
 //'
 //' @param matrix the matrix of residuals.
-//' @export
 // [[Rcpp::export]]
 NumericVector coefficients_of_kurtosis(NumericMatrix matrix) {
   int nrows = matrix.nrow(), ncols = matrix.ncol();

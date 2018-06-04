@@ -4,7 +4,6 @@
 #' Kurtosis coefficients.
 #'
 #' @param matrix the matrix of residuals.
-#' @export
 coefficients_of_kurtosis <- function(matrix) {
     .Call('_autovarCore_coefficients_of_kurtosis', PACKAGE = 'autovarCore', matrix)
 }
@@ -12,7 +11,6 @@ coefficients_of_kurtosis <- function(matrix) {
 #' Skewness coefficients.
 #'
 #' @param matrix the matrix of residuals.
-#' @export
 coefficients_of_skewness <- function(matrix) {
     .Call('_autovarCore_coefficients_of_skewness', PACKAGE = 'autovarCore', matrix)
 }
@@ -22,7 +20,6 @@ coefficients_of_skewness <- function(matrix) {
 #' See the paper of Ljung-Box test for the used definition of autocorrelation.
 #'
 #' @param matrix the matrix of residuals or squared residuals.
-#' @export
 portmanteau_test_statistics <- function(matrix) {
     .Call('_autovarCore_portmanteau_test_statistics', PACKAGE = 'autovarCore', matrix)
 }

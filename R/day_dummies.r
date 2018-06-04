@@ -6,7 +6,6 @@
 #' @return Either \code{NULL} or a matrix with \code{number_of_rows} rows and \code{6} columns.
 #' @examples
 #' autovarCore:::day_dummies(16, 2)
-#' @export
 day_dummies <- function(number_of_rows, measurements_per_day) {
   if (measurements_per_day == 0)
     return(NULL)

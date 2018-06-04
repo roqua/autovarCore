@@ -5,7 +5,6 @@
 #' @return A matrix with \code{number_of_rows} rows and 2 columns, one for linear trends and one for quadratic trends.
 #' @examples
 #' autovarCore:::trend_columns(10)
-#' @export
 trend_columns <- function(number_of_rows) {
   result <- NULL
   result <- add_linear_trend(result, number_of_rows)

@@ -8,7 +8,6 @@
 #' all_outlier_masks <- c(0, 1, 2, 3, 4, 5, 6, 7)
 #' invalid_mask <- 1
 #' autovarCore:::select_valid_masks(all_outlier_masks, invalid_mask)
-#' @export
 select_valid_masks <- function(all_outlier_masks, invalid_mask) {
   if (invalid_mask == 0)
     return(all_outlier_masks)

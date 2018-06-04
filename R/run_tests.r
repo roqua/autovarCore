@@ -10,7 +10,6 @@
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore:::run_tests(varest, 'portmanteau')
-#' @export
 run_tests <- function(varest, test_names) {
   results <- NULL
   for (test_name in test_names)

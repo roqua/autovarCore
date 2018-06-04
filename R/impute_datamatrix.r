@@ -14,6 +14,8 @@
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' data_matrix
 #' autovarCore:::impute_datamatrix(data_matrix, 1, 100)
+#' @importFrom Amelia amelia
+#' @importFrom stats var
 #' @export
 impute_datamatrix <- function(data_matrix, measurements_per_day, imputation_iterations) {
   # precondition: imputation_iterations > 0. This precondition is met by validate_params.
