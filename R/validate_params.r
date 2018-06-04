@@ -20,7 +20,6 @@
 #' autovarCore:::validate_params(data_matrix,
 #'                               list(selected_column_names = c('tijdstip', 'home'),
 #'                                    imputation_iterations = 20))
-#' @export
 validate_params <- function(data_matrix, params) {
   # precondition: dat_matrix is assumed to be a valid data set
   #               and is not validated here (it is validated in validate_raw_dataframe)

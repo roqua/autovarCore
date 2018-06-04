@@ -10,7 +10,6 @@
 #'                        dimnames = list(NULL, c('rumination', 'happiness', 'activity')))
 #' outlier_dummies <- autovarCore:::residual_outliers(resid_matrix, 40)
 #' autovarCore:::invalid_mask(outlier_dummies)
-#' @export
 invalid_mask <- function(outlier_dummies) {
   result <- 0
   for (column_index in 1:ncol(outlier_dummies))

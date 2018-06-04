@@ -9,6 +9,7 @@
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore::print_correlation_matrix(varest)
+#' @export
 print_correlation_matrix <- function(varest) {
   aug_correlation_matrix <- augmented_correlation_matrix(summary(varest))
   cat("\nCorrelation matrix of residuals:\n")
@@ -39,6 +40,11 @@ augmented_correlation_matrix <- function(varsum) {
   aug_correlation_matrix
 }
 
+#' Calculate the significance of a Pearson correlation coefficient
+#'
+#' @param p The Pearson cofficient.
+#' @param n The degrees of freedom.
+#' @importFrom stats pt
 significance_from_pearson_coef <- function(p, n) {
   2 * pt(abs(p) * sqrt(n - 2) / sqrt(1 - (p * p)), n - 2, lower.tail = FALSE)
 }

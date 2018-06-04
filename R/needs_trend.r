@@ -11,7 +11,7 @@
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' data_matrix
 #' autovarCore:::needs_trend(data_matrix, 1)
-#' @export
+#' @importFrom urca ur.pp
 needs_trend <- function(endo_matrix, lag) {
   for (column_index in 1:ncol(endo_matrix))
     if (column_needs_trend(endo_matrix[, column_index], lag))

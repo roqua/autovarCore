@@ -9,7 +9,8 @@
 #' endo_matrix <- matrix(rnorm(120), ncol = 2, nrow = 60,
 #'                       dimnames = list(NULL, c("rumination", "activity")))
 #' autovarCore:::run_var(endo_matrix, NULL, 1)
-#' @export
+#' @importFrom vars VAR
+#' @importFrom vars restrict
 run_var <- function(endo_matrix, exo_matrix, lag) {
   varest <- VAR(y = endo_matrix, p = max(lag, 1), exogen = exo_matrix)
   resmat_ncol <- length(colnames(varest$datamat)[!(colnames(varest$datamat) %in% colnames(varest$y))])

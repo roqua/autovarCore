@@ -9,6 +9,8 @@
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore:::assess_portmanteau(varest)
+#' @importFrom stats resid
+#' @importFrom stats pchisq
 assess_portmanteau <- function(varest) {
   data <- unname(resid(varest))
   portmanteau_test_data(data)

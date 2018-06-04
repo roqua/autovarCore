@@ -7,7 +7,6 @@
 #' data_matrix <- matrix(1:10, dimnames = list(NULL, 'some_val'))
 #' data_matrix
 #' autovarCore:::apply_ln_transformation(data_matrix)
-#' @export
 apply_ln_transformation <- function(data_matrix) {
   for (column_index in 1:ncol(data_matrix))
     data_matrix[, column_index] <- ln_column(data_matrix[, column_index])

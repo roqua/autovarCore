@@ -6,7 +6,6 @@ using namespace Rcpp;
 //' See the paper of Ljung-Box test for the used definition of autocorrelation.
 //'
 //' @param matrix the matrix of residuals or squared residuals.
-//' @export
 // [[Rcpp::export]]
 NumericVector portmanteau_test_statistics(NumericMatrix matrix) {
   int nrows = matrix.nrow(), ncols = matrix.ncol();

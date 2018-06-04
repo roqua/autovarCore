@@ -6,7 +6,6 @@
 #' @examples
 #' outlier_mask <- 7
 #' autovarCore:::selected_columns(outlier_mask)
-#' @export
 selected_columns <- function(outlier_mask) {
   result <- NULL
   for (column_index in 1:31)

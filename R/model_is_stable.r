@@ -9,7 +9,7 @@
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore:::model_is_stable(varest)
-#' @export
+#' @importFrom vars roots
 model_is_stable <- function(varest) {
   modulus_eigen_values <- roots(varest, modulus = TRUE)
   all(modulus_eigen_values < 1)

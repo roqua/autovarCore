@@ -9,6 +9,8 @@
 #' colnames(data_matrix) <- c('rumination', 'happiness', 'activity')
 #' varest <- autovarCore:::run_var(data_matrix, NULL, 1)
 #' autovarCore:::assess_kurtosis(varest)
+#' @importFrom stats resid
+#' @importFrom stats pnorm
 assess_kurtosis <- function(varest) {
   resids <- unname(resid(varest))
   nr_cols <- ncol(resids)

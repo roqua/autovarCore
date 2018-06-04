@@ -15,7 +15,6 @@
 #' resid_matrix[27, 3] <- 75
 #' resid_matrix
 #' autovarCore:::residual_outliers(resid_matrix, 40)
-#' @export
 residual_outliers <- function(resid_matrix, number_of_rows) {
   result <- matrix(NA,
                    ncol = ncol(resid_matrix),
@@ -47,6 +46,12 @@ squared_outliers_column <- function(resid_column, number_of_rows) {
                   std_factor_for_squared_outliers())
 }
 
+#' Determine the outliers column for the given column data
+#'
+#' @param column_data The column with data.
+#' @param number_of_rows The number of rows that the returned outliers column should have.
+#' @param std_factor The factor multiplied with the standard deviation that determines the threshold for the distance away from the mean at which data points switch over to outliers.
+#' @importFrom stats sd
 outliers_column <- function(column_data, number_of_rows, std_factor) {
   result <- as.numeric(abs(column_data - mean(column_data)) > std_factor * sd(column_data))
   if (length(result) < number_of_rows)
