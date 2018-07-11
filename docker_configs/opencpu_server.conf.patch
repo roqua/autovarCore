@@ -1,0 +1,16 @@
+--- server_old.conf 2015-02-16 18:54:47.066042000 +0100
++++ server.conf 2015-02-16 18:55:05.106042000 +0100
+@@ -27,10 +27,10 @@
+     "appspaths": "/usr/local/lib/opencpu/apps-library",
+     "repos": "http://cran.rstudio.com",
+     "rlimit.as": 4e9,
+     "rlimit.fsize": 1e9,
+     "rlimit.nproc": 100,
+-    "timelimit.get": 60,
++    "timelimit.get": 4800,
+-    "timelimit.post": 90,
++    "timelimit.post": 4800,
+     "timelimit.webhook": 900,
+     "preload": ["lattice"]
+ }
+ 

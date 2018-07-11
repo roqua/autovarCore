@@ -1,5 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 .git
-.gitignore
-^circle.yml$
+^.gitignore$
+.circleci
+docker_configs
+^Dockerfile$
