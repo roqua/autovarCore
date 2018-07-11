@@ -7,7 +7,7 @@ FROM compsy/opencpu-base
 
 WORKDIR /autovarCore
 
-RUN apt-get install -y git-core
+RUN apt-get install -y git-core pandoc
 
 ADD ./inst/bash/install-package-dependencies.sh /autovarCore/inst/bash/install-package-dependencies.sh
 RUN /autovarCore/inst/bash/install-package-dependencies.sh
