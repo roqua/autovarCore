@@ -2,4 +2,5 @@
 ^\.Rproj\.user$
 .git
 .gitignore
-^circle.yml$
+.circleci
+docker_configs
