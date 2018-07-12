@@ -1,4 +1,5 @@
 [![Circle CI](https://circleci.com/gh/roqua/autovarCore.png?style=shield&circle-token=6934b57a8e350e98f46f7798cf9347dce3c0d74f)](https://circleci.com/gh/roqua/autovarCore)
+[![codecov](https://codecov.io/gh/roqua/autovarCore/branch/master/graph/badge.svg)](https://codecov.io/gh/roqua/autovarCore)
 
 AutovarCore
 ===========
