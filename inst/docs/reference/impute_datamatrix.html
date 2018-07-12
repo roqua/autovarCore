@@ -21,14 +21,20 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Imputes the missing values in the input data — impute_datamatrix" />
 
 <meta property="og:description" content="This function uses Amelia::amelia to impute missing (NA) values in the input data set. This function averages over multiple Amelia imputations to obtain more consistent results. The Amelia imputation model uses all variables of the supplied data_matrix, the first lag of those variables, time, time squared, and day-part dummies." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -38,8 +44,6 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -57,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">autovarCore</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.0.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.0.5</span>
       </span>
     </div>
 
@@ -93,9 +97,11 @@
     <div class="hidden name"><code>impute_datamatrix.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function uses <code><a href='http://www.rdocumentation.org/packages/Amelia/topics/amelia'>Amelia::amelia</a></code> to impute missing (<code>NA</code>) values in the input data set. This function averages over multiple Amelia imputations to obtain more consistent results. The Amelia imputation model uses all variables of the supplied <code>data_matrix</code>, the first lag of those variables, time, time squared, and day-part dummies.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>impute_datamatrix</span>(<span class='no'>data_matrix</span>, <span class='no'>measurements_per_day</span>, <span class='no'>imputation_iterations</span>)</pre>
     
@@ -169,46 +175,46 @@
 #&gt; [38,]  18.593693 10.429268 34.529168
 #&gt; [39,]         NA 32.322620  8.539194
 #&gt; [40,]   3.746268 37.968635        NA</div><div class='input'><span class='kw pkg'>autovarCore</span><span class='kw ns'>:::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/autovarCore/topics/impute_datamatrix'>impute_datamatrix</a></span>(<span class='no'>data_matrix</span>, <span class='fl'>1</span>, <span class='fl'>100</span>)</div><div class='output co'>#&gt;       rumination happiness  activity
-#&gt;  [1,]  15.074074 29.950721 22.109948
-#&gt;  [2,]  26.447892 24.244925 21.075038
-#&gt;  [3,]  22.296501 25.747227 39.280132
+#&gt;  [1,]  15.074074 29.950721 21.532391
+#&gt;  [2,]  26.447892 24.294730 21.075038
+#&gt;  [3,]  21.630919 25.747227 39.280132
 #&gt;  [4,]  27.551146  6.328515 14.813282
 #&gt;  [5,]  34.512150 37.279106 18.777766
 #&gt;  [6,]  33.706570 26.393627  9.580964
-#&gt;  [7,]  25.473349 21.619662 22.255266
+#&gt;  [7,]  22.460247 21.619662 25.847934
 #&gt;  [8,]  10.270212  9.779500 15.400207
 #&gt;  [9,]  23.566603 39.347408  5.939997
 #&gt; [10,]  36.018198  5.252903 29.855028
-#&gt; [11,]  25.316632  3.727875 38.278785
+#&gt; [11,]  21.941243  3.727875 38.278785
 #&gt; [12,]  30.673471 31.328175 27.078306
 #&gt; [13,]  29.513042 26.674567 19.255485
-#&gt; [14,]  34.244863 11.108907 25.738824
-#&gt; [15,]  39.056904 19.268480 22.470001
+#&gt; [14,]  34.244863 11.108907 24.702607
+#&gt; [15,]  39.056904 16.928420 25.022153
 #&gt; [16,]   5.408853  6.799704 25.518602
-#&gt; [17,]  27.325148 25.986539 18.649546
+#&gt; [17,]  24.650743 25.986539 18.649546
 #&gt; [18,]  26.275228  8.848299 35.632592
 #&gt; [19,]   3.186849 30.001231 31.583871
-#&gt; [20,]  28.463178 32.128797  6.384322
+#&gt; [20,]  27.779351 30.361221  6.384322
 #&gt; [21,]  12.490376 34.291799 11.971209
 #&gt; [22,]  24.801685 32.333090 28.570913
-#&gt; [23,]   5.723246 21.865671 18.245290
+#&gt; [23,]   5.723246 21.408631 18.245290
 #&gt; [24,]  25.547244 32.019731 27.430242
-#&gt; [25,]  28.766257 16.279656 28.327884
+#&gt; [25,]  28.766257 15.463104 28.327884
 #&gt; [26,]  24.871229 24.401456  3.667850
 #&gt; [27,]   2.342740 17.878738 38.381637
-#&gt; [28,]  26.969741 36.890756 13.351239
-#&gt; [29,]  26.465724 25.024563 19.173886
-#&gt; [30,]  21.167783 17.993008 20.607136
-#&gt; [31,]  18.758391 17.310192 37.485169
+#&gt; [28,]  26.969741 36.890756 14.036992
+#&gt; [29,]  26.465724 25.024563 18.989008
+#&gt; [30,]  21.370947 17.993008 20.607136
+#&gt; [31,]  16.383332 19.631505 37.485169
 #&gt; [32,]  27.387821 30.991527 18.113186
 #&gt; [33,]  35.356391  5.996515 14.668975
 #&gt; [34,]  29.517937 22.006692 19.583659
-#&gt; [35,]  16.546173 13.672822 38.680221
-#&gt; [36,]  17.790305 26.452100 12.589315
-#&gt; [37,]   6.670887 22.207915 25.171412
+#&gt; [35,]  16.546173 14.973198 38.680221
+#&gt; [36,]  17.790305 27.466426 12.589315
+#&gt; [37,]   6.670887 22.207915 24.961803
 #&gt; [38,]  18.593693 10.429268 34.529168
-#&gt; [39,]  18.295066 32.322620  8.539194
-#&gt; [40,]   3.746268 37.968635 18.400788</div></pre>
+#&gt; [39,]  18.652749 32.322620  8.539194
+#&gt; [40,]   3.746268 37.968635 20.856719</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

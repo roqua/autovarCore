@@ -5,3 +5,5 @@
 .circleci
 docker_configs
 ^Dockerfile$
+^_pkgdown\.yml$
+^docs$
