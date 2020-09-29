@@ -1,8 +1,8 @@
 Package: autovarCore
 Type: Package
 Title: Automated Vector Autoregression Models and Networks
-Version: 1.0-5
-Date: 2018-07-12
+Version: 1.0-6
+Date: 2020-09-29
 Authors@R: c(person("Ando","Emerencia",role = c("aut","cre"),
     email = "ando.emerencia@gmail.com"))
 BugReports: https://github.com/roqua/autovarcore/issues
