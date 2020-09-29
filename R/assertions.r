@@ -7,8 +7,8 @@ assert_param_presence <- function(param_name, given_names_vector) {
 }
 
 assert_param_class <- function(param, expected_class) {
-  if (class(param) != expected_class)
-    stop(paste("Param class should be:", expected_class))
+  if (!is(param, expected_class))
+    stop(paste("Param class should include:", expected_class))
 }
 
 assert_param_subset <- function(given_names_vector, allowed_names_vector,
@@ -25,7 +25,7 @@ assert_param_not_null <- function(given_param) {
 
 assert_param_integer <- function(given_param) {
   # precondition: given_param is a single element
-  if (class(given_param) != 'numeric' || !(given_param%%1 == 0))
+  if (!(is(given_param, 'numeric')) || !(given_param%%1 == 0))
     stop(paste("Given param is not an integer:"), given_param)
 }
 

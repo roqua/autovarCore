@@ -23,7 +23,7 @@ test_that('validate_params requires the selected_column_names parameter', {
 test_that('validate_params does not accept NULL for a params list', {
   expect_error(autovarCore:::validate_params(testdata_data_matrix(),
                                              NULL),
-               "Param class should be: list")
+               "Param class should include: list")
 })
 
 test_that('validate_params substitutes with default parameter values', {
@@ -115,7 +115,7 @@ test_that('validate_significance_levels accepts only numeric vectors', {
   expect_error(autovarCore:::validate_significance_levels(data_matrix, NULL),
                "Given param cannot be NULL")
   expect_error(autovarCore:::validate_significance_levels(data_matrix, c('a', 'b', 'c')),
-               "Param class should be: numeric")
+               "Param class should include: numeric")
   # The statement below should not throw an error.
   expect_equal(autovarCore:::validate_significance_levels(data_matrix, 0.7),
                 0.7)

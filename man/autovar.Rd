@@ -4,10 +4,15 @@
 \alias{autovar}
 \title{Return the best VAR models found for a time series data set}
 \usage{
-autovar(raw_dataframe, selected_column_names, significance_levels = c(0.05,
-  0.01, 0.005), test_names = c("portmanteau", "portmanteau_squared",
-  "skewness"), criterion = "BIC", imputation_iterations = 100,
-  measurements_per_day = 1)
+autovar(
+  raw_dataframe,
+  selected_column_names,
+  significance_levels = c(0.05, 0.01, 0.005),
+  test_names = c("portmanteau", "portmanteau_squared", "skewness"),
+  criterion = "BIC",
+  imputation_iterations = 100,
+  measurements_per_day = 1
+)
 }
 \arguments{
 \item{raw_dataframe}{The raw, unimputed data frame. This can include columns other than the \code{selected_column_names}, as those may be helpful for the imputation. The measurements in the dataframe are expected to be sorted by time, and to be sequential. Missed measurements should be encoded as rows of \code{NA} values and will be imputed by EM imputation.}
@@ -48,6 +53,7 @@ In the final step, AutovarCore merges the sorted lists of models with and withou
 The reason for the different sorting algorithms is that in some cases we want to select the model with the fewest outlier dummy columns (i.e., the model that retains most of the original data), while in other cases we know that a certain operation (such as adding weekday dummies or logtransforming the data set) will affect the amount of dummies in the model and so a fair comparison would exclude this property. For example, we do not compare the number of outlier columns in the final step because this would have likely favored logtransformed models over models without logtransform, as logtransformations typically have the effect of reducing the outliers of a sample.
 
 Outliers are, for each variable, the measurements at >2.5 times the standard deviation away from the mean of the residuals or of the squared residuals. Outlier dummy variables are split up such that each time point that is considered an outlier has its own dummy outlier variable and adds one to the count of outlier columns. Checks are in place to ensure that a time point identified as an outlier by multiple variables only adds a single dummy outlier column to the equation. For the count of outlier columns, day-part dummies do not add to the count. This is because when they are included, they are included for each model and thus never have any discriminatory power.
+
 
 We are able to compare the AIC/BIC scores of logtransformed and nonlogtransformed models fairly because we compensate the AIC/BIC scores to account for the effect of the logtransformation. We compensate for the logtransformation by adjusting the loglikelihood score of the logtransformed models in the calculation of their AIC/BIC scores (by subtracting the sum of the logtransformed data).
 }

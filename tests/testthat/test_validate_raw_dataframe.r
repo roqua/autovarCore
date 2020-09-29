@@ -26,7 +26,7 @@ test_that('validate_raw_dataframe does not accept a null data frame', {
 
 test_that('validate_raw_dataframe requires class data.frame', {
   expect_error(autovarCore:::validate_raw_dataframe(list(a = 2)),
-               "Param class should be: data.frame")
+               "Param class should include: data.frame")
 })
 
 test_that('validate_raw_dataframe requires at least one row', {

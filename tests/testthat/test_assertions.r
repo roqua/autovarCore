@@ -19,7 +19,7 @@ test_that('assert_param_presence requires the presence of a param name', {
 })
 
 test_that('assert_param_class asserts that the given param is of the specified class', {
-  expected_error_message <- 'Param class should be: list'
+  expected_error_message <- 'Param class should include: list'
   expect_error(autovarCore:::assert_param_class(NULL, 'list'), expected_error_message)
   expect_error(autovarCore:::assert_param_class(testdata_raw_dataframe(), 'list'), expected_error_message)
   # The statement below should not throw an error.

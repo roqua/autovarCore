@@ -142,7 +142,7 @@ testdata_trend_columns <- function() {
   #                                                  'activity'),
   #                        imputation_iterations = 1)
   # )
-  # expect_equal(class(result), 'list')
+  # expect_true(is(result, 'list'))
   # expected_result <- list(list(logtransformed = FALSE, lag = 2, model_score = 889.947044325758, bucket = 0.05, nr_dummy_variables = 0),
   #                         list(logtransformed = FALSE, lag = 1, model_score = 911.467590883197, bucket = 0.05, nr_dummy_variables = 0),
   #                         list(logtransformed = TRUE, lag = 2, model_score = 984.385604338168, bucket = 0.01, nr_dummy_variables = 0),
@@ -152,7 +152,7 @@ testdata_trend_columns <- function() {
   #   expect_equal(result[[i]]$lag, expected_result[[i]]$lag)
   #   expect_equal(result[[i]]$bucket, expected_result[[i]]$bucket)
   #   expect_equal(result[[i]]$nr_dummy_variables, expected_result[[i]]$nr_dummy_variables)
-  #   expect_equal(class(result[[i]]$varest), 'varest')
+  #   expect_true(is(result[[i]]$varest, 'varest'))
   # }
 # })
 
@@ -189,7 +189,7 @@ test_that('evaluate_model_config calls its subfunctions correctly without daydum
     },
     `autovarCore:::residual_outliers` = function(...) {
       called_count_residual_outliers <<- called_count_residual_outliers + 1
-      expect_equal(class(list(...)[[1]]), 'matrix')
+      expect_true(is(list(...)[[1]], 'matrix'))
       expect_equal(list(...)[[2]], 40)
       res_outliers
     },
@@ -294,7 +294,7 @@ test_that('evaluate_model_config calls its subfunctions correctly with daydummie
     },
     `autovarCore:::residual_outliers` = function(...) {
       called_count_residual_outliers <<- called_count_residual_outliers + 1
-      expect_equal(class(list(...)[[1]]), 'matrix')
+      expect_true(is(list(...)[[1]], 'matrix'))
       expect_equal(list(...)[[2]], 40)
       res_outliers
     },

@@ -13,7 +13,7 @@ validate_raw_dataframe <- function(raw_dataframe) {
   assert_param_class(raw_dataframe, 'data.frame')
   assert_param_nrow(raw_dataframe, minimum = 1)
   for (column_name in names(raw_dataframe)) {
-    if (class(raw_dataframe[[column_name]]) != 'numeric')
+    if (!is(raw_dataframe[[column_name]], 'numeric'))
       raw_dataframe[[column_name]] <- as.numeric(raw_dataframe[[column_name]])
   }
   as.matrix(raw_dataframe)

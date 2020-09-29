@@ -4,13 +4,13 @@ context('config')
 
 test_that('default_autovar_params returns a list of expected commands', {
   default_params <- autovarCore:::default_autovar_params()
-  expect_equal(class(default_params), 'list')
+  expect_true(is(default_params, 'list'))
   expect_gt(length(names(default_params)), 4)
 })
 
 test_that('supported_test_names returns a character vector', {
   supported_test_names <- autovarCore:::supported_test_names()
-  expect_equal(class(supported_test_names), 'character')
+  expect_true(is(supported_test_names, 'character'))
   expect_gt(length(supported_test_names), 3)
 })
 
@@ -24,24 +24,24 @@ test_that('run_test accepts exactly the correct test_names', {
 
 test_that('supported_criteria returns a character vector', {
   supported_criteria <- autovarCore:::supported_criteria()
-  expect_equal(class(supported_criteria), 'character')
+  expect_true(is(supported_criteria, 'character'))
   expect_gt(length(supported_criteria), 1)
 })
 
 test_that('p_level_for_trend_significance returns a single float', {
   p_level_for_trend_significance <- autovarCore:::p_level_for_trend_significance()
-  expect_equal(class(p_level_for_trend_significance), 'numeric')
+  expect_true(is(p_level_for_trend_significance, 'numeric'))
   expect_equal(length(p_level_for_trend_significance), 1)
 })
 
 test_that('std_factor_for_normal_outliers returns a single float', {
   std_factor_for_normal_outliers <- autovarCore:::std_factor_for_normal_outliers()
-  expect_equal(class(std_factor_for_normal_outliers), 'numeric')
+  expect_true(is(std_factor_for_normal_outliers, 'numeric'))
   expect_equal(length(std_factor_for_normal_outliers), 1)
 })
 
 test_that('std_factor_for_squared_outliers returns a single float', {
   std_factor_for_squared_outliers <- autovarCore:::std_factor_for_squared_outliers()
-  expect_equal(class(std_factor_for_squared_outliers), 'numeric')
+  expect_true(is(std_factor_for_squared_outliers, 'numeric'))
   expect_equal(length(std_factor_for_squared_outliers), 1)
 })
