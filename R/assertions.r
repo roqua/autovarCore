@@ -6,6 +6,7 @@ assert_param_presence <- function(param_name, given_names_vector) {
     stop(paste(param_name, "is a required parameter"))
 }
 
+#' @importFrom methods is
 assert_param_class <- function(param, expected_class) {
   if (!is(param, expected_class))
     stop(paste("Param class should include:", expected_class))
@@ -23,6 +24,7 @@ assert_param_not_null <- function(given_param) {
     stop("Given param cannot be NULL")
 }
 
+#' @importFrom methods is
 assert_param_integer <- function(given_param) {
   # precondition: given_param is a single element
   if (!(is(given_param, 'numeric')) || !(given_param%%1 == 0))

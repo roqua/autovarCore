@@ -8,6 +8,7 @@
 #'   tijdstip = c(1, 3, 5, 6, 7),
 #'   home = c(1, 0, 0, NA, 1))
 #' autovarCore:::validate_raw_dataframe(raw_dataframe)
+#' @importFrom methods is
 validate_raw_dataframe <- function(raw_dataframe) {
   assert_param_not_null(raw_dataframe)
   assert_param_class(raw_dataframe, 'data.frame')

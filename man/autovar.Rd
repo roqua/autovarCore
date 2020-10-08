@@ -25,7 +25,7 @@ autovar(
 
 \item{criterion}{The information criterion used to sort the models. Valid options are 'BIC' (the default) or 'AIC'.}
 
-\item{imputation_iterations}{The amount of times the Amelia imputation should be averaged over. The default value for this parameter is \code{100}. For details on the Amelia imputation, please see \url{http://r.iq.harvard.edu/docs/amelia/amelia.pdf}.}
+\item{imputation_iterations}{The amount of times the Amelia imputation should be averaged over. The default value for this parameter is \code{100}. For details on the Amelia imputation, please see \url{https://r.iq.harvard.edu/docs/amelia/amelia.pdf}.}
 
 \item{measurements_per_day}{The number of measurements per day in the time series data. The default value for this parameter is \code{1}. All models considered include day-part dummy variables if there are multiple measurements per day. If this value is \code{0}, then daypart- and weekday dummies variables are not included for any models.}
 }
